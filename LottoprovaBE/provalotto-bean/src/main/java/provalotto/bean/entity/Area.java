@@ -28,6 +28,9 @@ public class Area extends AbstractIdentifiedBean {
 	private String name;
 
 	@Column(nullable = false, length = 50)
+	private String areaManager;
+
+	@Column(nullable = false, length = 50)
 	private String maker;
 
 	@Column(nullable = false)

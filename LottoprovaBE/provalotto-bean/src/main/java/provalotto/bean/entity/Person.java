@@ -32,6 +32,9 @@ public class Person extends AbstractIdentifiedBean {
 	private String surname;
 
 	@Column(nullable = false, length = 50)
+	private String username;
+
+	@Column(nullable = false, length = 50)
 	private String maker;
 
 	@Column(nullable = false)
