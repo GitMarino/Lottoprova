@@ -51,10 +51,15 @@ public class Area extends AbstractIdentifiedBean {
 		if (getClass() != obj.getClass())
 			return false;
 		Area other = (Area) obj;
-		return Objects.equals(areaTopicConnections, other.areaTopicConnections)
+		return Objects.equals(areaManager, other.areaManager)
+				&& Objects.equals(areaTopicConnections, other.areaTopicConnections)
 				&& Objects.equals(dateTime, other.dateTime) && Objects.equals(maker, other.maker)
 				&& Objects.equals(name, other.name)
 				&& Objects.equals(personAreaConnections, other.personAreaConnections);
+	}
+
+	public String getAreaManager() {
+		return areaManager;
 	}
 
 	public List<AreaTopicConnection> getAreaTopicConnections() {
@@ -81,8 +86,13 @@ public class Area extends AbstractIdentifiedBean {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(areaTopicConnections, dateTime, maker, name, personAreaConnections);
+		result = prime * result
+				+ Objects.hash(areaManager, areaTopicConnections, dateTime, maker, name, personAreaConnections);
 		return result;
+	}
+
+	public void setAreaManager(final String areaManager) {
+		this.areaManager = areaManager;
 	}
 
 	public void setAreaTopicConnections(final List<AreaTopicConnection> areaTopicConnections) {
@@ -107,8 +117,9 @@ public class Area extends AbstractIdentifiedBean {
 
 	@Override
 	public String toString() {
-		return "Area [name=" + name + ", maker=" + maker + ", dateTime=" + dateTime + ", personAreaConnections="
-				+ personAreaConnections + ", areaTopicConnections=" + areaTopicConnections + "]";
+		return "Area [name=" + name + ", areaManager=" + areaManager + ", maker=" + maker + ", dateTime=" + dateTime
+				+ ", personAreaConnections=" + personAreaConnections + ", areaTopicConnections=" + areaTopicConnections
+				+ "]";
 	}
 
 }

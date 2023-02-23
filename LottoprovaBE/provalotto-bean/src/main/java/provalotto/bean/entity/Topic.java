@@ -50,7 +50,8 @@ public class Topic extends AbstractIdentifiedBean {
 		Topic other = (Topic) obj;
 		return Objects.equals(areaTopicConnections, other.areaTopicConnections)
 				&& Objects.equals(dateTime, other.dateTime) && Objects.equals(maker, other.maker)
-				&& Objects.equals(name, other.name);
+				&& Objects.equals(name, other.name)
+				&& Objects.equals(personTopicConnections, other.personTopicConnections);
 	}
 
 	public List<AreaTopicConnection> getAreaTopicConnections() {
@@ -73,7 +74,7 @@ public class Topic extends AbstractIdentifiedBean {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(areaTopicConnections, dateTime, maker, name);
+		result = prime * result + Objects.hash(areaTopicConnections, dateTime, maker, name, personTopicConnections);
 		return result;
 	}
 
@@ -96,6 +97,6 @@ public class Topic extends AbstractIdentifiedBean {
 	@Override
 	public String toString() {
 		return "Topic [name=" + name + ", maker=" + maker + ", dateTime=" + dateTime + ", areaTopicConnections="
-				+ areaTopicConnections + "]";
+				+ areaTopicConnections + ", personTopicConnections=" + personTopicConnections + "]";
 	}
 }

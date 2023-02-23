@@ -10,6 +10,6 @@ import provalotto.bean.entity.Skill;
 @Repository
 public interface SkillDAO extends JpaRepository<Skill, Long> {
 
-	List<Skill> findByTopicIdOrderByName(long topicId);
+	List<Skill> findBySkillTopicIdOrderByName(long skillTopicId);
 
 }

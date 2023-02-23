@@ -1,12 +1,15 @@
 package provalotto.datalayer.manager.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import provalotto.bean.bean.AreaBean;
 import provalotto.bean.entity.Area;
 import provalotto.datalayer.dao.AreaDAO;
 import provalotto.datalayer.manager.AreaManager;
@@ -20,21 +23,26 @@ public class AreaManagerImpl implements AreaManager {
 	private AreaDAO areaDAO;
 
 	@Override
-	public Area createArea(final Area area) {
+	public AreaBean createArea(final AreaBean areaBean) throws ServiceErrorException {
 		try {
-			if (!areaDAO.existsById(area.getId())) {
-				return areaDAO.save(area);
-			}
+			Area area = new Area();
+			area.setName(areaBean.getName());
+			area.setAreaManager(areaBean.getAreaManager());
+			area.setMaker("Christian Marino");
+			area.setDateTime(LocalDateTime.now());
+			areaDAO.save(area);
+			return areaBean;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
-		return null;
 	}
 
 	@Override
-	public boolean deleteArea(final Area area) {
+	public boolean deleteArea(final AreaBean areaBean) {
 		try {
-			if (areaDAO.existsById(area.getId())) {
+			Area area = areaDAO.findById(areaBean.getId()).get();
+			if (area != null) {
 				areaDAO.delete(area);
 				return true;
 			}
@@ -46,18 +54,17 @@ public class AreaManagerImpl implements AreaManager {
 	}
 
 	@Override
-	public List<Area> getAllAreas() {
-		return areaDAO.findAllByOrderByName();
-	}
-
-	@Override
-	public Area saveArea(final Area area) {
-		try {
-			return areaDAO.save(area);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
+	public List<AreaBean> getAllAreas() {
+		List<AreaBean> allAreaBeans = new ArrayList<>();
+		AreaBean areaBean;
+		for (Area area : areaDAO.findAllByOrderByName()) {
+			areaBean = new AreaBean();
+			areaBean.setId(area.getId());
+			areaBean.setName(area.getName());
+			areaBean.setAreaManager(area.getAreaManager());
+			allAreaBeans.add(areaBean);
 		}
-		return null;
+		return allAreaBeans;
 	}
 
 }

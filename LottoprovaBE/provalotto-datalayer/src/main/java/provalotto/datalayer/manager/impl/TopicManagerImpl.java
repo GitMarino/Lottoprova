@@ -1,12 +1,15 @@
 package provalotto.datalayer.manager.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import provalotto.bean.bean.TopicBean;
 import provalotto.bean.entity.Topic;
 import provalotto.datalayer.dao.TopicDAO;
 import provalotto.datalayer.manager.TopicManager;
@@ -20,21 +23,25 @@ public class TopicManagerImpl implements TopicManager {
 	private TopicDAO topicDAO;
 
 	@Override
-	public Topic createTopic(final Topic topic) {
+	public TopicBean createTopic(final TopicBean topicBean) throws ServiceErrorException {
 		try {
-			if (!topicDAO.existsById(topic.getId())) {
-				return topicDAO.save(topic);
-			}
+			Topic topic = new Topic();
+			topic.setName(topicBean.getName());
+			topic.setMaker("Christian Marino");
+			topic.setDateTime(LocalDateTime.now());
+			topicDAO.save(topic);
+			return topicBean;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
-		return null;
 	}
 
 	@Override
-	public boolean deleteTopic(final Topic topic) {
+	public boolean deleteTopic(final TopicBean topicBean) {
 		try {
-			if (topicDAO.existsById(topic.getId())) {
+			Topic topic = topicDAO.findById(topicBean.getId()).get();
+			if (topic != null) {
 				topicDAO.delete(topic);
 				return true;
 			}
@@ -46,17 +53,16 @@ public class TopicManagerImpl implements TopicManager {
 	}
 
 	@Override
-	public List<Topic> getAllTopics() {
-		return topicDAO.findAllByOrderByName();
+	public List<TopicBean> getAllTopics() {
+		List<TopicBean> allTopicBeans = new ArrayList<>();
+		TopicBean topicBean;
+		for (Topic topic : topicDAO.findAllByOrderByName()) {
+			topicBean = new TopicBean();
+			topicBean.setId(topic.getId());
+			topicBean.setName(topic.getName());
+			allTopicBeans.add(topicBean);
+		}
+		return allTopicBeans;
 	}
 
-	@Override
-	public Topic saveTopic(final Topic topic) {
-		try {
-			return topicDAO.save(topic);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
-		return null;
-	}
 }

@@ -37,7 +37,7 @@ public class Skill extends AbstractIdentifiedBean {
 	private LocalDateTime dateTime;
 
 	@ManyToOne
-	private Topic topic;
+	private Topic skillTopic;
 
 	@OneToMany(mappedBy = "skill")
 	List<PersonSkillConnection> personSkillConnections;
@@ -53,7 +53,8 @@ public class Skill extends AbstractIdentifiedBean {
 		Skill other = (Skill) obj;
 		return Objects.equals(dateTime, other.dateTime) && Objects.equals(description, other.description)
 				&& Objects.equals(maker, other.maker) && Objects.equals(name, other.name)
-				&& Objects.equals(topic, other.topic);
+				&& Objects.equals(personSkillConnections, other.personSkillConnections)
+				&& Objects.equals(skillTopic, other.skillTopic);
 	}
 
 	public LocalDateTime getDateTime() {
@@ -72,15 +73,19 @@ public class Skill extends AbstractIdentifiedBean {
 		return name;
 	}
 
-	public Topic getTopic() {
-		return topic;
+	public List<PersonSkillConnection> getPersonSkillConnections() {
+		return personSkillConnections;
+	}
+
+	public Topic getSkillTopic() {
+		return skillTopic;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(dateTime, description, maker, name, topic);
+		result = prime * result + Objects.hash(dateTime, description, maker, name, personSkillConnections, skillTopic);
 		return result;
 	}
 
@@ -100,14 +105,18 @@ public class Skill extends AbstractIdentifiedBean {
 		this.name = name;
 	}
 
-	public void setTopic(final Topic topic) {
-		this.topic = topic;
+	public void setPersonSkillConnections(final List<PersonSkillConnection> personSkillConnections) {
+		this.personSkillConnections = personSkillConnections;
+	}
+
+	public void setSkillTopic(final Topic skillTopic) {
+		this.skillTopic = skillTopic;
 	}
 
 	@Override
 	public String toString() {
 		return "Skill [name=" + name + ", description=" + description + ", maker=" + maker + ", dateTime=" + dateTime
-				+ ", topic=" + topic + "]";
+				+ ", skillTopic=" + skillTopic + ", personSkillConnections=" + personSkillConnections + "]";
 	}
 
 }

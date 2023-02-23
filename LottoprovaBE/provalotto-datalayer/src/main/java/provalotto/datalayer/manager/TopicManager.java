@@ -2,16 +2,15 @@ package provalotto.datalayer.manager;
 
 import java.util.List;
 
-import provalotto.bean.entity.Topic;
+import provalotto.bean.bean.TopicBean;
+import provalotto.datalayer.manager.impl.ServiceErrorException;
 
 public interface TopicManager {
 
-	Topic createTopic(Topic topic);
+	TopicBean createTopic(TopicBean topicBean) throws ServiceErrorException;
 
-	boolean deleteTopic(Topic topic);
+	boolean deleteTopic(TopicBean topicBean);
 
-	List<Topic> getAllTopics();
-
-	Topic saveTopic(Topic topic);
+	List<TopicBean> getAllTopics();
 
 }

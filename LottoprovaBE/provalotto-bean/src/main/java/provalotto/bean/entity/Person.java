@@ -26,13 +26,13 @@ public class Person extends AbstractIdentifiedBean {
 	}
 
 	@Column(nullable = false, length = 50)
+	private String username;
+
+	@Column(nullable = false, length = 50)
 	private String name;
 
 	@Column(nullable = false, length = 50)
 	private String surname;
-
-	@Column(nullable = false, length = 50)
-	private String username;
 
 	@Column(nullable = false, length = 50)
 	private String maker;
@@ -61,7 +61,9 @@ public class Person extends AbstractIdentifiedBean {
 		return Objects.equals(dateTime, other.dateTime) && Objects.equals(maker, other.maker)
 				&& Objects.equals(name, other.name)
 				&& Objects.equals(personAreaConnections, other.personAreaConnections)
-				&& Objects.equals(surname, other.surname);
+				&& Objects.equals(personSkillConnections, other.personSkillConnections)
+				&& Objects.equals(personTopicConnections, other.personTopicConnections)
+				&& Objects.equals(surname, other.surname) && Objects.equals(username, other.username);
 	}
 
 	public LocalDateTime getDateTime() {
@@ -84,11 +86,16 @@ public class Person extends AbstractIdentifiedBean {
 		return surname;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(dateTime, maker, name, personAreaConnections, surname);
+		result = prime * result + Objects.hash(dateTime, maker, name, personAreaConnections, personSkillConnections,
+				personTopicConnections, surname, username);
 		return result;
 	}
 
@@ -112,9 +119,15 @@ public class Person extends AbstractIdentifiedBean {
 		this.surname = surname;
 	}
 
+	public void setUsername(final String username) {
+		this.username = username;
+	}
+
 	@Override
 	public String toString() {
-		return "Person [name=" + name + ", surname=" + surname + ", maker=" + maker + ", dateTime=" + dateTime
-				+ ", personAreaConnections=" + personAreaConnections + "]";
+		return "Person [username=" + username + ", name=" + name + ", surname=" + surname + ", maker=" + maker
+				+ ", dateTime=" + dateTime + ", personAreaConnections=" + personAreaConnections
+				+ ", personTopicConnections=" + personTopicConnections + ", personSkillConnections="
+				+ personSkillConnections + "]";
 	}
 }

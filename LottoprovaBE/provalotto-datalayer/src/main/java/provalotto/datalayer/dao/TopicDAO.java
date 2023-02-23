@@ -1,6 +1,7 @@
 package provalotto.datalayer.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,5 +12,8 @@ import provalotto.bean.entity.Topic;
 public interface TopicDAO extends JpaRepository<Topic, Long> {
 
 	List<Topic> findAllByOrderByName();
+
+	@Override
+	Optional<Topic> findById(Long id);
 
 }

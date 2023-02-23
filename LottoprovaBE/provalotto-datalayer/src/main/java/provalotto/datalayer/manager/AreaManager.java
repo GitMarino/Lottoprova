@@ -2,16 +2,15 @@ package provalotto.datalayer.manager;
 
 import java.util.List;
 
-import provalotto.bean.entity.Area;
+import provalotto.bean.bean.AreaBean;
+import provalotto.datalayer.manager.impl.ServiceErrorException;
 
 public interface AreaManager {
 
-	Area createArea(Area area);
+	AreaBean createArea(AreaBean areaBean) throws ServiceErrorException;
 
-	boolean deleteArea(Area area);
+	boolean deleteArea(AreaBean areaBean);
 
-	List<Area> getAllAreas();
-
-	Area saveArea(Area area);
+	List<AreaBean> getAllAreas();
 
 }

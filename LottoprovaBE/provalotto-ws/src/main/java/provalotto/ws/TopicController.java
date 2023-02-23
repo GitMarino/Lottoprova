@@ -3,46 +3,41 @@ package provalotto.ws;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import provalotto.bean.entity.Topic;
+import provalotto.bean.bean.TopicBean;
 import provalotto.datalayer.manager.TopicManager;
-import provalotto.datalayer.ws.TopicWs;
 
 @RestController
 @RequestMapping("/topic")
-public class TopicController implements TopicWs {
+public class TopicController {
 
 	@Autowired
 	private TopicManager topicManager;
 
-	@Override
 	@PostMapping
-	public Topic createTopic(final @RequestBody Topic topic) {
-		return topicManager.createTopic(topic);
+	public ResponseEntity<TopicBean> createTopic(final @RequestBody TopicBean topicBean) {
+		try {
+			return ResponseEntity.ok(topicManager.createTopic(topicBean));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
-	@Override
 	@DeleteMapping
-	public boolean deleteTopic(final @RequestBody Topic topic) {
-		return topicManager.deleteTopic(topic);
+	public boolean deleteTopic(final @RequestBody TopicBean topicBean) {
+		return topicManager.deleteTopic(topicBean);
 	}
 
-	@Override
-	@GetMapping("/topics")
-	public List<Topic> getAllTopics() {
+	@GetMapping
+	public List<TopicBean> getAllTopics() {
 		return topicManager.getAllTopics();
 	}
 
-	@Override
-	@PutMapping
-	public Topic saveTopic(final @RequestBody Topic topic) {
-		return topicManager.saveTopic(topic);
-	}
 }

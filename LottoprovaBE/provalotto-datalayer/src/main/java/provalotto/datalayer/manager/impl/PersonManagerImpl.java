@@ -1,12 +1,15 @@
 package provalotto.datalayer.manager.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import provalotto.bean.bean.PersonBean;
 import provalotto.bean.entity.Person;
 import provalotto.datalayer.dao.PersonDAO;
 import provalotto.datalayer.manager.PersonManager;
@@ -20,21 +23,27 @@ public class PersonManagerImpl implements PersonManager {
 	private PersonDAO personDAO;
 
 	@Override
-	public Person createPerson(final Person person) {
+	public PersonBean createPerson(final PersonBean personBean) throws ServiceErrorException {
 		try {
-			if (!personDAO.existsById(person.getId())) {
-				return personDAO.save(person);
-			}
+			Person person = new Person();
+			person.setUsername(personBean.getUsername());
+			person.setName(personBean.getName());
+			person.setSurname(personBean.getSurname());
+			person.setMaker("Christian Marino");
+			person.setDateTime(LocalDateTime.now());
+			personDAO.save(person);
+			return personBean;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
-		return null;
 	}
 
 	@Override
-	public boolean deletePerson(final Person person) {
+	public boolean deletePerson(final PersonBean personBean) {
 		try {
-			if (personDAO.existsById(person.getId())) {
+			Person person = personDAO.findById(personBean.getId()).get();
+			if (person != null) {
 				personDAO.delete(person);
 				return true;
 			}
@@ -46,18 +55,18 @@ public class PersonManagerImpl implements PersonManager {
 	}
 
 	@Override
-	public List<Person> getAllPeople() {
-		return personDAO.findAllByOrderBySurname();
-	}
-
-	@Override
-	public Person savePerson(final Person person) {
-		try {
-			return personDAO.save(person);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
+	public List<PersonBean> getAllPeople() {
+		List<PersonBean> allPersonBeans = new ArrayList<>();
+		PersonBean personBean;
+		for (Person person : personDAO.findAllByOrderBySurname()) {
+			personBean = new PersonBean();
+			personBean.setId(person.getId());
+			personBean.setUsername(personBean.getUsername());
+			personBean.setName(personBean.getName());
+			personBean.setSurname(person.getSurname());
+			allPersonBeans.add(personBean);
 		}
-		return null;
+		return allPersonBeans;
 	}
 
 }

@@ -2,16 +2,15 @@ package provalotto.datalayer.manager;
 
 import java.util.List;
 
-import provalotto.bean.entity.Person;
+import provalotto.bean.bean.PersonBean;
+import provalotto.datalayer.manager.impl.ServiceErrorException;
 
 public interface PersonManager {
 
-	Person createPerson(Person person);
+	PersonBean createPerson(PersonBean personBean) throws ServiceErrorException;
 
-	boolean deletePerson(Person person);
+	boolean deletePerson(PersonBean personBean);
 
-	List<Person> getAllPeople();
-
-	Person savePerson(Person person);
+	List<PersonBean> getAllPeople();
 
 }
