@@ -31,8 +31,8 @@ public class AreaController {
 	}
 
 	@DeleteMapping
-	public boolean deleteArea(final @RequestBody AreaBean areaBean) {
-		return areaManager.deleteArea(areaBean);
+	public boolean deleteArea(final Long areaBeanId) {
+		return areaManager.deleteArea(areaBeanId);
 	}
 
 	@GetMapping

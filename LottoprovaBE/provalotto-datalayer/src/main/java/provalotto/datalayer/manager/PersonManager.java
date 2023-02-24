@@ -9,7 +9,7 @@ public interface PersonManager {
 
 	PersonBean createPerson(PersonBean personBean) throws ServiceErrorException;
 
-	boolean deletePerson(PersonBean personBean);
+	boolean deletePerson(Long personBeanId);
 
 	List<PersonBean> getAllPeople();
 

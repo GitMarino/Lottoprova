@@ -12,42 +12,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import provalotto.bean.bean.SkillBean;
-import provalotto.bean.bean.TopicBean;
 import provalotto.datalayer.manager.SkillManager;
-import provalotto.datalayer.manager.TopicManager;
 
 @RestController
-@RequestMapping("/topic")
-public class TopicController {
-
-	@Autowired
-	private TopicManager topicManager;
+@RequestMapping("/skill")
+public class SkillController {
 
 	@Autowired
 	private SkillManager skillManager;
 
 	@PostMapping
-	public ResponseEntity<TopicBean> createTopic(final @RequestBody TopicBean topicBean) {
+	public ResponseEntity<SkillBean> createSkill(final @RequestBody SkillBean skillBean) {
 		try {
-			return ResponseEntity.ok(topicManager.createTopic(topicBean));
+			return ResponseEntity.ok(skillManager.createSkill(skillBean));
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}
 
 	@DeleteMapping
-	public boolean deleteTopic(final Long topicBeanId) {
-		return topicManager.deleteTopic(topicBeanId);
+	public boolean deleteSkill(final Long skillBeanId) {
+		return skillManager.deleteSkill(skillBeanId);
 	}
 
 	@GetMapping
-	public List<TopicBean> getAllTopics() {
-		return topicManager.getAllTopics();
-	}
-
-	@GetMapping("/skills")
-	public List<SkillBean> getSkillsByTopic(final TopicBean topicBean) {
-		return skillManager.getSkillsByTopic(topicBean);
+	public List<SkillBean> getAllSkills() {
+		return skillManager.getAllSkills();
 	}
 
 }

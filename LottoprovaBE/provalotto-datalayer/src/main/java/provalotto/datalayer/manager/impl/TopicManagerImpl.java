@@ -38,9 +38,9 @@ public class TopicManagerImpl implements TopicManager {
 	}
 
 	@Override
-	public boolean deleteTopic(final TopicBean topicBean) {
+	public boolean deleteTopic(final Long topicBeanId) {
 		try {
-			Topic topic = topicDAO.findById(topicBean.getId()).get();
+			Topic topic = topicDAO.findById(topicBeanId).get();
 			if (topic != null) {
 				topicDAO.delete(topic);
 				return true;

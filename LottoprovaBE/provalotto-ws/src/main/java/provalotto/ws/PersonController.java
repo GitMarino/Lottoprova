@@ -31,8 +31,8 @@ public class PersonController {
 	}
 
 	@DeleteMapping
-	public boolean deletePerson(final @RequestBody PersonBean personBean) {
-		return personManager.deletePerson(personBean);
+	public boolean deletePerson(final Long personBeanId) {
+		return personManager.deletePerson(personBeanId);
 	}
 
 	@GetMapping

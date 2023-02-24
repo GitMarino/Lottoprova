@@ -9,7 +9,7 @@ public interface TopicManager {
 
 	TopicBean createTopic(TopicBean topicBean) throws ServiceErrorException;
 
-	boolean deleteTopic(TopicBean topicBean);
+	boolean deleteTopic(Long topicBeanId);
 
 	List<TopicBean> getAllTopics();
 

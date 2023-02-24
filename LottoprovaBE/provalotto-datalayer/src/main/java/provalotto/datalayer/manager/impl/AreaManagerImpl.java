@@ -39,9 +39,9 @@ public class AreaManagerImpl implements AreaManager {
 	}
 
 	@Override
-	public boolean deleteArea(final AreaBean areaBean) {
+	public boolean deleteArea(final Long areaBeanId) {
 		try {
-			Area area = areaDAO.findById(areaBean.getId()).get();
+			Area area = areaDAO.findById(areaBeanId).get();
 			if (area != null) {
 				areaDAO.delete(area);
 				return true;

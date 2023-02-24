@@ -9,7 +9,7 @@ public interface AreaManager {
 
 	AreaBean createArea(AreaBean areaBean) throws ServiceErrorException;
 
-	boolean deleteArea(AreaBean areaBean);
+	boolean deleteArea(Long areaBeanId);
 
 	List<AreaBean> getAllAreas();
 

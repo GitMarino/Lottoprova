@@ -40,9 +40,9 @@ public class PersonManagerImpl implements PersonManager {
 	}
 
 	@Override
-	public boolean deletePerson(final PersonBean personBean) {
+	public boolean deletePerson(final Long personBeanId) {
 		try {
-			Person person = personDAO.findById(personBean.getId()).get();
+			Person person = personDAO.findById(personBeanId).get();
 			if (person != null) {
 				personDAO.delete(person);
 				return true;
