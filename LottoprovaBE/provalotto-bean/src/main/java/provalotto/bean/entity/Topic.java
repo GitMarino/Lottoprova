@@ -1,17 +1,13 @@
 package provalotto.bean.entity;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 
 import org.joda.time.LocalDateTime;
 
 import provalotto.bean.base.AbstractIdentifiedBean;
-import provalotto.bean.connection.AreaTopicConnection;
-import provalotto.bean.connection.PersonTopicConnection;
 
 @Entity(name = Topic.TABLE_NAME)
 public class Topic extends AbstractIdentifiedBean {
@@ -33,12 +29,6 @@ public class Topic extends AbstractIdentifiedBean {
 	@Column(nullable = false)
 	private LocalDateTime dateTime;
 
-	@OneToMany(mappedBy = "topic")
-	List<AreaTopicConnection> areaTopicConnections;
-
-	@OneToMany(mappedBy = "topic")
-	List<PersonTopicConnection> personTopicConnections;
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj)
@@ -48,14 +38,8 @@ public class Topic extends AbstractIdentifiedBean {
 		if (getClass() != obj.getClass())
 			return false;
 		Topic other = (Topic) obj;
-		return Objects.equals(areaTopicConnections, other.areaTopicConnections)
-				&& Objects.equals(dateTime, other.dateTime) && Objects.equals(maker, other.maker)
-				&& Objects.equals(name, other.name)
-				&& Objects.equals(personTopicConnections, other.personTopicConnections);
-	}
-
-	public List<AreaTopicConnection> getAreaTopicConnections() {
-		return areaTopicConnections;
+		return Objects.equals(dateTime, other.dateTime) && Objects.equals(maker, other.maker)
+				&& Objects.equals(name, other.name);
 	}
 
 	public LocalDateTime getDateTime() {
@@ -74,12 +58,8 @@ public class Topic extends AbstractIdentifiedBean {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(areaTopicConnections, dateTime, maker, name, personTopicConnections);
+		result = prime * result + Objects.hash(dateTime, maker, name);
 		return result;
-	}
-
-	public void setAreaTopicConnections(final List<AreaTopicConnection> areaTopicConnections) {
-		this.areaTopicConnections = areaTopicConnections;
 	}
 
 	public void setDateTime(final LocalDateTime dateTime) {
@@ -96,7 +76,7 @@ public class Topic extends AbstractIdentifiedBean {
 
 	@Override
 	public String toString() {
-		return "Topic [name=" + name + ", maker=" + maker + ", dateTime=" + dateTime + ", areaTopicConnections="
-				+ areaTopicConnections + ", personTopicConnections=" + personTopicConnections + "]";
+		return "Topic [name=" + name + ", maker=" + maker + ", dateTime=" + dateTime + "]";
 	}
+
 }

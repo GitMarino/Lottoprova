@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import provalotto.bean.bean.SkillBean;
+import provalotto.bean.bean.TopicBean;
 import provalotto.datalayer.manager.SkillManager;
 
 @RestController
@@ -38,6 +39,11 @@ public class SkillController {
 	@GetMapping
 	public List<SkillBean> getAllSkills() {
 		return skillManager.getAllSkills();
+	}
+
+	@GetMapping("/topic")
+	public List<SkillBean> getSkillsByTopic(final TopicBean topicBean) {
+		return skillManager.getSkillsByTopic(topicBean);
 	}
 
 }

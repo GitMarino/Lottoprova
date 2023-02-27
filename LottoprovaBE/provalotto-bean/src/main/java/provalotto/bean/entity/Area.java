@@ -1,17 +1,13 @@
 package provalotto.bean.entity;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 
 import org.joda.time.LocalDateTime;
 
 import provalotto.bean.base.AbstractIdentifiedBean;
-import provalotto.bean.connection.AreaTopicConnection;
-import provalotto.bean.connection.PersonAreaConnection;
 
 @Entity(name = Area.TABLE_NAME)
 public class Area extends AbstractIdentifiedBean {
@@ -36,12 +32,6 @@ public class Area extends AbstractIdentifiedBean {
 	@Column(nullable = false)
 	private LocalDateTime dateTime;
 
-	@OneToMany(mappedBy = "area")
-	List<PersonAreaConnection> personAreaConnections;
-
-	@OneToMany(mappedBy = "area")
-	List<AreaTopicConnection> areaTopicConnections;
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj)
@@ -51,19 +41,12 @@ public class Area extends AbstractIdentifiedBean {
 		if (getClass() != obj.getClass())
 			return false;
 		Area other = (Area) obj;
-		return Objects.equals(areaManager, other.areaManager)
-				&& Objects.equals(areaTopicConnections, other.areaTopicConnections)
-				&& Objects.equals(dateTime, other.dateTime) && Objects.equals(maker, other.maker)
-				&& Objects.equals(name, other.name)
-				&& Objects.equals(personAreaConnections, other.personAreaConnections);
+		return Objects.equals(areaManager, other.areaManager) && Objects.equals(dateTime, other.dateTime)
+				&& Objects.equals(maker, other.maker) && Objects.equals(name, other.name);
 	}
 
 	public String getAreaManager() {
 		return areaManager;
-	}
-
-	public List<AreaTopicConnection> getAreaTopicConnections() {
-		return areaTopicConnections;
 	}
 
 	public LocalDateTime getDateTime() {
@@ -78,25 +61,16 @@ public class Area extends AbstractIdentifiedBean {
 		return name;
 	}
 
-	public List<PersonAreaConnection> getPersonAreaConnections() {
-		return personAreaConnections;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ Objects.hash(areaManager, areaTopicConnections, dateTime, maker, name, personAreaConnections);
+		result = prime * result + Objects.hash(areaManager, dateTime, maker, name);
 		return result;
 	}
 
 	public void setAreaManager(final String areaManager) {
 		this.areaManager = areaManager;
-	}
-
-	public void setAreaTopicConnections(final List<AreaTopicConnection> areaTopicConnections) {
-		this.areaTopicConnections = areaTopicConnections;
 	}
 
 	public void setDateTime(final LocalDateTime dateTime) {
@@ -111,14 +85,9 @@ public class Area extends AbstractIdentifiedBean {
 		this.name = name;
 	}
 
-	public void setPersonAreaConnections(final List<PersonAreaConnection> personAreaConnections) {
-		this.personAreaConnections = personAreaConnections;
-	}
-
 	@Override
 	public String toString() {
 		return "Area [name=" + name + ", areaManager=" + areaManager + ", maker=" + maker + ", dateTime=" + dateTime
-				+ ", personAreaConnections=" + personAreaConnections + ", areaTopicConnections=" + areaTopicConnections
 				+ "]";
 	}
 

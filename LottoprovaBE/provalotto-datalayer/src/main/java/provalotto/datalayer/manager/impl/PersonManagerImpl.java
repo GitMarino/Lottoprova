@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import provalotto.bean.bean.PersonBean;
+import provalotto.bean.bean.SearchByAreaAndTopicBean;
 import provalotto.bean.entity.Person;
 import provalotto.datalayer.dao.PersonDAO;
 import provalotto.datalayer.manager.PersonManager;
@@ -61,12 +62,28 @@ public class PersonManagerImpl implements PersonManager {
 		for (Person person : personDAO.findAllByOrderBySurname()) {
 			personBean = new PersonBean();
 			personBean.setId(person.getId());
-			personBean.setUsername(personBean.getUsername());
-			personBean.setName(personBean.getName());
+			personBean.setUsername(person.getUsername());
+			personBean.setName(person.getName());
 			personBean.setSurname(person.getSurname());
 			allPersonBeans.add(personBean);
 		}
 		return allPersonBeans;
+	}
+
+	@Override
+	public List<PersonBean> getPeopleByAreaAndTopic(final SearchByAreaAndTopicBean searchByAreaAndTopicBean) {
+		List<PersonBean> peopleByAreaAndTopic = new ArrayList<>();
+		PersonBean personBean;
+		for (Person person : personDAO.search(searchByAreaAndTopicBean.getAreaId(),
+				searchByAreaAndTopicBean.getTopicId())) {
+			personBean = new PersonBean();
+			personBean.setId(person.getId());
+			personBean.setUsername(person.getUsername());
+			personBean.setName(person.getName());
+			personBean.setSurname(person.getSurname());
+			peopleByAreaAndTopic.add(personBean);
+		}
+		return peopleByAreaAndTopic;
 	}
 
 }

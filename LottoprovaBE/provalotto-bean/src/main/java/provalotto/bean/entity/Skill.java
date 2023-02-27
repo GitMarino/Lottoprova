@@ -1,17 +1,14 @@
 package provalotto.bean.entity;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import org.joda.time.LocalDateTime;
 
 import provalotto.bean.base.AbstractIdentifiedBean;
-import provalotto.bean.connection.PersonSkillConnection;
 
 @Entity(name = Skill.TABLE_NAME)
 public class Skill extends AbstractIdentifiedBean {
@@ -39,9 +36,6 @@ public class Skill extends AbstractIdentifiedBean {
 	@ManyToOne
 	private Topic skillTopic;
 
-	@OneToMany(mappedBy = "skill")
-	List<PersonSkillConnection> personSkillConnections;
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj)
@@ -53,7 +47,6 @@ public class Skill extends AbstractIdentifiedBean {
 		Skill other = (Skill) obj;
 		return Objects.equals(dateTime, other.dateTime) && Objects.equals(description, other.description)
 				&& Objects.equals(maker, other.maker) && Objects.equals(name, other.name)
-				&& Objects.equals(personSkillConnections, other.personSkillConnections)
 				&& Objects.equals(skillTopic, other.skillTopic);
 	}
 
@@ -73,10 +66,6 @@ public class Skill extends AbstractIdentifiedBean {
 		return name;
 	}
 
-	public List<PersonSkillConnection> getPersonSkillConnections() {
-		return personSkillConnections;
-	}
-
 	public Topic getSkillTopic() {
 		return skillTopic;
 	}
@@ -85,7 +74,7 @@ public class Skill extends AbstractIdentifiedBean {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(dateTime, description, maker, name, personSkillConnections, skillTopic);
+		result = prime * result + Objects.hash(dateTime, description, maker, name, skillTopic);
 		return result;
 	}
 
@@ -105,10 +94,6 @@ public class Skill extends AbstractIdentifiedBean {
 		this.name = name;
 	}
 
-	public void setPersonSkillConnections(final List<PersonSkillConnection> personSkillConnections) {
-		this.personSkillConnections = personSkillConnections;
-	}
-
 	public void setSkillTopic(final Topic skillTopic) {
 		this.skillTopic = skillTopic;
 	}
@@ -116,7 +101,7 @@ public class Skill extends AbstractIdentifiedBean {
 	@Override
 	public String toString() {
 		return "Skill [name=" + name + ", description=" + description + ", maker=" + maker + ", dateTime=" + dateTime
-				+ ", skillTopic=" + skillTopic + ", personSkillConnections=" + personSkillConnections + "]";
+				+ ", skillTopic=" + skillTopic + "]";
 	}
 
 }

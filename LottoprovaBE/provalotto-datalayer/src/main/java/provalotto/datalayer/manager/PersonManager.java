@@ -3,6 +3,7 @@ package provalotto.datalayer.manager;
 import java.util.List;
 
 import provalotto.bean.bean.PersonBean;
+import provalotto.bean.bean.SearchByAreaAndTopicBean;
 import provalotto.datalayer.manager.impl.ServiceErrorException;
 
 public interface PersonManager {
@@ -13,4 +14,5 @@ public interface PersonManager {
 
 	List<PersonBean> getAllPeople();
 
+	List<PersonBean> getPeopleByAreaAndTopic(SearchByAreaAndTopicBean searchByAreaAndTopicBean);
 }

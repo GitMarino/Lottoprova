@@ -5,14 +5,9 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 
 import org.joda.time.LocalDateTime;
 
-import provalotto.bean.entity.Area;
-import provalotto.bean.entity.Person;
 import provalotto.bean.key.PersonAreaConnectionKey;
 
 @Entity
@@ -20,16 +15,6 @@ public class PersonAreaConnection {
 
 	@EmbeddedId
 	PersonAreaConnectionKey id;
-
-	@ManyToOne
-	@MapsId("personId")
-	@JoinColumn(name = "person_id")
-	Person person;
-
-	@ManyToOne
-	@MapsId("areaId")
-	@JoinColumn(name = "area_id")
-	Area area;
 
 	@Column(nullable = false)
 	private String maker;
@@ -46,13 +31,8 @@ public class PersonAreaConnection {
 		if (getClass() != obj.getClass())
 			return false;
 		PersonAreaConnection other = (PersonAreaConnection) obj;
-		return Objects.equals(area, other.area) && Objects.equals(dateTime, other.dateTime)
-				&& Objects.equals(id, other.id) && Objects.equals(maker, other.maker)
-				&& Objects.equals(person, other.person);
-	}
-
-	public Area getArea() {
-		return area;
+		return Objects.equals(dateTime, other.dateTime) && Objects.equals(id, other.id)
+				&& Objects.equals(maker, other.maker);
 	}
 
 	public LocalDateTime getDateTime() {
@@ -67,17 +47,9 @@ public class PersonAreaConnection {
 		return maker;
 	}
 
-	public Person getPerson() {
-		return person;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(area, dateTime, id, maker, person);
-	}
-
-	public void setArea(final Area area) {
-		this.area = area;
+		return Objects.hash(dateTime, id, maker);
 	}
 
 	public void setDateTime(final LocalDateTime dateTime) {
@@ -92,14 +64,9 @@ public class PersonAreaConnection {
 		this.maker = maker;
 	}
 
-	public void setPerson(final Person person) {
-		this.person = person;
-	}
-
 	@Override
 	public String toString() {
-		return "PersonAreaConnection [id=" + id + ", person=" + person + ", area=" + area + ", maker=" + maker
-				+ ", dateTime=" + dateTime + "]";
+		return "PersonAreaConnection [id=" + id + ", maker=" + maker + ", dateTime=" + dateTime + "]";
 	}
 
 }

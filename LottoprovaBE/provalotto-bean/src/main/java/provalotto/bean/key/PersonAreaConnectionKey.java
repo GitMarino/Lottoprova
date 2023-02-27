@@ -3,19 +3,25 @@ package provalotto.bean.key;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import provalotto.bean.entity.Area;
+import provalotto.bean.entity.Person;
 
 @Embeddable
 public class PersonAreaConnectionKey implements Serializable {
 
 	private static final long serialVersionUID = -6297954423935509232L;
 
-	@Column(name = "person_id")
-	Long personId;
+	@ManyToOne
+	@JoinColumn(name = "person_id", nullable = false)
+	Person person;
 
-	@Column(name = "area_id")
-	Long areaId;
+	@ManyToOne
+	@JoinColumn(name = "area_id", nullable = false)
+	Area area;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -26,33 +32,33 @@ public class PersonAreaConnectionKey implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		PersonAreaConnectionKey other = (PersonAreaConnectionKey) obj;
-		return Objects.equals(areaId, other.areaId) && Objects.equals(personId, other.personId);
+		return Objects.equals(area, other.area) && Objects.equals(person, other.person);
 	}
 
-	public Long getAreaId() {
-		return areaId;
+	public Area getArea() {
+		return area;
 	}
 
-	public Long getPersonId() {
-		return personId;
+	public Person getPerson() {
+		return person;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(areaId, personId);
+		return Objects.hash(area, person);
 	}
 
-	public void setAreaId(final Long areaId) {
-		this.areaId = areaId;
+	public void setArea(final Area area) {
+		this.area = area;
 	}
 
-	public void setPersonId(final Long personId) {
-		this.personId = personId;
+	public void setPerson(final Person person) {
+		this.person = person;
 	}
 
 	@Override
 	public String toString() {
-		return "PersonAreaConnectionKey [personId=" + personId + ", areaId=" + areaId + "]";
+		return "PersonAreaConnectionKey [person=" + person + ", area=" + area + "]";
 	}
 
 }

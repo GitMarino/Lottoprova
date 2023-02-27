@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import provalotto.bean.bean.SkillBean;
 import provalotto.bean.bean.TopicBean;
-import provalotto.datalayer.manager.SkillManager;
 import provalotto.datalayer.manager.TopicManager;
 
 @RestController
@@ -22,9 +20,6 @@ public class TopicController {
 
 	@Autowired
 	private TopicManager topicManager;
-
-	@Autowired
-	private SkillManager skillManager;
 
 	@PostMapping
 	public ResponseEntity<TopicBean> createTopic(final @RequestBody TopicBean topicBean) {
@@ -43,11 +38,6 @@ public class TopicController {
 	@GetMapping
 	public List<TopicBean> getAllTopics() {
 		return topicManager.getAllTopics();
-	}
-
-	@GetMapping("/skills")
-	public List<SkillBean> getSkillsByTopic(final TopicBean topicBean) {
-		return skillManager.getSkillsByTopic(topicBean);
 	}
 
 }

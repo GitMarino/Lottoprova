@@ -1,18 +1,13 @@
 package provalotto.bean.entity;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 
 import org.joda.time.LocalDateTime;
 
 import provalotto.bean.base.AbstractIdentifiedBean;
-import provalotto.bean.connection.PersonAreaConnection;
-import provalotto.bean.connection.PersonSkillConnection;
-import provalotto.bean.connection.PersonTopicConnection;
 
 @Entity(name = Person.TABLE_NAME)
 public class Person extends AbstractIdentifiedBean {
@@ -40,15 +35,6 @@ public class Person extends AbstractIdentifiedBean {
 	@Column(nullable = false)
 	private LocalDateTime dateTime;
 
-	@OneToMany(mappedBy = "person")
-	List<PersonAreaConnection> personAreaConnections;
-
-	@OneToMany(mappedBy = "person")
-	List<PersonTopicConnection> personTopicConnections;
-
-	@OneToMany(mappedBy = "person")
-	List<PersonSkillConnection> personSkillConnections;
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj)
@@ -59,11 +45,8 @@ public class Person extends AbstractIdentifiedBean {
 			return false;
 		Person other = (Person) obj;
 		return Objects.equals(dateTime, other.dateTime) && Objects.equals(maker, other.maker)
-				&& Objects.equals(name, other.name)
-				&& Objects.equals(personAreaConnections, other.personAreaConnections)
-				&& Objects.equals(personSkillConnections, other.personSkillConnections)
-				&& Objects.equals(personTopicConnections, other.personTopicConnections)
-				&& Objects.equals(surname, other.surname) && Objects.equals(username, other.username);
+				&& Objects.equals(name, other.name) && Objects.equals(surname, other.surname)
+				&& Objects.equals(username, other.username);
 	}
 
 	public LocalDateTime getDateTime() {
@@ -78,10 +61,6 @@ public class Person extends AbstractIdentifiedBean {
 		return name;
 	}
 
-	public List<PersonAreaConnection> getPersonAreaConnections() {
-		return personAreaConnections;
-	}
-
 	public String getSurname() {
 		return surname;
 	}
@@ -94,8 +73,7 @@ public class Person extends AbstractIdentifiedBean {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(dateTime, maker, name, personAreaConnections, personSkillConnections,
-				personTopicConnections, surname, username);
+		result = prime * result + Objects.hash(dateTime, maker, name, surname, username);
 		return result;
 	}
 
@@ -111,10 +89,6 @@ public class Person extends AbstractIdentifiedBean {
 		this.name = name;
 	}
 
-	public void setPersonAreaConnections(final List<PersonAreaConnection> personAreaConnections) {
-		this.personAreaConnections = personAreaConnections;
-	}
-
 	public void setSurname(final String surname) {
 		this.surname = surname;
 	}
@@ -126,8 +100,7 @@ public class Person extends AbstractIdentifiedBean {
 	@Override
 	public String toString() {
 		return "Person [username=" + username + ", name=" + name + ", surname=" + surname + ", maker=" + maker
-				+ ", dateTime=" + dateTime + ", personAreaConnections=" + personAreaConnections
-				+ ", personTopicConnections=" + personTopicConnections + ", personSkillConnections="
-				+ personSkillConnections + "]";
+				+ ", dateTime=" + dateTime + "]";
 	}
+
 }

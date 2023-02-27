@@ -3,19 +3,25 @@ package provalotto.bean.key;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import provalotto.bean.entity.Person;
+import provalotto.bean.entity.Topic;
 
 @Embeddable
 public class PersonTopicConnectionKey implements Serializable {
 
 	private static final long serialVersionUID = 3955910219976678208L;
 
-	@Column(name = "person_id")
-	Long personId;
+	@ManyToOne
+	@JoinColumn(name = "person_id", nullable = false)
+	Person person;
 
-	@Column(name = "topic_id")
-	Long topicId;
+	@ManyToOne
+	@JoinColumn(name = "topic_id", nullable = false)
+	Topic topic;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -26,33 +32,33 @@ public class PersonTopicConnectionKey implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		PersonTopicConnectionKey other = (PersonTopicConnectionKey) obj;
-		return Objects.equals(personId, other.personId) && Objects.equals(topicId, other.topicId);
+		return Objects.equals(person, other.person) && Objects.equals(topic, other.topic);
 	}
 
-	public Long getPersonId() {
-		return personId;
+	public Person getPerson() {
+		return person;
 	}
 
-	public Long getTopicId() {
-		return topicId;
+	public Topic getTopic() {
+		return topic;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(personId, topicId);
+		return Objects.hash(person, topic);
 	}
 
-	public void setPersonId(final Long personId) {
-		this.personId = personId;
+	public void setPerson(final Person person) {
+		this.person = person;
 	}
 
-	public void setTopicId(final Long topicId) {
-		this.topicId = topicId;
+	public void setTopic(final Topic topic) {
+		this.topic = topic;
 	}
 
 	@Override
 	public String toString() {
-		return "PersonTopicConnectionKey [personId=" + personId + ", topicId=" + topicId + "]";
+		return "PersonTopicConnectionKey [person=" + person + ", topic=" + topic + "]";
 	}
 
 }
