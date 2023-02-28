@@ -2,6 +2,7 @@ package provalotto.datalayer.manager.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -41,9 +42,9 @@ public class AreaManagerImpl implements AreaManager {
 	@Override
 	public boolean deleteArea(final Long areaBeanId) {
 		try {
-			Area area = areaDAO.findById(areaBeanId).get();
-			if (area != null) {
-				areaDAO.delete(area);
+			Optional<Area> areaOptional = areaDAO.findById(areaBeanId);
+			if (areaOptional.isPresent()) {
+				areaDAO.delete(areaOptional.get());
 				return true;
 			}
 			return false;

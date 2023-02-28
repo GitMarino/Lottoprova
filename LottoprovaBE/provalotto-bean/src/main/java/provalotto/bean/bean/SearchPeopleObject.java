@@ -3,11 +3,13 @@ package provalotto.bean.bean;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class SearchByAreaAndTopicBean implements Serializable {
+public class SearchPeopleObject implements Serializable {
 
 	private static final long serialVersionUID = -1673741700766730965L;
 
 	private Long areaId;
+
+	private Long skillId;
 
 	private Long topicId;
 
@@ -19,12 +21,17 @@ public class SearchByAreaAndTopicBean implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SearchByAreaAndTopicBean other = (SearchByAreaAndTopicBean) obj;
-		return Objects.equals(areaId, other.areaId) && Objects.equals(topicId, other.topicId);
+		SearchPeopleObject other = (SearchPeopleObject) obj;
+		return Objects.equals(areaId, other.areaId) && Objects.equals(skillId, other.skillId)
+				&& Objects.equals(topicId, other.topicId);
 	}
 
 	public Long getAreaId() {
 		return areaId;
+	}
+
+	public Long getSkillId() {
+		return skillId;
 	}
 
 	public Long getTopicId() {
@@ -33,11 +40,15 @@ public class SearchByAreaAndTopicBean implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(areaId, topicId);
+		return Objects.hash(areaId, skillId, topicId);
 	}
 
 	public void setAreaId(final Long areaId) {
 		this.areaId = areaId;
+	}
+
+	public void setSkillId(final Long skillId) {
+		this.skillId = skillId;
 	}
 
 	public void setTopicId(final Long topicId) {
@@ -46,7 +57,7 @@ public class SearchByAreaAndTopicBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "SearchByAreaAndTopicBean [areaId=" + areaId + ", topicId=" + topicId + "]";
+		return "SearchPeopleByBeans [areaId=" + areaId + ", skillId=" + skillId + ", topicId=" + topicId + "]";
 	}
 
 }

@@ -1,7 +1,10 @@
 package provalotto.bean.bean;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+
+import provalotto.bean.utility.SkillMark;
 
 public class PersonBean implements Serializable {
 
@@ -15,6 +18,8 @@ public class PersonBean implements Serializable {
 
 	private String surname;
 
+	private List<SkillMark> skillMarkList;
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj)
@@ -25,7 +30,8 @@ public class PersonBean implements Serializable {
 			return false;
 		PersonBean other = (PersonBean) obj;
 		return Objects.equals(id, other.id) && Objects.equals(name, other.name)
-				&& Objects.equals(surname, other.surname) && Objects.equals(username, other.username);
+				&& Objects.equals(skillMarkList, other.skillMarkList) && Objects.equals(surname, other.surname)
+				&& Objects.equals(username, other.username);
 	}
 
 	public Long getId() {
@@ -34,6 +40,10 @@ public class PersonBean implements Serializable {
 
 	public String getName() {
 		return name;
+	}
+
+	public List<SkillMark> getSkillMarkList() {
+		return skillMarkList;
 	}
 
 	public String getSurname() {
@@ -46,7 +56,7 @@ public class PersonBean implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, surname, username);
+		return Objects.hash(id, name, skillMarkList, surname, username);
 	}
 
 	public void setId(final Long id) {
@@ -55,6 +65,10 @@ public class PersonBean implements Serializable {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public void setSkillMarkList(final List<SkillMark> skillMarkList) {
+		this.skillMarkList = skillMarkList;
 	}
 
 	public void setSurname(final String surname) {
@@ -67,6 +81,8 @@ public class PersonBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PersonBean [id=" + id + ", username=" + username + ", name=" + name + ", surname=" + surname + "]";
+		return "PersonBean [id=" + id + ", username=" + username + ", name=" + name + ", surname=" + surname
+				+ ", skillMarkList=" + skillMarkList + "]";
 	}
+
 }

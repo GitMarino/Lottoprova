@@ -2,6 +2,9 @@ package provalotto.datalayer.manager.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -28,27 +31,37 @@ public class SkillManagerImpl implements SkillManager {
 	@Autowired
 	private TopicDAO topicDAO;
 
+	@Transactional
 	@Override
-	public SkillBean createSkill(final SkillBean skillBean) throws ServiceErrorException {
-		Skill skill = new Skill();
-		skill.setName(skillBean.getName());
-		skill.setDescription(skillBean.getDescription());
-		Topic topic = topicDAO.findById(skillBean.getSkillTopic().getId()).get();
-		if (topic != null) {
-			skill.setSkillTopic(topic);
+	public void createSkill(final String name, final String description, final Long skillTopicBeanId)
+			throws ServiceErrorException {
+
+		Optional<Topic> topicOptional = topicDAO.findById(skillTopicBeanId);
+		if (topicOptional.isPresent()) {
+			Skill skill = new Skill();
+			skill.setName(name);
+			skill.setDescription(description);
+			skill.setSkillTopic(topicOptional.get());
+			skill.setMaker("Christian Marino");
+			skill.setDateTime(LocalDateTime.now());
+			try {
+				skillDAO.save(skill);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+				throw new ServiceErrorException(e);
+			}
+		} else {
+			throw new ServiceErrorException("Dati incosistenti");
 		}
-		skill.setMaker("Christian Marino");
-		skill.setDateTime(LocalDateTime.now());
-		skillDAO.save(skill);
-		return skillBean;
+
 	}
 
 	@Override
 	public boolean deleteSkill(final Long skillBeanId) {
 		try {
-			Skill skill = skillDAO.findById(skillBeanId).get();
-			if (skill != null) {
-				skillDAO.delete(skill);
+			Optional<Skill> skillOptional = skillDAO.findById(skillBeanId);
+			if (skillOptional.isPresent()) {
+				skillDAO.delete(skillOptional.get());
 				return true;
 			}
 			return false;
@@ -85,9 +98,9 @@ public class SkillManagerImpl implements SkillManager {
 	public List<SkillBean> getSkillsByTopic(final TopicBean topicBean) {
 		List<SkillBean> skillBeans = new ArrayList<>();
 		SkillBean skillBean;
-		Topic topic = topicDAO.findById(topicBean.getId()).get();
-		if (topic != null) {
-			for (Skill skill : skillDAO.findBySkillTopicIdOrderByName(topic.getId())) {
+		Optional<Topic> topicOptional = topicDAO.findById(topicBean.getId());
+		if (topicOptional.isPresent()) {
+			for (Skill skill : skillDAO.findBySkillTopicIdOrderByName(topicOptional.get().getId())) {
 				skillBean = new SkillBean();
 				skillBean.setId(skill.getId());
 				skillBean.setName(skill.getName());
