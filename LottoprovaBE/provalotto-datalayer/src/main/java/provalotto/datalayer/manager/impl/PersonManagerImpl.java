@@ -79,7 +79,7 @@ public class PersonManagerImpl implements PersonManager {
 
 	@Transactional
 	@Override
-	public void createPersonAreaConnection(final Long areaId, final Long personId) throws ServiceErrorException {
+	public void createPersonAreaConnection(final Long personId, final Long areaId) throws ServiceErrorException {
 
 		Optional<Area> areaOptional = areaDAO.findById(areaId);
 		Optional<Person> personOptional = personDAO.findById(personId);
@@ -191,11 +191,11 @@ public class PersonManagerImpl implements PersonManager {
 
 	@Override
 	public List<PersonBean> getPeopleByBeans(final SearchPeopleObject searchPeopleObject) {
-		List<PersonBean> peopleByAreaAndTopic = new ArrayList<>();
+		List<PersonBean> peopleByBeans = new ArrayList<>();
 		PersonBean personBean;
 		SkillMark skillMark;
 		List<SkillMark> skillMarkList;
-		for (Person person : personDAO.search(searchPeopleObject)) {
+		for (Person person : personDAO.searchPeople(searchPeopleObject)) {
 			personBean = new PersonBean();
 			personBean.setId(person.getId());
 			personBean.setUsername(person.getUsername());
@@ -203,16 +203,16 @@ public class PersonManagerImpl implements PersonManager {
 			personBean.setSurname(person.getSurname());
 			skillMarkList = new ArrayList<>();
 			for (PersonSkillConnection personSkillConnection : personSkillConnectionDAO
-					.findByIdPersonIdAndIdSkillId(person.getId(), searchPeopleObject.getSkillId())) {
+					.searchPersonSkillConnection(person.getId(), searchPeopleObject)) {
 				skillMark = new SkillMark();
 				skillMark.setSkillName(personSkillConnection.getId().getSkill().getName());
 				skillMark.setMark(personSkillConnection.getMark());
 				skillMarkList.add(skillMark);
 			}
 			personBean.setSkillMarkList(skillMarkList);
-			peopleByAreaAndTopic.add(personBean);
+			peopleByBeans.add(personBean);
 		}
-		return peopleByAreaAndTopic;
+		return peopleByBeans;
 	}
 
 }
