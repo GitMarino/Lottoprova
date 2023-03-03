@@ -9,6 +9,8 @@ public interface AreaManager {
 
 	AreaBean createArea(AreaBean areaBean) throws ServiceErrorException;
 
+	void createAreaTopicConnection(Long areaId, Long topicId) throws ServiceErrorException;
+
 	boolean deleteArea(Long areaBeanId);
 
 	List<AreaBean> getAllAreas();

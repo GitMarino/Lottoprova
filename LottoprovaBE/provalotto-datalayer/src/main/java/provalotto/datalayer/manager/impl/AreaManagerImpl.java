@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import provalotto.bean.bean.AreaBean;
+import provalotto.bean.connection.AreaTopicConnection;
 import provalotto.bean.entity.Area;
+import provalotto.bean.entity.Topic;
+import provalotto.bean.key.AreaTopicConnectionKey;
 import provalotto.datalayer.dao.AreaDAO;
+import provalotto.datalayer.dao.AreaTopicConnectionDAO;
+import provalotto.datalayer.dao.TopicDAO;
 import provalotto.datalayer.manager.AreaManager;
 
 @Component
@@ -22,6 +29,12 @@ public class AreaManagerImpl implements AreaManager {
 
 	@Autowired
 	private AreaDAO areaDAO;
+
+	@Autowired
+	private TopicDAO topicDAO;
+
+	@Autowired
+	private AreaTopicConnectionDAO areaTopicConnectionDAO;
 
 	@Override
 	public AreaBean createArea(final AreaBean areaBean) throws ServiceErrorException {
@@ -37,6 +50,33 @@ public class AreaManagerImpl implements AreaManager {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
 		}
+	}
+
+	@Override
+	@Transactional
+	public void createAreaTopicConnection(final Long areaId, final Long topicId) throws ServiceErrorException {
+		Optional<Area> areaOptional = areaDAO.findById(areaId);
+		Optional<Topic> topicOptional = topicDAO.findById(topicId);
+
+		if (areaOptional.isPresent() && topicOptional.isPresent()) {
+			AreaTopicConnectionKey areaTopicConnectionKey = new AreaTopicConnectionKey();
+			areaTopicConnectionKey.setArea(areaOptional.get());
+			areaTopicConnectionKey.setTopic(topicOptional.get());
+
+			AreaTopicConnection areaTopicConnection = new AreaTopicConnection();
+			areaTopicConnection.setId(areaTopicConnectionKey);
+			areaTopicConnection.setMaker("Christian Marino");
+			areaTopicConnection.setDateTime(LocalDateTime.now());
+			try {
+				areaTopicConnectionDAO.save(areaTopicConnection);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+				throw new ServiceErrorException(e);
+			}
+		} else {
+			throw new ServiceErrorException("Dati incosistenti");
+		}
+
 	}
 
 	@Override
