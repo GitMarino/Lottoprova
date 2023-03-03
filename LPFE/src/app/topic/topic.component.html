@@ -1,0 +1,34 @@
+<section style="text-align: center;">
+    <h1> PAGINA TEMATICHE </h1>
+</section>
+<section>
+    <div>
+        <a routerLink="/topic/add"> Aggiungi una tematica </a>
+    </div>
+    <br/>
+    <div>
+        <h2> Tematiche registrate: </h2>
+        <section>
+            <div *ngIf="!error && topics.length>0">
+                <table>
+                    <thead>
+                        <tr>
+                            <th> nome tematica </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let topic of topics">  
+                            <td> {{topic.name}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div *ngIf="!error && topics.length==0">
+                <h4> Nessuna tematica registrata </h4>
+            </div>
+            <div *ngIf="error">
+                <h4> Oops! Impossibile caricare le tematiche </h4>
+            </div>
+        </section>
+    </div>
+</section>

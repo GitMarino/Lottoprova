@@ -1,0 +1,36 @@
+<section style="text-align: center;">
+    <h1> PAGINA AREE </h1>
+</section>
+<section>
+    <div>
+        <a routerLink="/area/add"> Aggiungi un'area </a>
+    </div>
+    <br/>
+    <div>
+        <h2> Aree registrate: </h2>
+        <section>
+            <div *ngIf="!error && areas.length>0">
+                <table>
+                    <thead>
+                        <tr>
+                            <th> nome area </th>
+                            <th> username responsabile area </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let area of areas">  
+                            <td> {{area.name}} </td>
+                            <td> {{area.areaManager}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div *ngIf="!error && areas.length==0">
+                <h4> Nessuna area registrata </h4>
+            </div>
+            <div *ngIf="error">
+                <h4> Oops! Impossibile caricare le aree </h4>
+            </div>
+        </section>
+    </div>
+</section>

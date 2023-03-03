@@ -1,0 +1,83 @@
+<section style="text-align: center;">
+    <h1> PAGINA PERSONE </h1>
+</section>
+<section>
+    <div>
+        <a routerLink="/person/add"> Aggiungi una persona </a>
+    </div>
+    <br/>
+    <div>
+        <h2> Persone registrate: </h2>
+        <div *ngIf="!searchAllError && allPeople.length>0">
+            <table>
+                <thead>
+                    <tr>
+                        <th> username </th>
+                        <th> nome </th>
+                        <th> cognome </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let person of allPeople">  
+                        <td> {{person.username}} </td>
+                        <td> {{person.name}} </td>
+                        <td> {{person.surname}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="!searchAllError && allPeople.length==0">
+            <h4> Nessuna persona registrata </h4>
+        </div>
+        <div *ngIf="searchAllError">
+            <h4> Oops! Non è stato possibile caricare le persone </h4>
+        </div>
+    </div>
+</section>
+<section style="text-align: center;">
+    <div>
+        <form ng form>
+            <h4> area </h4>  
+            <input [(ngModel)]="areaId" type="number">
+            <h4> competenza </h4>  
+            <input [(ngModel)]="skillId" type="number">
+            <h4> tematica </h4>
+            <input [(ngModel)]="topicId" type="number">
+        </form>    
+        <br/>
+        
+        <button class="btn btn-primary" color="primary" (click)="searchPeople()"> Cerca </button>
+    </div>
+    <br/>
+    <div *ngIf="searchSuccess && !searchError && peopleSearched.length>0">
+        <table>
+            <thead>
+                <tr>
+                    <th> username </th>
+                    <th> name </th>
+                    <th> surname </th>
+                    <th> competenza </th>
+                    <th> voto </th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let person of peopleSearched">
+                    <tr *ngFor="let skillMark of person.skillMarkList">  
+                        <td> {{person.username}} </td>
+                        <td> {{person.name}} </td>
+                        <td> {{person.surname}} </td>
+                        <td> {{skillMark.skillName}} </td>
+                        <td> <img  class="images" [src]="'/assets/images/mark'+skillMark.mark+'.png'"/> </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="searchSuccess && !searchError && peopleSearched.length==0">
+        <h4> Nessuna persona soddisfa la ricerca </h4>
+    </div>
+    <div *ngIf="searchError">
+        <h4> Oops! Non è stato possibile caricare le persone </h4>
+    </div>
+    <br/>
+</section>
