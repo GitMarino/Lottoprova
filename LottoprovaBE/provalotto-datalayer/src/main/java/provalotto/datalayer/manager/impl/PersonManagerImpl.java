@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import provalotto.bean.bean.BeanKeyValue;
 import provalotto.bean.bean.PersonBean;
 import provalotto.bean.bean.SearchPeopleObject;
 import provalotto.bean.connection.PersonAreaConnection;
@@ -175,18 +176,16 @@ public class PersonManagerImpl implements PersonManager {
 	}
 
 	@Override
-	public List<PersonBean> getAllPeople() {
-		List<PersonBean> allPersonBeans = new ArrayList<>();
-		PersonBean personBean;
+	public List<BeanKeyValue> getAllPeople() {
+		List<BeanKeyValue> allBeans = new ArrayList<>();
+		BeanKeyValue beanKeyValue;
 		for (Person person : personDAO.findAllByOrderBySurname()) {
-			personBean = new PersonBean();
-			personBean.setId(person.getId());
-			personBean.setUsername(person.getUsername());
-			personBean.setName(person.getName());
-			personBean.setSurname(person.getSurname());
-			allPersonBeans.add(personBean);
+			beanKeyValue = new BeanKeyValue();
+			beanKeyValue.setId(person.getId());
+			beanKeyValue.setValue(person.getUsername());
+			allBeans.add(beanKeyValue);
 		}
-		return allPersonBeans;
+		return allBeans;
 	}
 
 	@Override

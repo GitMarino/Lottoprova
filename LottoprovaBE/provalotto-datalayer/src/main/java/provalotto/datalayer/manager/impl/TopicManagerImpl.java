@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import provalotto.bean.bean.BeanKeyValue;
 import provalotto.bean.bean.TopicBean;
 import provalotto.bean.entity.Topic;
 import provalotto.datalayer.dao.TopicDAO;
@@ -54,16 +55,16 @@ public class TopicManagerImpl implements TopicManager {
 	}
 
 	@Override
-	public List<TopicBean> getAllTopics() {
-		List<TopicBean> allTopicBeans = new ArrayList<>();
-		TopicBean topicBean;
+	public List<BeanKeyValue> getAllTopics() {
+		List<BeanKeyValue> allBeans = new ArrayList<>();
+		BeanKeyValue beanKeyValue;
 		for (Topic topic : topicDAO.findAllByOrderByName()) {
-			topicBean = new TopicBean();
-			topicBean.setId(topic.getId());
-			topicBean.setName(topic.getName());
-			allTopicBeans.add(topicBean);
+			beanKeyValue = new BeanKeyValue();
+			beanKeyValue.setId(topic.getId());
+			beanKeyValue.setValue(topic.getName());
+			allBeans.add(beanKeyValue);
 		}
-		return allTopicBeans;
+		return allBeans;
 	}
 
 }

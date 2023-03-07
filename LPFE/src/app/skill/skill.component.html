@@ -1,36 +1,8 @@
-<section style="text-align: center;">
-    <h1> PAGINA COMPETENZE </h1>
-</section>
-<section>
+<br/>
+<br/>
+<br/>
+<div class="container">
     <div>
         <a routerLink="/skill/add"> Aggiungi una competenza </a>
     </div>
-    <br/>
-    <div>
-        <h2> Competenze registrate: </h2>
-        <div *ngIf="!error && skills.length>0">
-            <table>
-                <thead>
-                    <tr>
-                        <th> nome </th>
-                        <th> descrizione </th>
-                        <th> tematica </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let skill of skills">  
-                        <td> {{skill.name}} </td>
-                        <td> {{skill.description}} </td>
-                        <td> {{skill.skillTopic.name}} </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div *ngIf="!error && skills.length==0">
-            <h4> Nessuna competenza registrata </h4>
-        </div>
-        <div *ngIf="error">
-            <h4> Oops! Non è stato possibile caricare le persone </h4>
-        </div>
-    </div>
-</section>
+</div>

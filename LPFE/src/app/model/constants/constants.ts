@@ -9,6 +9,7 @@ export const PERSON = "/person";
 
 //SKILL
 export const SKILL = "/skill";
+export const SKILLS = "/skills";
 
 //TOPIC
 export const TOPIC = "/topic";

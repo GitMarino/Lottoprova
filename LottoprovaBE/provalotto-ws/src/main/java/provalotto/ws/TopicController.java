@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import provalotto.bean.bean.BeanKeyValue;
 import provalotto.bean.bean.TopicBean;
 import provalotto.datalayer.manager.TopicManager;
 
@@ -36,7 +37,7 @@ public class TopicController {
 	}
 
 	@GetMapping
-	public List<TopicBean> getAllTopics() {
+	public List<BeanKeyValue> getAllTopics() {
 		return topicManager.getAllTopics();
 	}
 

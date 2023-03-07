@@ -1,18 +1,20 @@
-<section style="text-align: center;">
-    <h1> PAGINA ASSOCIA PERSONA AD AREA</h1>
-    <br/>
-    <div>
-        <form ngForm>
-            <h4> persona </h4>
-            <input [(ngModel)]="personId" type="number">
-            <h4> area </h4>  
-            <input [(ngModel)]="areaId" type="number">
-        </form>
-        <br/>
-        <br/>
-        <br/>
-        <button class="btn btn-primary" color="primary" (click)="addPersonAreaConnection()"> Salva </button>
-    </div>
+<br/>
+<br/>
+<br/>
+<div class="container">
+    <form ngForm>
+        <div class="row">
+          <select class="col form-select" aria-label="person">
+              <option selected disabled> persona: </option>
+              <option *ngFor="let person of people" [ngValue]="selectedPerson"> {{person.value}} </option>
+          </select>
+          <select class="col form-select" aria-label="area">
+              <option selected disabled> area: </option>
+              <option *ngFor="let area of areas" [ngValue]="selectedArea"> {{area.value}} </option>
+          </select>
+            <button class="col btn btn-primary" color="primary" (click)="addPersonAreaConnection()"> Salva </button>
+        </div>
+    </form>
     <br/>
     <div *ngIf="success && !error">
         <h4> Salvataggio andato a buon fine! </h4>
@@ -20,4 +22,4 @@
     <div *ngIf="error && !success">
         <h4> Oops! Non è stato possibile salvare </h4>
     </div>
-</section>
+</div>

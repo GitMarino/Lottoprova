@@ -3,6 +3,7 @@ package provalotto.datalayer.manager;
 import java.util.List;
 
 import provalotto.bean.bean.AreaBean;
+import provalotto.bean.bean.BeanKeyValue;
 import provalotto.datalayer.manager.impl.ServiceErrorException;
 
 public interface AreaManager {
@@ -13,6 +14,6 @@ public interface AreaManager {
 
 	boolean deleteArea(Long areaBeanId);
 
-	List<AreaBean> getAllAreas();
+	List<BeanKeyValue> getAllAreas();
 
 }

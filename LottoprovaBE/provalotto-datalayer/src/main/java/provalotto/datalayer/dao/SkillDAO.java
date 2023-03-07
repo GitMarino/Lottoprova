@@ -16,6 +16,4 @@ public interface SkillDAO extends JpaRepository<Skill, Long> {
 	@Override
 	Optional<Skill> findById(Long id);
 
-	List<Skill> findBySkillTopicIdOrderByName(long skillTopicId);
-
 }

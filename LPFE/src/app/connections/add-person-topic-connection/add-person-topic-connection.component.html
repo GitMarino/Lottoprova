@@ -1,18 +1,33 @@
-<section style="text-align: center;">
-    <h1> PAGINA ASSOCIA PERSONA A TEMATICA</h1>
-    <br/>
-    <div>
-        <form ngForm>
-            <h4> persona </h4>
-            <input [(ngModel)]="personId" type="number">
-            <h4> tematica </h4>  
-            <input [(ngModel)]="topicId" type="number">
-        </form>
-        <br/>
-        <br/>
-        <br/>
-        <button class="btn btn-primary" color="primary" (click)="addPersonTopicConnection()"> Salva </button>
-    </div>
+<br/>
+<br/>
+<br/>
+<div class="container">
+    <form ngForm>
+        <div class="row">
+            <div class="col dropdown show">
+                <a class="btn btn-dark dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  persona
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <!--<a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>-->
+                </div>
+            </div>
+            <br/>
+            <div class="col dropdown show">
+                <a class="btn btn-dark dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  tematica
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <!--<a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>-->
+                </div>
+            </div>
+            <button class="col btn btn-primary" color="primary" (click)="addPersonTopicConnection()"> Salva </button>
+        </div>
+    </form>
     <br/>
     <div *ngIf="success && !error">
         <h4> Salvataggio andato a buon fine! </h4>
@@ -20,4 +35,4 @@
     <div *ngIf="error && !success">
         <h4> Oops! Non è stato possibile salvare </h4>
     </div>
-</section>
+</div>

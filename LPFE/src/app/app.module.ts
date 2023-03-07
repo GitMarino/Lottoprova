@@ -64,7 +64,7 @@ const routes: Routes = [
     ReactiveFormsModule,
 
     NoopAnimationsModule,
-     NgbModule,
+    NgbModule,
   ],
   exports: [RouterModule],
   providers: [],

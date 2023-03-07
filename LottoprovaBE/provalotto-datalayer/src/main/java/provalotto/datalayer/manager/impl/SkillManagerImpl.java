@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import provalotto.bean.bean.SkillBean;
-import provalotto.bean.bean.TopicBean;
+import provalotto.bean.bean.BeanKeyValue;
 import provalotto.bean.entity.Skill;
 import provalotto.bean.entity.Topic;
 import provalotto.datalayer.dao.SkillDAO;
@@ -72,44 +71,16 @@ public class SkillManagerImpl implements SkillManager {
 	}
 
 	@Override
-	public List<SkillBean> getAllSkills() {
-		List<SkillBean> allSkillBeans = new ArrayList<>();
-		SkillBean skillBean;
-		Topic topic;
-		TopicBean topicBean;
+	public List<BeanKeyValue> getAllSkills() {
+		List<BeanKeyValue> allBeans = new ArrayList<>();
+		BeanKeyValue beanKeyValue;
 		for (Skill skill : skillDAO.findAllByOrderByName()) {
-			skillBean = new SkillBean();
-			skillBean.setId(skill.getId());
-			skillBean.setName(skill.getName());
-			skillBean.setDescription(skill.getDescription());
-
-			topic = skill.getSkillTopic();
-			topicBean = new TopicBean();
-			topicBean.setId(topic.getId());
-			topicBean.setName(topic.getName());
-			skillBean.setSkillTopic(topicBean);
-
-			allSkillBeans.add(skillBean);
+			beanKeyValue = new BeanKeyValue();
+			beanKeyValue.setId(skill.getId());
+			beanKeyValue.setValue(skill.getName());
+			allBeans.add(beanKeyValue);
 		}
-		return allSkillBeans;
-	}
-
-	@Override
-	public List<SkillBean> getSkillsByTopic(final TopicBean topicBean) {
-		List<SkillBean> skillBeans = new ArrayList<>();
-		SkillBean skillBean;
-		Optional<Topic> topicOptional = topicDAO.findById(topicBean.getId());
-		if (topicOptional.isPresent()) {
-			for (Skill skill : skillDAO.findBySkillTopicIdOrderByName(topicOptional.get().getId())) {
-				skillBean = new SkillBean();
-				skillBean.setId(skill.getId());
-				skillBean.setName(skill.getName());
-				skillBean.setDescription(skill.getDescription());
-				skillBean.setSkillTopic(topicBean);
-				skillBeans.add(skillBean);
-			}
-		}
-		return skillBeans;
+		return allBeans;
 	}
 
 }

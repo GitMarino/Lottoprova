@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import provalotto.bean.bean.BeanKeyValue;
 import provalotto.bean.bean.PersonBean;
 import provalotto.bean.bean.SearchPeopleObject;
 import provalotto.datalayer.manager.PersonManager;
@@ -73,7 +74,7 @@ public class PersonController {
 	}
 
 	@GetMapping
-	public List<PersonBean> getAllPeople() {
+	public List<BeanKeyValue> getAllPeople() {
 		return personManager.getAllPeople();
 	}
 

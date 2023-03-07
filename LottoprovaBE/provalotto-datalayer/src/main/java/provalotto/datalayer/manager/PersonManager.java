@@ -2,6 +2,7 @@ package provalotto.datalayer.manager;
 
 import java.util.List;
 
+import provalotto.bean.bean.BeanKeyValue;
 import provalotto.bean.bean.PersonBean;
 import provalotto.bean.bean.SearchPeopleObject;
 import provalotto.datalayer.manager.impl.ServiceErrorException;
@@ -18,7 +19,7 @@ public interface PersonManager {
 
 	boolean deletePerson(Long personBeanId);
 
-	List<PersonBean> getAllPeople();
+	List<BeanKeyValue> getAllPeople();
 
 	List<PersonBean> getPeopleByBeans(SearchPeopleObject searchPeopleObject);
 }

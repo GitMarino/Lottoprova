@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import provalotto.bean.bean.AreaBean;
+import provalotto.bean.bean.BeanKeyValue;
 import provalotto.datalayer.manager.AreaManager;
 
 @RestController
@@ -49,7 +50,7 @@ public class AreaController {
 	}
 
 	@GetMapping
-	public List<AreaBean> getAllAreas() {
+	public List<BeanKeyValue> getAllAreas() {
 		return areaManager.getAllAreas();
 	}
 

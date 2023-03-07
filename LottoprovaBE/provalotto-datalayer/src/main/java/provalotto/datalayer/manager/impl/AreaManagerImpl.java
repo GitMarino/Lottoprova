@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import provalotto.bean.bean.AreaBean;
+import provalotto.bean.bean.BeanKeyValue;
 import provalotto.bean.connection.AreaTopicConnection;
 import provalotto.bean.entity.Area;
 import provalotto.bean.entity.Topic;
@@ -95,17 +96,16 @@ public class AreaManagerImpl implements AreaManager {
 	}
 
 	@Override
-	public List<AreaBean> getAllAreas() {
-		List<AreaBean> allAreaBeans = new ArrayList<>();
-		AreaBean areaBean;
+	public List<BeanKeyValue> getAllAreas() {
+		List<BeanKeyValue> allBeans = new ArrayList<>();
+		BeanKeyValue beanKeyValue;
 		for (Area area : areaDAO.findAllByOrderByName()) {
-			areaBean = new AreaBean();
-			areaBean.setId(area.getId());
-			areaBean.setName(area.getName());
-			areaBean.setAreaManager(area.getAreaManager());
-			allAreaBeans.add(areaBean);
+			beanKeyValue = new BeanKeyValue();
+			beanKeyValue.setId(area.getId());
+			beanKeyValue.setValue(area.getName());
+			allBeans.add(beanKeyValue);
 		}
-		return allAreaBeans;
+		return allBeans;
 	}
 
 }

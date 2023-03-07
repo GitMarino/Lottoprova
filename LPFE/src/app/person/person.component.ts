@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component } from '@angular/core';
 import { Person } from '../model/objects/Person';
 import { HttpCallsService } from '../model/service/http-calls.service';
 
@@ -8,44 +7,29 @@ import { HttpCallsService } from '../model/service/http-calls.service';
   templateUrl: './person.component.html',
   styleUrls: ['./person.component.css']
 })
-export class PersonComponent implements OnInit
+export class PersonComponent
 { 
-  allPeople: Person[] = [];
-  searchAllError: boolean = false;
+  areaId: number = 0;
+  skillId: number = 0;
+  topicId: number = 0;
 
-  areaId = new FormControl();
-  skillId = new FormControl();
-  topicId = new FormControl();
-  peopleSearched: Person[] = [];
-  searchSuccess: boolean = false;
-  searchError: boolean = false;
+  people: Person[] = [];
+  success: boolean = false;
+  error: boolean = false;
 
   constructor(private httpCalls: HttpCallsService) {}
 
-  ngOnInit(): void
-  { this.httpCalls.getAllPeople()
-      .subscribe({
-        next: (response: Person[]) => {
-          this.allPeople = response as Person[]
-        },
-        error : error => {
-          this.searchAllError = true;
-          this.allPeople = [];
-        }
-      });
-  }
-
   searchPeople()
-  { this.httpCalls.searchPeopleByBeans(this.areaId.value, this.skillId.value , this.topicId.value)
+  { this.httpCalls.searchPeopleByBeans(this.areaId, this.skillId , this.topicId)
       .subscribe({
         next: (response: Person[]) => {
-          this.peopleSearched = response as Person[];
-          this.searchSuccess = true;
+          this.people = response as Person[];
+          this.success = true;
         },
         error : error => {
-          this.searchError = true;
-          this.searchSuccess = false;
-          this.peopleSearched = [];
+          this.error = true;
+          this.success = false;
+          this.people = [];
         }
       })
 

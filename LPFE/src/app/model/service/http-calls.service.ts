@@ -5,7 +5,7 @@ import { Topic } from '../objects/Topic';
 import { AREA, BACKEND_ENDPOINT, PERSON, SEARCH, SKILL, STANDARD_JSON_HEADERS, TOPIC } from '../constants/constants';
 import { Area } from '../objects/Area';
 import { Person } from '../objects/Person';
-import { Skill } from '../objects/Skill';
+import { KeyValue } from '../objects/KeyValue';
 
 @Injectable({providedIn: 'root'})
 export class HttpCallsService
@@ -15,8 +15,8 @@ export class HttpCallsService
 
   //AREA
 
-  public getAllAreas(): Observable<Area[]>
-  { return this.http.get<Area[]>(BACKEND_ENDPOINT+AREA);
+  public getAllAreas(): Observable<KeyValue[]>
+  { return this.http.get<KeyValue[]>(BACKEND_ENDPOINT+AREA);
   }
 
   public createArea(area: Area): Observable<Area>
@@ -25,8 +25,8 @@ export class HttpCallsService
 
   //PERSON
 
-  public getAllPeople(): Observable<Person[]>
-  { return this.http.get<Person[]>(BACKEND_ENDPOINT+PERSON);
+  public getAllPeople(): Observable<KeyValue[]>
+  { return this.http.get<KeyValue[]>(BACKEND_ENDPOINT+PERSON);
   }
 
   public createPerson(person: Person): Observable<Person>
@@ -48,8 +48,8 @@ export class HttpCallsService
 
   //SKILL
 
-  public getAllSkills(): Observable<Skill[]>
-  { return this.http.get<Skill[]>(BACKEND_ENDPOINT+SKILL);
+  public getAllSkills(): Observable<KeyValue[]>
+  { return this.http.get<KeyValue[]>(BACKEND_ENDPOINT+SKILL);
   }
 
   public createSkill(name: string, description: string, skillTopicBeanId: number): Observable<void>
@@ -58,8 +58,8 @@ export class HttpCallsService
   
   //TOPIC
 
-  public getAllTopics(): Observable<Topic[]>
-  { return this.http.get<Topic[]>(BACKEND_ENDPOINT+TOPIC);
+  public getAllTopics(): Observable<KeyValue[]>
+  { return this.http.get<KeyValue[]>(BACKEND_ENDPOINT+TOPIC);
   }
   
   public createTopic(topic: Topic): Observable<Topic>
