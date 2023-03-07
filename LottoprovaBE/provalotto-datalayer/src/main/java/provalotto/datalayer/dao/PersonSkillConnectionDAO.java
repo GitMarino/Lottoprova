@@ -18,9 +18,10 @@ public interface PersonSkillConnectionDAO extends JpaRepository<PersonSkillConne
 		 + "FROM PersonSkillConnection ps "
 			+ "left join skill s on ps.id.skill.id=s.id "
 			+ "left join topic t on s.skillTopic=t.id "
-			+ "WHERE ps.id.person.id=?1 AND "
-			+ "( (:#{#model.skillId} IS NULL AND (:#{#model.topicId} IS NULL OR t.id=:#{#model.topicId})) "
-			+ "OR s.id=:#{#model.skillId} )")
+		 + "WHERE ps.id.person.id=?1 AND "
+		 	 + "( (:#{#model.skillId} IS NULL AND (:#{#model.topicId} IS NULL OR t.id=:#{#model.topicId})) "
+		 	   + "OR s.id=:#{#model.skillId} )"
+		  )
 	List<PersonSkillConnection> searchPersonSkillConnection(Long personId,
 			@Param("model") SearchPeopleObject searchPeopleObject);
 
