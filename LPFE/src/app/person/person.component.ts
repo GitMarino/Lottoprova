@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { KeyValue } from '../model/objects/KeyValue';
 import { Person } from '../model/objects/Person';
 import { HttpCallsService } from '../model/service/http-calls.service';
 
@@ -9,9 +10,13 @@ import { HttpCallsService } from '../model/service/http-calls.service';
 })
 export class PersonComponent
 { 
-  areaId: number = 0;
-  skillId: number = 0;
-  topicId: number = 0;
+  selectedArea?: number;
+  selectedSkill?: number;
+  selectedTopic?: number;
+
+  areas: KeyValue[] = [];
+  skills: KeyValue[] = [];
+  topics: KeyValue[] = [];
 
   people: Person[] = [];
   success: boolean = false;
@@ -19,8 +24,31 @@ export class PersonComponent
 
   constructor(private httpCalls: HttpCallsService) {}
 
+  ngOnInit(): void
+  { this.httpCalls.getAllAreas()
+      .subscribe({
+        next: (response: KeyValue[]) => {
+          this.areas = response as KeyValue[];
+        }
+      });
+    
+    this.httpCalls.getAllSkills()
+      .subscribe({
+        next: (response: KeyValue[]) => {
+          this.skills = response as KeyValue[];
+        },
+      });
+
+    this.httpCalls.getAllTopics()
+      .subscribe({
+        next: (response: KeyValue[]) => {
+          this.topics = response as KeyValue[];
+        },
+      });
+  }
+
   searchPeople()
-  { this.httpCalls.searchPeopleByBeans(this.areaId, this.skillId , this.topicId)
+  { this.httpCalls.searchPeopleByBeans(this.selectedArea!, this.selectedSkill!, this.selectedTopic!)
       .subscribe({
         next: (response: Person[]) => {
           this.people = response as Person[];

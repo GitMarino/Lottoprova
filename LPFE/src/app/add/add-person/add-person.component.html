@@ -1,25 +1,31 @@
-<section style="text-align: center;">
-    <h1> PAGINA AGGIUNGI PERSONA </h1>
-    <br/>
-    <div>
-        <form ngForm>
-            <h4> username </h4>
-            <input [(ngModel)]="username" type="text">
-            <h4> nome </h4>  
-            <input [(ngModel)]="name" type="text">
-            <h4> cognome </h4>
-            <input [(ngModel)]="surname" type="text">
-        </form>
-        <br/>
-        <br/>
-        <br/>
-        <button class="btn btn-primary" (click)="addPerson()"> Salva </button>
-    </div>
-    <br/>
+<br />
+<br />
+<br />
+<div class="container">
+    <form ngForm>
+        <div class="row">
+            <div class="col-md-4 form-floating mb-3">
+                <input [(ngModel)]="person.username" type="text" name="username" class="form-control" id="username">
+                <label for="username"> username </label>
+            </div>
+            <div class="col-md-4 form-floating mb-3">
+                <input [(ngModel)]="person.name" type="text" name="name" class="form-control" id="name">
+                <label for="name"> nome </label>
+            </div>
+            <div class="col-md-4 form-floating mb-3">
+                <input [(ngModel)]="person.surname" type="text" name="surname" class="form-control" id="surname">
+                <label for="surname"> cognome </label>
+            </div>
+        </div>
+    </form>
+    <br />
+    <button class="col-md-12 btn btn-dark" (click)="addPerson()"> Salva </button>
+    <br />
+    <br />
     <div *ngIf="success && !error">
         <h4> Salvataggio andato a buon fine! </h4>
     </div>
     <div *ngIf="error && !success">
-        <h4> Oops! Non è stato possibile salvare </h4>
+        <h4> Oops! Non è stato possibile salvare la persona </h4>
     </div>
-</section>
+</div>

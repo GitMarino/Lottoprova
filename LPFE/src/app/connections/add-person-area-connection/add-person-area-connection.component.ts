@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { KeyValue } from 'src/app/model/objects/KeyValue';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
@@ -12,8 +11,8 @@ export class AddPersonAreaConnectionComponent {
 
   constructor(private httpCalls: HttpCallsService) {}
 
-  selectedPerson: KeyValue = new KeyValue();
-  selectedArea: KeyValue = new KeyValue();
+  selectedPerson?: number;
+  selectedArea?: number;
 
   people: KeyValue[] = [];
   areas: KeyValue[] = [];
@@ -38,7 +37,7 @@ export class AddPersonAreaConnectionComponent {
   }
 
   addPersonAreaConnection()
-  { this.httpCalls.createPersonAreaConnection(this.selectedPerson.id, this.selectedArea.id)
+  { this.httpCalls.createPersonAreaConnection(this.selectedPerson!, this.selectedArea!)
       .subscribe({
         next: (response: void) => {
           this.success = true;

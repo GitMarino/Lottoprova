@@ -13,14 +13,12 @@ export class AddTopicComponent {
   constructor(private httpCalls: HttpCallsService) {}
 
   topic: Topic = new Topic();
-  name = new FormControl();
 
   error: boolean = false;
   success: boolean = false;
 
   addTopic()
-  { this.topic.name = this.name.value;
-    this.httpCalls.createTopic(this.topic)
+  { this.httpCalls.createTopic(this.topic)
       .subscribe({
         next: (response: Topic) => {
           this.success = true;

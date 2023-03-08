@@ -1,25 +1,35 @@
-<section style="text-align: center;">
-    <h1> PAGINA AGGIUNGI COMPETENZA </h1>
+<br/>
+<br/>
+<br/>
+<div class="container">
+    <form ngForm>
+        <div class="row">
+            <div class="col-md-4 form-floating mb-3">
+                <input [(ngModel)]="name" type="text" name="name" class="form-control" id="name">
+                <label for="name"> name </label>
+            </div>
+            <div class="col-md-4 form-floating mb-3">
+                <input [(ngModel)]="description" type="text" name="description" class="form-control" id="description">
+                <label for="description"> descrizione </label>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <select class="form-select" [(ngModel)]="selectedTopic" aria-label="topic" name="topic" id="topicId">
+                        <option *ngFor="let topic of topics" [ngValue]="topic.id"> {{topic.value}} </option>
+                    </select>
+                    <label for="topicId"> tematica </label>
+                 </div>
+            </div>
+        </div>
+    </form>
     <br/>
-    <div>
-        <form ngForm>
-            <h4> nome </h4>  
-            <input [(ngModel)]="name" type="text">
-            <h4> descrizione </h4>  
-            <input [(ngModel)]="description" type="text">
-            <h4> tematica </h4>  
-            <input [(ngModel)]="topicId" type="number">
-        </form>
-        <br/>
-        <br/>
-        <br/>
-        <button class="btn btn-primary" color="primary" (click)="addSkill()"> Salva </button>
-    </div>
+    <button class="col-md-12 btn btn-dark" color="dark" (click)="addSkill()"> Salva </button>
+    <br/>
     <br/>
     <div *ngIf="success && !error">
         <h4> Salvataggio andato a buon fine! </h4>
     </div>
     <div *ngIf="error && !success">
-        <h4> Oops! Non è stato possibile salvare </h4>
+        <h4> Oops! Non è stato possibile salvare la competenza </h4>
     </div>
-</section>
+</div>

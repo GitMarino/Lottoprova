@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { KeyValue } from 'src/app/model/objects/KeyValue';
-import { Topic } from 'src/app/model/objects/Topic';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
 @Component({
@@ -13,8 +11,8 @@ export class AddAreaTopicConnectionComponent {
 
   constructor(private httpCalls: HttpCallsService) {}
 
-  selectedTopic: KeyValue = new KeyValue();
-  selectedArea: KeyValue = new KeyValue();
+  selectedTopic?: number;
+  selectedArea?: number;
 
   topics: KeyValue[] = [];
   areas: KeyValue[] = [];
@@ -39,7 +37,7 @@ export class AddAreaTopicConnectionComponent {
   }
 
   addAreaTopicConnection()
-  { this.httpCalls.createAreaTopicConnection(this.selectedArea.id, this.selectedTopic.id)
+  { this.httpCalls.createAreaTopicConnection(this.selectedArea!, this.selectedTopic!)
       .subscribe({
         next: (response: void) => {
           this.success = true;

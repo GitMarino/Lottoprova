@@ -12,8 +12,8 @@ export class AddPersonTopicConnectionComponent {
 
   constructor(private httpCalls: HttpCallsService) {}
 
-  personId = new FormControl();
-  topicId = new FormControl();
+  selectedPerson?: number;
+  selectedTopic?: number;
 
   people: KeyValue[] = [];
   topics: KeyValue[] = [];
@@ -38,7 +38,7 @@ export class AddPersonTopicConnectionComponent {
   }
 
   addPersonTopicConnection()
-  { this.httpCalls.createPersonTopicConnection(this.personId.value, this.topicId.value)
+  { this.httpCalls.createPersonTopicConnection(this.selectedPerson!, this.selectedTopic!)
       .subscribe({
         next: (response: void) => {
           this.success = true;

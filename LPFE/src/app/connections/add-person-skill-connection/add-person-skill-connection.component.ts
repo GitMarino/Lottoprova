@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { KeyValue } from 'src/app/model/objects/KeyValue';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
@@ -12,9 +11,9 @@ export class AddPersonSkillConnectionComponent {
 
   constructor(private httpCalls: HttpCallsService) {}
 
-  selectedPerson: KeyValue = new KeyValue();
-  selctedSkill: KeyValue = new KeyValue();
-  mark: string = "";
+  selectedPerson?: number;
+  selectedSkill?: number;
+  mark: number = 0;
 
   people: KeyValue[] = [];
   skills: KeyValue[] = [];
@@ -39,7 +38,7 @@ export class AddPersonSkillConnectionComponent {
   }
 
   addPersonSkillConnection()
-  { this.httpCalls.createPersonSkillConnection(this.selectedPerson.value, this.selctedSkill.value, this.mark)
+  { this.httpCalls.createPersonSkillConnection(this.selectedPerson!, this.selectedSkill!, this.mark)
       .subscribe({
         next: (response: void) => {
           this.success = true;

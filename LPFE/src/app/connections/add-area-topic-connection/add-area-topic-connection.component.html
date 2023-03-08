@@ -4,17 +4,29 @@
 <div class="container">
     <form ngForm>
         <div class="row"> 
-            <select class="col form-select" aria-label="topic">
-                <option selected disabled> tematica: </option>
-                <option *ngFor="let topic of topics" [ngValue]="selectedTopic"> {{topic.value}} </option>
-            </select>
-            <select class="col form-select" aria-label="area">
-                <option selected disabled> area: </option>
-                <option *ngFor="let area of areas" [ngValue]="selectedArea"> {{area.value}} </option>
-            </select>
-            <button class="col btn btn-primary" color="primary" (click)="addAreaTopicConnection()"> Salva </button>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <select class="form-select" [(ngModel)]="selectedTopic" aria-label="topic" name="topic" id="topicId">
+                        <option *ngFor="let topic of topics" [ngValue]="topic.id"> {{topic.value}} </option>
+                    </select>
+                    <label for="topicId"> tematica </label>
+                 </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <select class="form-select" [(ngModel)]="selectedArea" aria-label="area" name="area" id="areaId">
+                        <option *ngFor="let area of areas" [ngValue]="area.id"> {{area.value}} </option>
+                    </select>
+                    <label for="areaId"> area </label>
+                 </div>
+            </div>
         </div>
     </form>
+    <br/>
+    <div class="d-flex justify-content-center">
+        <button class="btn btn-dark" color="dark" (click)="addAreaTopicConnection()"> Salva </button>
+    </div>
+    <br/>
     <br/>
     <div *ngIf="success && !error">
         <h4> Salvataggio andato a buon fine! </h4>

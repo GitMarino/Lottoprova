@@ -4,22 +4,33 @@
 <div class="container">
     <form ngForm>
         <div class="row">
-            <select class="col form-select" aria-label="person">
-                <option selected disabled> persona: </option>
-                <option *ngFor="let person of people" [ngValue]="selectedPerson"> {{person.value}} </option>
-            </select>
-            <select class="col form-select" aria-label="skill">
-                <option selected disabled> competenza: </option>
-                <option *ngFor="let skill of skills" [ngValue]="selectedSkill"> {{skill.value}} </option>
-            </select>
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <select class="form-select" [(ngModel)]="selectedPerson" aria-label="person" name="person" id="personId">
+                        <option *ngFor="let person of people" [ngValue]="person.id"> {{person.value}} </option>
+                    </select>
+                    <label for="personId"> persona </label>
+                 </div>
             </div>
-              <div class="col form-floating mb-3">
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <select class="form-select" [(ngModel)]="selectedSkill" aria-label="skill" name="skill" id="skillId">
+                        <option *ngFor="let skill of skills" [ngValue]="skill.id"> {{skill.value}} </option>
+                    </select>
+                    <label for="skillId"> competenza </label>
+                 </div>
+            </div>
+            <div class="col form-floating mb-4">
                 <input [(ngModel)]="mark" type="number" name="mark" class="form-control" id="mark">
                 <label for="mark"> voto </label>
             </div>
-            <button class="btn btn-primary" color="primary" (click)="addPersonSkillConnection()"> Salva </button>
         </div>
     </form>
+    <br/>
+    <div class="d-flex justify-content-center">
+        <button class="btn btn-dark" color="dark" (click)="addPersonSkillConnection()"> Salva </button>
+    </div>
+    <br/>
     <br/>
     <div *ngIf="success && !error">
         <h4> Salvataggio andato a buon fine! </h4>

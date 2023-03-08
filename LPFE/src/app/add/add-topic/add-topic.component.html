@@ -1,21 +1,23 @@
-<section style="text-align: center;">
-    <h1> PAGINA AGGIUNGI TEMATICA </h1>
+<br/>
+<br/>
+<br/>
+<div class="container">
+    <form ngForm>   
+        <div class="row">
+            <div class="col-md-4 form-floating mb-3">
+                <input [(ngModel)]="topic.name" type="text" name="name" class="form-control" id="name">
+                <label for="name"> name </label>
+            </div>
+        </div>
+    </form>
     <br/>
-    <div>
-        <form ng form>
-            <h4> nome </h4>  
-            <input [(ngModel)]="name" type="text">
-        </form>
-        <br/>
-        <br/>
-        <br/>
-        <button class="btn btn-primary" color="primary" (click)="addTopic()"> Salva </button>
-    </div>
+    <button class="col-md-4 btn btn-dark" color="dark" (click)="addTopic()"> Salva </button>
+    <br/>
     <br/>
     <div *ngIf="success && !error">
         <h4> Salvataggio andato a buon fine! </h4>
     </div>
     <div *ngIf="error && !success">
-        <h4> Oops! Non è stato possibile salvare </h4>
+        <h4> Oops! Non è stato possibile salvare la tematica </h4>
     </div>
-</section>
+</div>

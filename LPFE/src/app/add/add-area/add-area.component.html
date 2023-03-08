@@ -1,23 +1,27 @@
-<section style="text-align: center;">
-    <h1> PAGINA AGGIUNGI AREA </h1>
+<br/>
+<br/>
+<br/>
+<div class="container">
+    <form ngForm>
+        <div class="row">
+            <div class="col-md-6 form-floating mb-3">
+                <input [(ngModel)]="area.name" type="text" name="name" class="form-control" id="name">
+                <label for="name"> name </label>
+            </div>
+            <div class="col-md-6 form-floating mb-3">
+                <input [(ngModel)]="area.areaManager" type="text" name="areaManager" class="form-control" id="areaManager">
+                <label for="areaManager"> responsabile </label>
+            </div>
+        </div>
+    </form>
     <br/>
-    <div>
-        <form ngForm>
-            <h4> nome </h4>  
-            <input [(ngModel)]="name" type="text">
-            <h4> responsabile </h4>
-            <input [(ngModel)]="areaManager" type="text">
-        </form>
-        <br/>
-        <br/>
-        <br/>
-        <button class="btn btn-primary" (click)="addArea()"> Salva </button>
-    </div>
+    <button class="col-md-12 btn btn-dark" (click)="addArea()"> Salva </button>
+    <br/>
     <br/>
     <div *ngIf="success && !error">
         <h4> Salvataggio andato a buon fine! </h4>
     </div>
     <div *ngIf="error && !success">
-        <h4> Oops! Non è stato possibile salvare </h4>
+        <h4> Oops! Non è stato possibile salvare l'area </h4>
     </div>
-</section>
+</div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { KeyValue } from 'src/app/model/objects/KeyValue';
 import { Skill } from '../../model/objects/Skill';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
@@ -13,15 +13,26 @@ export class AddSkillComponent {
   constructor(private httpCalls: HttpCallsService) {}
 
   skill: Skill = new Skill();
-  name = new FormControl();
-  description = new FormControl();
-  topicId = new FormControl();
+  name: string = "";
+  description: string = "";
+
+  selectedTopic?: number;
+  topics: KeyValue[] = [];
 
   error: boolean = false;
   success: boolean = false;
 
+  ngOnInit(): void
+  { this.httpCalls.getAllTopics()
+      .subscribe({
+        next: (response: KeyValue[]) => {
+          this.topics = response as KeyValue[];
+        }
+      });
+  }
+
   addSkill()
-  { this.httpCalls.createSkill(this.name.value, this.description.value, this.topicId.value)
+  { this.httpCalls.createSkill(this.name, this.description, this.selectedTopic!)
       .subscribe({
         next: (response: void) => {
           this.success = true;
