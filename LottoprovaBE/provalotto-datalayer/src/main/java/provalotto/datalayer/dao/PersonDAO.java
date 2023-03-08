@@ -26,7 +26,8 @@ public interface PersonDAO extends JpaRepository<Person, Long> {
 			+ "left join PersonSkillConnection ps on p.id=ps.id.person.id left join skill s on ps.id.skill.id=s.id "
 		 + "WHERE (:#{#model.areaId} IS NULL OR a.id=:#{#model.areaId}) "
 			+ "AND (:#{#model.skillId} IS NULL OR s.id=:#{#model.skillId}) "
-			+ "AND (:#{#model.topicId} IS NULL OR t.id=:#{#model.topicId})")
+			+ "AND (:#{#model.topicId} IS NULL OR t.id=:#{#model.topicId}) "
+		 + "ORDER BY p.surname")
 	List<Person> searchPeople(@Param("model") SearchPeopleObject searchPeopleObject);
 
 }
