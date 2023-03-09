@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Topic } from '../../model/objects/Topic';
+import { Topic } from '../../model/objects/topic';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
 @Component({

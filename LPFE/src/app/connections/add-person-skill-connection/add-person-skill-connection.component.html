@@ -20,15 +20,23 @@
                     <label for="skillId"> competenza </label>
                  </div>
             </div>
-            <div class="col form-floating mb-4">
-                <input [(ngModel)]="mark" type="number" name="mark" class="form-control" id="mark">
-                <label for="mark"> voto </label>
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <select class="form-select" [(ngModel)]="mark" aria-label="mark" name="mark" id="markId">
+                        <option> 0 </option>
+                        <option> 1 </option>
+                        <option> 2 </option>
+                        <option> 3 </option>
+                        <option> 4 </option>
+                    </select>
+                    <label for="markId"> voto </label>
+                </div>
             </div>
         </div>
     </form>
     <br/>
     <div class="d-flex justify-content-center">
-        <button class="btn btn-dark" color="dark" (click)="addPersonSkillConnection()"> Salva </button>
+        <button class="col-md-1 btn btn-dark" color="dark" (click)="addPersonSkillConnection()"> Salva </button>
     </div>
     <br/>
     <br/>

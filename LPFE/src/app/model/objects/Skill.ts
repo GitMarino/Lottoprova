@@ -1,4 +1,4 @@
-import { Topic } from "./Topic";
+import { Topic } from "./topic";
 
 export class Skill
 {   

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Topic } from '../objects/Topic';
+import { Topic } from '../objects/topic';
 import { AREA, BACKEND_ENDPOINT, PERSON, SEARCH, SKILL, STANDARD_JSON_HEADERS, TOPIC } from '../constants/constants';
-import { Area } from '../objects/Area';
-import { Person } from '../objects/Person';
-import { KeyValue } from '../objects/KeyValue';
+import { Area } from '../objects/area';
+import { Person } from '../objects/person';
+import { KeyValue } from '../objects/key-value';
 
 @Injectable({providedIn: 'root'})
 export class HttpCallsService

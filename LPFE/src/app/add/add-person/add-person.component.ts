@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Person } from '../../model/objects/Person';
+import { Person } from '../../model/objects/person';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
 @Component({

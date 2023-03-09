@@ -1,4 +1,4 @@
-import { SkillMark } from "./SkillMark";
+import { SkillMark } from "./skill-marks";
 
 export class Person
 {   

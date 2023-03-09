@@ -22,6 +22,11 @@ import { AddPersonSkillConnectionComponent } from './connections/add-person-skil
 import { AddAreaTopicConnectionComponent } from './connections/add-area-topic-connection/add-area-topic-connection.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+
+import { FeatherModule } from 'angular-feather';
+import { PageComponent } from './page/page.component';
+import { IconsModule } from './icons/icons.module';
+
 const routes: Routes = [
   { path: '', component: AppComponent},
   { path: 'area', component: AreaComponent},
@@ -37,6 +42,7 @@ const routes: Routes = [
   { path: 'personSkill', component: AddPersonSkillConnectionComponent},
   { path: 'areaTopic', component: AddAreaTopicConnectionComponent},
 ];
+
 
 @NgModule({
   declarations: 
@@ -54,7 +60,8 @@ const routes: Routes = [
     AddPersonAreaConnectionComponent,
     AddPersonTopicConnectionComponent,
     AddPersonSkillConnectionComponent,
-    AddAreaTopicConnectionComponent, 
+    AddAreaTopicConnectionComponent,
+    PageComponent, 
   ],
   imports: 
   [ BrowserModule,
@@ -65,6 +72,8 @@ const routes: Routes = [
 
     NoopAnimationsModule,
     NgbModule,
+
+    IconsModule
   ],
   exports: [RouterModule],
   providers: [],

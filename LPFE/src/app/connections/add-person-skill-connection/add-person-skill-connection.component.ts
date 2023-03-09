@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { KeyValue } from 'src/app/model/objects/KeyValue';
+import { KeyValue } from 'src/app/model/objects/key-value';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class AddPersonSkillConnectionComponent {
 
   selectedPerson?: number;
   selectedSkill?: number;
-  mark: number = 0;
+  mark?: number;
 
   people: KeyValue[] = [];
   skills: KeyValue[] = [];
@@ -38,7 +38,7 @@ export class AddPersonSkillConnectionComponent {
   }
 
   addPersonSkillConnection()
-  { this.httpCalls.createPersonSkillConnection(this.selectedPerson!, this.selectedSkill!, this.mark)
+  { this.httpCalls.createPersonSkillConnection(this.selectedPerson!, this.selectedSkill!, this.mark!)
       .subscribe({
         next: (response: void) => {
           this.success = true;

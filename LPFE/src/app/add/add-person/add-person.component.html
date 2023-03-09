@@ -4,22 +4,24 @@
 <div class="container">
     <form ngForm>
         <div class="row">
-            <div class="col-md-4 form-floating mb-3">
+            <div class="col-md-4 form-floating">
                 <input [(ngModel)]="person.username" type="text" name="username" class="form-control" id="username">
                 <label for="username"> username </label>
             </div>
-            <div class="col-md-4 form-floating mb-3">
+            <div class="col-md-4 form-floating">
                 <input [(ngModel)]="person.name" type="text" name="name" class="form-control" id="name">
                 <label for="name"> nome </label>
             </div>
-            <div class="col-md-4 form-floating mb-3">
+            <div class="col-md-4 form-floating">
                 <input [(ngModel)]="person.surname" type="text" name="surname" class="form-control" id="surname">
                 <label for="surname"> cognome </label>
             </div>
         </div>
     </form>
     <br />
-    <button class="col-md-12 btn btn-dark" (click)="addPerson()"> Salva </button>
+    <div class="d-flex justify-content-center">
+        <button class="col-md-1 btn btn-dark" (click)="addPerson()"> Salva </button>
+    </div>
     <br />
     <br />
     <div *ngIf="success && !error">

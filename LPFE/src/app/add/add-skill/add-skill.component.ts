@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { KeyValue } from 'src/app/model/objects/KeyValue';
-import { Skill } from '../../model/objects/Skill';
+import { KeyValue } from 'src/app/model/objects/key-value';
+import { Skill } from 'src/app/model/objects/Skill';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
 @Component({

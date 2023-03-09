@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { KeyValue } from 'src/app/model/objects/KeyValue';
+import { KeyValue } from 'src/app/model/objects/key-value';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
 @Component({

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { KeyValue } from '../model/objects/KeyValue';
-import { Person } from '../model/objects/Person';
+import { Button } from '../model/objects/button';
+import { KeyValue } from '../model/objects/key-value';
+import { Link } from '../model/objects/link';
+import { Person } from '../model/objects/person';
 import { HttpCallsService } from '../model/service/http-calls.service';
 
 @Component({
@@ -18,11 +20,30 @@ export class PersonComponent
   skills: KeyValue[] = [];
   topics: KeyValue[] = [];
 
+
+  link: Link = new Link();
+  iconName: string = "search"
+  buttons: Button[] = [];
+
   people: Person[] = [];
   success: boolean = false;
   error: boolean = false;
 
-  constructor(private httpCalls: HttpCallsService) {}
+  constructor(private httpCalls: HttpCallsService) {
+    this.link.name = "Aggiungi una persona";
+    this.link.path =  "/person/add";
+    
+    this.buttons = [
+      {
+        name: 'cerca',
+        action: this.searchPeople
+      },
+      {
+        name: 'reset',
+        action: this.reset
+      }
+    ];
+  }
 
   ngOnInit(): void
   { this.httpCalls.getAllAreas()
@@ -60,6 +81,11 @@ export class PersonComponent
           this.people = [];
         }
       })
+  }
 
+  reset()
+  { this.selectedArea = undefined;
+    this.selectedSkill = undefined;
+    this.selectedTopic = undefined;
   }
 }
