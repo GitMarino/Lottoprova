@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Button } from 'src/app/model/objects/button';
 import { Topic } from '../../model/objects/topic';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
@@ -9,14 +10,24 @@ import { HttpCallsService } from '../../model/service/http-calls.service';
 })
 export class AddTopicComponent {
 
-  constructor(private httpCalls: HttpCallsService) {}
+  iconName: string = "plus-square"
+  buttons: Button[] = [];
 
   topic: Topic = new Topic();
 
   error: boolean = false;
   success: boolean = false;
 
-  addTopic()
+  constructor(private httpCalls: HttpCallsService) 
+  { this.buttons = [
+      {
+        name: 'salva',
+        action: this.addTopic
+      }
+    ];
+  }
+
+  addTopic = () =>
   { this.httpCalls.createTopic(this.topic)
       .subscribe({
         next: (response: Topic) => {

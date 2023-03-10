@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Button } from '../model/objects/button';
 import { Link } from '../model/objects/link';
 
@@ -9,10 +9,20 @@ import { Link } from '../model/objects/link';
 })
 export class PageComponent {
 
+  @Input() iconName: string = '';
   @Input() pageTitle: string = '';
   @Input() link: Link = new Link;
-  @Input() iconName: string = '';
   @Input() cardTitle: string = '';
   @Input() buttons: Button[] = [];
-
+  
+  @Output() selection = new EventEmitter<string>();
+  
+  onClick(button: Button) {
+    if( button.action ) {
+      button.action!();
+    } 
+    else if (button.identifier ) {
+      this.selection.emit(button.identifier);
+    }
+  }
 }

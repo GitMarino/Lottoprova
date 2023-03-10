@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Button } from 'src/app/model/objects/button';
 import { KeyValue } from 'src/app/model/objects/key-value';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
@@ -9,7 +10,8 @@ import { HttpCallsService } from '../../model/service/http-calls.service';
 })
 export class AddPersonSkillConnectionComponent {
 
-  constructor(private httpCalls: HttpCallsService) {}
+  iconName: string = "git-commit";
+  buttons: Button[] = [];
 
   selectedPerson?: number;
   selectedSkill?: number;
@@ -20,6 +22,15 @@ export class AddPersonSkillConnectionComponent {
 
   error: boolean = false;
   success: boolean = false;
+
+  constructor(private httpCalls: HttpCallsService) 
+  { this.buttons = [
+      {
+        name: 'salva',
+        action: this.addPersonSkillConnection
+      }
+    ];
+  }
 
   ngOnInit(): void
   { this.httpCalls.getAllPeople()
@@ -37,7 +48,7 @@ export class AddPersonSkillConnectionComponent {
       });
   }
 
-  addPersonSkillConnection()
+  addPersonSkillConnection = () =>
   { this.httpCalls.createPersonSkillConnection(this.selectedPerson!, this.selectedSkill!, this.mark!)
       .subscribe({
         next: (response: void) => {

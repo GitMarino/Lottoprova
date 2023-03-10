@@ -1,8 +1,5 @@
-<br/>
-<br/>
-<br/>
-<div class="container">
-    <form ngForm>   
+<app-page [iconName]="iconName" pageTitle="Registrazione tematiche" cardTitle="Aggiungi tematica" [buttons]="buttons">
+    <form ngForm>
         <div class="row">
             <div class="form-floating justify-content-center">
                 <input [(ngModel)]="topic.name" type="text" name="name" class="form-control" id="name">
@@ -10,16 +7,12 @@
             </div>
         </div>
     </form>
-    <br/>
-    <div class="d-flex justify-content-center">
-        <button class="col-md-1 btn btn-dark" color="dark" (click)="addTopic()"> Salva </button>
-    </div>
-    <br/>
-    <br/>
     <div *ngIf="success && !error">
-        <h4> Salvataggio andato a buon fine! </h4>
+        <br/>
+        <h6> Salvataggio andato a buon fine! </h6>
     </div>
     <div *ngIf="error && !success">
-        <h4> Oops! Non è stato possibile salvare la tematica </h4>
+        <br/>
+        <h6> Oops! Non è stato possibile salvare la tematica </h6>
     </div>
-</div>
+</app-page>

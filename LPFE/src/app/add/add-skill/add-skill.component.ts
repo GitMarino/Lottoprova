@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { Button } from 'src/app/model/objects/button';
 import { KeyValue } from 'src/app/model/objects/key-value';
-import { Skill } from 'src/app/model/objects/Skill';
+import { Skill } from 'src/app/model/objects/skill';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
 @Component({
@@ -10,17 +11,26 @@ import { HttpCallsService } from '../../model/service/http-calls.service';
 })
 export class AddSkillComponent {
 
-  constructor(private httpCalls: HttpCallsService) {}
+  iconName: string = "plus-square"
+  buttons: Button[] = [];
 
-  skill: Skill = new Skill();
+  skill: Skill = new Skill;
   name: string = "";
   description: string = "";
-
   selectedTopic?: number;
   topics: KeyValue[] = [];
 
   error: boolean = false;
   success: boolean = false;
+
+  constructor(private httpCalls: HttpCallsService) 
+  { this.buttons = [
+      {
+        name: 'salva',
+        action: this.addSkill
+      }
+    ];
+  }
 
   ngOnInit(): void
   { this.httpCalls.getAllTopics()
@@ -31,7 +41,7 @@ export class AddSkillComponent {
       });
   }
 
-  addSkill()
+  addSkill = () =>
   { this.httpCalls.createSkill(this.name, this.description, this.selectedTopic!)
       .subscribe({
         next: (response: void) => {

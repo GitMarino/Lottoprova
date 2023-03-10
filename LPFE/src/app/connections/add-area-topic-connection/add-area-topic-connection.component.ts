@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Button } from 'src/app/model/objects/button';
 import { KeyValue } from 'src/app/model/objects/key-value';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
@@ -9,7 +10,8 @@ import { HttpCallsService } from '../../model/service/http-calls.service';
 })
 export class AddAreaTopicConnectionComponent {
 
-  constructor(private httpCalls: HttpCallsService) {}
+  iconName: string = "git-commit";
+  buttons: Button[] = [];
 
   selectedTopic?: number;
   selectedArea?: number;
@@ -19,6 +21,15 @@ export class AddAreaTopicConnectionComponent {
 
   error: boolean = false;
   success: boolean = false;
+
+  constructor(private httpCalls: HttpCallsService) 
+  { this.buttons = [
+      {
+        name: 'salva',
+        action: this.addAreaTopicConnection
+      }
+    ];
+  }
 
   ngOnInit(): void
   { this.httpCalls.getAllTopics()
@@ -36,7 +47,7 @@ export class AddAreaTopicConnectionComponent {
       });
   }
 
-  addAreaTopicConnection()
+  addAreaTopicConnection = () =>
   { this.httpCalls.createAreaTopicConnection(this.selectedArea!, this.selectedTopic!)
       .subscribe({
         next: (response: void) => {
@@ -50,6 +61,4 @@ export class AddAreaTopicConnectionComponent {
         }
       })
   }
-
-
 }

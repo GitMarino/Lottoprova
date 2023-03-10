@@ -20,27 +20,26 @@ export class PersonComponent
   skills: KeyValue[] = [];
   topics: KeyValue[] = [];
 
-
   link: Link = new Link();
-  iconName: string = "search"
+  iconName: string = "users";
   buttons: Button[] = [];
 
-  people: Person[] = [];
+  people?: Person[];
   success: boolean = false;
   error: boolean = false;
 
-  constructor(private httpCalls: HttpCallsService) {
-    this.link.name = "Aggiungi una persona";
+  constructor(private httpCalls: HttpCallsService) 
+  { this.link.name = "Aggiungi una persona";
     this.link.path =  "/person/add";
     
     this.buttons = [
       {
         name: 'cerca',
-        action: this.searchPeople
+        identifier: 'search'
       },
       {
         name: 'reset',
-        action: this.reset
+        identifier: 'reset'
       }
     ];
   }
@@ -68,11 +67,24 @@ export class PersonComponent
       });
   }
 
+  onClick(indentifier: string) {
+    switch (indentifier) {
+      case 'search': 
+        this.searchPeople();
+        break;
+      case 'reset':
+        this.reset();
+        break;
+    }
+  }
+
   searchPeople()
-  { this.httpCalls.searchPeopleByBeans(this.selectedArea!, this.selectedSkill!, this.selectedTopic!)
+  {
+    this.httpCalls.searchPeopleByBeans(this.selectedArea!, this.selectedSkill!, this.selectedTopic!)
       .subscribe({
         next: (response: Person[]) => {
           this.people = response as Person[];
+          console.log(this.people)
           this.success = true;
         },
         error : error => {

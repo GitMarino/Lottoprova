@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Button } from 'src/app/model/objects/button';
 import { Area } from '../../model/objects/area';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
@@ -9,15 +9,25 @@ import { HttpCallsService } from '../../model/service/http-calls.service';
   styleUrls: ['./add-area.component.css']
 })
 export class AddAreaComponent {
-
-  constructor(private httpCalls: HttpCallsService) {}
   
+  iconName: string = "plus-square"
+  buttons: Button[] = [];
+
   area: Area = new Area();
 
   error: boolean = false;
   success: boolean = false;
 
-  addArea()
+  constructor(private httpCalls: HttpCallsService) 
+  { this.buttons = [
+      {
+        name: 'salva',
+        action: this.addArea
+      }
+    ];
+  }
+
+  addArea = () =>
   { this.httpCalls.createArea(this.area)
       .subscribe({
         next: (response: Area) => {

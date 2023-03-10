@@ -1,4 +1,5 @@
 export class Button
 {   name!: string;
-    action!: ()=> void
+    action?: ()=> void
+    identifier?: string;
 }

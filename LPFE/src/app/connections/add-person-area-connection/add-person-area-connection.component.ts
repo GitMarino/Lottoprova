@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Button } from 'src/app/model/objects/button';
 import { KeyValue } from 'src/app/model/objects/key-value';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
@@ -9,7 +10,8 @@ import { HttpCallsService } from '../../model/service/http-calls.service';
 })
 export class AddPersonAreaConnectionComponent {
 
-  constructor(private httpCalls: HttpCallsService) {}
+  iconName: string = "git-commit";
+  buttons: Button[] = [];
 
   selectedPerson?: number;
   selectedArea?: number;
@@ -19,6 +21,15 @@ export class AddPersonAreaConnectionComponent {
 
   error: boolean = false;
   success: boolean = false;
+
+  constructor(private httpCalls: HttpCallsService) 
+  { this.buttons = [
+      {
+        name: 'salva',
+        action: this.addPersonAreaConnection
+      }
+    ];
+  }
 
   ngOnInit(): void
   { this.httpCalls.getAllPeople()
@@ -36,7 +47,7 @@ export class AddPersonAreaConnectionComponent {
       });
   }
 
-  addPersonAreaConnection()
+  addPersonAreaConnection = () =>
   { this.httpCalls.createPersonAreaConnection(this.selectedPerson!, this.selectedArea!)
       .subscribe({
         next: (response: void) => {

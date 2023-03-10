@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Button } from 'src/app/model/objects/button';
 import { Person } from '../../model/objects/person';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
@@ -9,14 +10,24 @@ import { HttpCallsService } from '../../model/service/http-calls.service';
 })
 export class AddPersonComponent {
 
-  constructor(private httpCalls: HttpCallsService) {}
+  iconName: string = "plus-square"
+  buttons: Button[] = [];
 
   person : Person = new Person();
 
   error: boolean = false;
   success: boolean = false;
 
-  addPerson()
+  constructor(private httpCalls: HttpCallsService) 
+  { this.buttons = [
+      {
+        name: 'salva',
+        action: this.addPerson
+      }
+    ];
+  }
+
+  addPerson = () =>
   { this.httpCalls.createPerson(this.person)
       .subscribe({
         next: (response: Person) => {

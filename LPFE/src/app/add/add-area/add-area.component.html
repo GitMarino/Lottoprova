@@ -1,7 +1,4 @@
-<br/>
-<br/>
-<br/>
-<div class="container">
+<app-page [iconName]="iconName" pageTitle="Registrazione aree" cardTitle="Aggiungi area" [buttons]="buttons"> 
     <form ngForm>
         <div class="row">
             <div class="col-md-6 form-floating">
@@ -14,16 +11,12 @@
             </div>
         </div>
     </form>
-    <br/>
-    <div class="d-flex justify-content-center">
-        <button class="col-md-1 btn btn-dark" (click)="addArea()"> Salva </button>
-    </div>
-    <br/>
-    <br/>
     <div *ngIf="success && !error">
-        <h4> Salvataggio andato a buon fine! </h4>
+        <br/>
+        <h6> Salvataggio andato a buon fine! </h6>
     </div>
     <div *ngIf="error && !success">
-        <h4> Oops! Non è stato possibile salvare l'area </h4>
+        <br/>
+        <h6> Oops! Non è stato possibile salvare l'area </h6>
     </div>
-</div>
+</app-page>
