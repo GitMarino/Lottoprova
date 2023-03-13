@@ -1,11 +1,11 @@
 <app-page [iconName]="iconName" pageTitle="Registrazione aree" cardTitle="Aggiungi area" [buttons]="buttons"> 
     <form ngForm>
-        <div class="row">
-            <div class="col-md-6 form-floating">
+        <div class="row justify-content-center">
+            <div class="col-md-4 form-floating">
                 <input [(ngModel)]="area.name" type="text" name="name" class="form-control" id="name">
-                <label for="name"> name </label>
+                <label for="name"> nome </label>
             </div>
-            <div class="col-md-6 form-floating">
+            <div class="col-md-4 offset-md-1 form-floating">
                 <input [(ngModel)]="area.areaManager" type="text" name="areaManager" class="form-control" id="areaManager">
                 <label for="areaManager"> responsabile </label>
             </div>

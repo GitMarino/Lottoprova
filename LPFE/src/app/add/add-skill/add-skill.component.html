@@ -1,15 +1,15 @@
 <app-page [iconName]="iconName" pageTitle="Registrazione competenze" cardTitle="Aggiungi competenza" [buttons]="buttons">
     <form ngForm>
-        <div class="row">
-            <div class="col-md-4 form-floating">
+        <div class="row justify-content-center">
+            <div class="col-md-3 form-floating">
                 <input [(ngModel)]="name" type="text" name="name" class="form-control" id="name">
-                <label for="name"> name </label>
+                <label for="name"> nome </label>
             </div>
-            <div class="col-md-4 form-floating">
+            <div class="col-md-3 offset-md-1 form-floating">
                 <input [(ngModel)]="description" type="text" name="description" class="form-control" id="description">
                 <label for="description"> descrizione </label>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3 offset-md-1">
                 <div class="form-floating">
                     <select class="form-select" [(ngModel)]="selectedTopic" aria-label="topic" name="topic" id="topicId">
                         <option *ngFor="let topic of topics" [ngValue]="topic.id"> {{topic.value}} </option>

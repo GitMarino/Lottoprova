@@ -1,7 +1,8 @@
-<app-page [iconName]="iconName" pageTitle="Gestione Personale" [link]="link" cardTitle="Cerca persone" [buttons]="buttons" (selection)="onClick($event)">
+<app-page [iconName]="iconName" pageTitle="Gestione Personale" cardTitle="Cerca persone" [buttons]="buttons" (selection)="onClick($event)">
+    <!-- [link]="link" -->
     <form ngForm>
-        <div class="row">
-            <div class="col-md-4">
+        <div class="row justify-content-center">
+            <div class="col-md-3">
                 <div class="form-floating">
                     <select class="form-select" [(ngModel)]="selectedArea" aria-label="area" name="area" id="areaId">
                         <option selected> </option>
@@ -11,7 +12,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3 offset-md-1">
                 <div class="form-floating">
                     <select class="form-select" [(ngModel)]="selectedSkill" aria-label="skill" name="skill" id="skillId">
                         <option selected> </option>
@@ -21,7 +22,7 @@
                 </div>    
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3 offset-md-1">
                 <div class="form-floating">
                     <select class="form-select" [(ngModel)]="selectedTopic" aria-label="topic" name="tematica" id="topicId">
                         <option selected> </option>

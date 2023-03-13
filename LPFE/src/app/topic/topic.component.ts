@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Link } from '../model/objects/link';
 
 @Component({
   selector: 'app-topic',
@@ -7,11 +6,6 @@ import { Link } from '../model/objects/link';
   styleUrls: ['./topic.component.css']
 })
 export class TopicComponent 
-{ link: Link = new Link();
-  iconName: string = "book";
+{ iconName: string = "book";
 
-  constructor()
-  { this.link.name = "Aggiungi una tematica";
-    this.link.path =  "/topic/add";
-  }
 }

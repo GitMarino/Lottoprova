@@ -1,7 +1,7 @@
-<app-page [iconName]="iconName" pageTitle="Associazione tra persone e competenze" cardTitle="Associa una persona ad una competenza" [buttons]="buttons">
+<app-page [iconName]="iconName" pageTitle="Associa una persona ad una competenza" [buttons]="buttons">
     <form ngForm>
-        <div class="row">
-            <div class="col-md-4">
+        <div class="row justify-content-center">
+            <div class="col-md-3">
                 <div class="form-floating">
                     <select class="form-select" [(ngModel)]="selectedPerson" aria-label="person" name="person" id="personId">
                         <option *ngFor="let person of people" [ngValue]="person.id"> {{person.value}} </option>
@@ -9,7 +9,7 @@
                     <label for="personId"> persona </label>
                  </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3 offset-md-1">
                 <div class="form-floating">
                     <select class="form-select" [(ngModel)]="selectedSkill" aria-label="skill" name="skill" id="skillId">
                         <option *ngFor="let skill of skills" [ngValue]="skill.id"> {{skill.value}} </option>
@@ -17,7 +17,7 @@
                     <label for="skillId"> competenza </label>
                  </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3 offset-md-1">
                 <div class="form-floating">
                     <select class="form-select" [(ngModel)]="mark" aria-label="mark" name="mark" id="markId">
                         <option> 0 </option>

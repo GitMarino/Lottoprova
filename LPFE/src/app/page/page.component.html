@@ -1,19 +1,19 @@
 <div class="container">
-    <div class="d-flex justify-content-between">
-        <div class="d-flex" *ngIf="pageTitle">
+    <div class="d-flex justify-content-between" *ngIf="pageTitle">
+        <div class="d-flex">
             <i-feather [name]="iconName"></i-feather>
             <h2> {{pageTitle}} </h2>
         </div>
-        <a [routerLink]="link.path"> {{link.name}} </a>
+        <!--<a [routerLink]="link.path"> {{link.name}} </a>-->
     </div>
     <div class="col-md-12 card">
-        <div class="card-header">
+        <div class="card-header" *ngIf="cardTitle">
             <h4> {{cardTitle}} </h4>
         </div>
         <div class="card-body">
             <ng-content></ng-content>
         </div>
-        <div *ngIf="buttons.length!==0" class="card-footer">
+        <div class="card-footer" *ngIf="buttons.length!==0">
             <button *ngFor="let button of buttons" (click)="onClick(button)" class="btn btn-dark" color="dark"> {{button.name}} </button>
         </div>
     </div>

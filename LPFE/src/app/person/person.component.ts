@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Button } from '../model/objects/button';
 import { KeyValue } from '../model/objects/key-value';
-import { Link } from '../model/objects/link';
 import { Person } from '../model/objects/person';
 import { HttpCallsService } from '../model/service/http-calls.service';
 
@@ -20,7 +19,6 @@ export class PersonComponent
   skills: KeyValue[] = [];
   topics: KeyValue[] = [];
 
-  link: Link = new Link();
   iconName: string = "users";
   buttons: Button[] = [];
 
@@ -29,9 +27,7 @@ export class PersonComponent
   error: boolean = false;
 
   constructor(private httpCalls: HttpCallsService) 
-  { this.link.name = "Aggiungi una persona";
-    this.link.path =  "/person/add";
-    
+  { 
     this.buttons = [
       {
         name: 'cerca',
@@ -96,7 +92,8 @@ export class PersonComponent
   }
 
   reset()
-  { this.selectedArea = undefined;
+  { this.people = undefined;
+    this.selectedArea = undefined;
     this.selectedSkill = undefined;
     this.selectedTopic = undefined;
   }

@@ -1,15 +1,15 @@
 <app-page [iconName]="iconName" pageTitle="Registrazione persone" cardTitle="Aggiungi persona" [buttons]="buttons">
     <form ngForm>
-        <div class="row">
-            <div class="col-md-4 form-floating">
+        <div class="row justify-content-center">
+            <div class="col-md-3 form-floating">
                 <input [(ngModel)]="person.username" type="text" name="username" class="form-control" id="username">
                 <label for="username"> username </label>
             </div>
-            <div class="col-md-4 form-floating">
+            <div class="col-md-3 offset-md-1 form-floating">
                 <input [(ngModel)]="person.name" type="text" name="name" class="form-control" id="name">
                 <label for="name"> nome </label>
             </div>
-            <div class="col-md-4 form-floating">
+            <div class="col-md-3 offset-md-1 form-floating">
                 <input [(ngModel)]="person.surname" type="text" name="surname" class="form-control" id="surname">
                 <label for="surname"> cognome </label>
             </div>

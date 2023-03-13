@@ -11,7 +11,7 @@ export class PageComponent {
 
   @Input() iconName: string = '';
   @Input() pageTitle: string = '';
-  @Input() link: Link = new Link;
+  //@Input() link: Link = new Link;
   @Input() cardTitle: string = '';
   @Input() buttons: Button[] = [];
   

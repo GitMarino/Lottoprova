@@ -3,21 +3,40 @@
     <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
       <ul class="navbar-nav">
         <li ngbDropdown class="nav-item">
-          <a href (click)="false" class="nav-link" ngbDropdownToggle> Pagine dedicate </a>
-          <div ngbDropdownMenu>
-            <a ngbDropdownItem href="/area"> Aree </a>
-            <a ngbDropdownItem href="/skill"> Competenze </a>
-            <a ngbDropdownItem href="/person"> Persone </a>
-            <a ngbDropdownItem href="/topic"> Tematica </a>
-          </div>
-        </li>
-        <li ngbDropdown class="nav-item">
           <a href (click)="false" class="nav-link" ngbDropdownToggle> Associazioni </a>
           <div ngbDropdownMenu>
             <a ngbDropdownItem routerLink="/personArea"> Persone ad Aree </a>
             <a ngbDropdownItem href="/personSkill"> Persone a Competenze </a>
             <a ngbDropdownItem href="/personTopic"> Persone a Tematiche </a>
             <a ngbDropdownItem href="/areaTopic"> Tematiche ad Aree </a>
+          </div>
+        </li>
+        <li ngbDropdown class="nav-item">
+          <a href (click)="false" class="nav-link" ngbDropdownToggle> Aree </a>
+          <div ngbDropdownMenu>
+            <a ngbDropdownItem href="/area"> Pagina dedicata </a>
+            <a ngbDropdownItem href="/area/add"> Nuova area </a>
+          </div>
+        </li>
+        <li ngbDropdown class="nav-item">
+          <a href (click)="false" class="nav-link" ngbDropdownToggle> Competenze </a>
+          <div ngbDropdownMenu>
+            <a ngbDropdownItem href="/skill"> Pagina dedicata </a>
+            <a ngbDropdownItem href="/skill/add"> Nuova competenza </a>
+          </div>
+        </li>
+        <li ngbDropdown class="nav-item">
+          <a href (click)="false" class="nav-link" ngbDropdownToggle> Persone </a>
+          <div ngbDropdownMenu>
+            <a ngbDropdownItem href="/person"> Pagina dedicata </a>
+            <a ngbDropdownItem href="/person/add"> Nuova persona </a>
+          </div>
+        </li>
+        <li ngbDropdown class="nav-item">
+          <a href (click)="false" class="nav-link" ngbDropdownToggle> Tematiche </a>
+          <div ngbDropdownMenu>
+            <a ngbDropdownItem href="/topic"> Pagina dedicata </a>
+            <a ngbDropdownItem href="/topic/add"> Nuova tematica </a>
           </div>
         </li>
       </ul>
