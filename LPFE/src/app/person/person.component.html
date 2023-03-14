@@ -42,29 +42,26 @@
         <h6> Oops! Non è stato possibile caricare le persone </h6>
     </div>
 </app-page>
-<app-page *ngIf="people && people.length>0" cardTitle="Risultato ricerca">
+<app-page *ngIf="people && collectionSize && people.length>0" cardTitle="Risultato ricerca">
     <table class="table">
         <thead>
             <tr>
                 <th> username </th>
                 <th> nome </th>
                 <th> cognome </th>
-                <th> competenza </th>
-                <th> voto </th>
+                <th> dettagli </th>
             </tr>
         </thead>
         <tbody>
-            <ng-container *ngFor="let person of people!">
-                <tr *ngFor="let skillMark of person.skillMarkList">
-                    <td> {{person.username}} </td>
-                    <td> {{person.name}} </td>
-                    <td> {{person.surname}} </td>
-                    <td> {{skillMark.skillName}} </td>
-                    <td> <img class="images" [src]="'/assets/images/mark'+skillMark.mark+'.png'" /> </td>
-                </tr>
-            </ng-container>
+            <tr *ngFor="let person of people! | slice: (currentPage-1) * pageSize : currentPage * pageSize">
+                <td> {{person.username}} </td>
+                <td> {{person.name}} </td>
+                <td> {{person.surname}} </td>
+                <td> <a [routerLink]="['/infoPerson', person.id]"> info </a> </td>
+            </tr>
         </tbody>
     </table>
+    <ngb-pagination [(page)]="currentPage" [pageSize]="pageSize" [collectionSize]="collectionSize" [directionLinks]="false"></ngb-pagination>
 </app-page>
 <!-- <div class="container">
     <h2> PERSONE </h2>

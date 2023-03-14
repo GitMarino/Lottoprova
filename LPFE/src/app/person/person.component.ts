@@ -23,6 +23,9 @@ export class PersonComponent
   buttons: Button[] = [];
 
   people?: Person[];
+  currentPage: number = 1;
+  pageSize: number = 5;
+  collectionSize?: number;
   success: boolean = false;
   error: boolean = false;
 
@@ -80,7 +83,8 @@ export class PersonComponent
       .subscribe({
         next: (response: Person[]) => {
           this.people = response as Person[];
-          console.log(this.people)
+          this.collectionSize = this.people.length;
+          console.log(this.collectionSize);
           this.success = true;
         },
         error : error => {

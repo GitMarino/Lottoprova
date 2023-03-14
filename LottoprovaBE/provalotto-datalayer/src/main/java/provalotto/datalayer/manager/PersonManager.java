@@ -5,6 +5,7 @@ import java.util.List;
 import provalotto.bean.bean.BeanKeyValue;
 import provalotto.bean.bean.PersonBean;
 import provalotto.bean.bean.SearchPeopleObject;
+import provalotto.bean.utility.SkillMark;
 import provalotto.datalayer.manager.impl.ServiceErrorException;
 
 public interface PersonManager {
@@ -17,9 +18,13 @@ public interface PersonManager {
 
 	void createPersonTopicConnection(Long personId, Long topicId) throws ServiceErrorException;
 
-	boolean deletePerson(Long personBeanId);
+	boolean deletePerson(Long personId);
 
 	List<BeanKeyValue> getAllPeople();
 
-	List<PersonBean> getPeopleByBeans(SearchPeopleObject searchPeopleObject);
+	PersonBean getPerson(Long personId) throws ServiceErrorException;;
+
+	List<SkillMark> getPersonSkillMarks(Long personId);
+
+	List<PersonBean> searchPeopleByBeans(SearchPeopleObject searchPeopleObject);
 }

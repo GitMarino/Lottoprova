@@ -3,6 +3,7 @@ package provalotto.ws;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import provalotto.bean.bean.BeanKeyValue;
 import provalotto.bean.bean.PersonBean;
 import provalotto.bean.bean.SearchPeopleObject;
+import provalotto.bean.utility.SkillMark;
 import provalotto.datalayer.manager.PersonManager;
 
 @RestController
@@ -78,14 +80,29 @@ public class PersonController {
 		return personManager.getAllPeople();
 	}
 
+	@GetMapping("/{id}")
+	public ResponseEntity<PersonBean> getPerson(@PathVariable("id") final Long personId) {
+		try {
+			return ResponseEntity.ok(personManager.getPerson(personId));
+			//return new ResponseEntity<>(personManager.getPerson(personId), HttpStatus.OK);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	@GetMapping("/{id}/skill")
+	public List<SkillMark> getPersonSkillMarks(@PathVariable("id") final Long personId) {
+		return personManager.getPersonSkillMarks(personId);
+	}
+
 	@GetMapping("/search")
-	public List<PersonBean> getPeopleByBeans(final @RequestParam(required = false) Long areaId,
+	public List<PersonBean> searchPeopleByBeans(final @RequestParam(required = false) Long areaId,
 			final @RequestParam(required = false) Long skillId, final @RequestParam(required = false) Long topicId) {
 		SearchPeopleObject searchPeopleObject = new SearchPeopleObject();
 		searchPeopleObject.setAreaId(areaId);
 		searchPeopleObject.setSkillId(skillId);
 		searchPeopleObject.setTopicId(topicId);
-		return personManager.getPeopleByBeans(searchPeopleObject);
+		return personManager.searchPeopleByBeans(searchPeopleObject);
 	}
 
 }

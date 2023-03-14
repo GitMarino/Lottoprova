@@ -6,6 +6,7 @@ import { AREA, BACKEND_ENDPOINT, PERSON, SEARCH, SKILL, STANDARD_JSON_HEADERS, T
 import { Area } from '../objects/area';
 import { Person } from '../objects/person';
 import { KeyValue } from '../objects/key-value';
+import { SkillMark } from '../objects/skill-marks';
 
 @Injectable({providedIn: 'root'})
 export class HttpCallsService
@@ -24,6 +25,10 @@ export class HttpCallsService
   }
 
   //PERSON
+
+  public getPerson(personId: number): Observable<Person>
+  { return this.http.get<Person>(BACKEND_ENDPOINT+PERSON+"/"+personId);
+  }
 
   public getAllPeople(): Observable<KeyValue[]>
   { return this.http.get<KeyValue[]>(BACKEND_ENDPOINT+PERSON);
@@ -44,6 +49,10 @@ export class HttpCallsService
       params = params.set('topicId', topicId);
     
     return this.http.get<Person[]>(BACKEND_ENDPOINT+PERSON+SEARCH, { params });
+  }
+
+  public getSkillMarks(personId: number): Observable<SkillMark[]>
+  { return this.http.get<SkillMark[]>(BACKEND_ENDPOINT+PERSON+"/"+personId+SKILL)
   }
 
   //SKILL

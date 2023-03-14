@@ -100,7 +100,7 @@ public class PersonManagerImpl implements PersonManager {
 				throw new ServiceErrorException(e);
 			}
 		} else {
-			throw new ServiceErrorException("Dati incosistenti");
+			throw new ServiceErrorException("Dati inconsistenti");
 		}
 
 	}
@@ -129,7 +129,7 @@ public class PersonManagerImpl implements PersonManager {
 				throw new ServiceErrorException(e);
 			}
 		} else {
-			throw new ServiceErrorException("Dati incosistenti");
+			throw new ServiceErrorException("Dati inconsistenti");
 		}
 	}
 
@@ -156,14 +156,14 @@ public class PersonManagerImpl implements PersonManager {
 				throw new ServiceErrorException(e);
 			}
 		} else {
-			throw new ServiceErrorException("Dati incosistenti");
+			throw new ServiceErrorException("Dati inconsistenti");
 		}
 	}
 
 	@Override
-	public boolean deletePerson(final Long personBeanId) {
+	public boolean deletePerson(final Long personId) {
 		try {
-			Optional<Person> personOptional = personDAO.findById(personBeanId);
+			Optional<Person> personOptional = personDAO.findById(personId);
 			if (personOptional.isPresent()) {
 				personDAO.delete(personOptional.get());
 				return true;
@@ -189,26 +189,47 @@ public class PersonManagerImpl implements PersonManager {
 	}
 
 	@Override
-	public List<PersonBean> getPeopleByBeans(final SearchPeopleObject searchPeopleObject) {
+	public PersonBean getPerson(final Long personId) throws ServiceErrorException {
+		PersonBean personBean;
+		Optional<Person> personOptional = personDAO.findById(personId);
+		if (personOptional.isPresent()) {
+			Person person = personOptional.get();
+
+			personBean = new PersonBean();
+			personBean.setId(person.getId());
+			personBean.setUsername(person.getUsername());
+			personBean.setName(person.getName());
+			personBean.setSurname(person.getSurname());
+
+			return personBean;
+		} else {
+			throw new ServiceErrorException("Dati inconsistenti");
+		}
+	}
+
+	@Override
+	public List<SkillMark> getPersonSkillMarks(final Long personId) {
+		List<SkillMark> skillMarkList = new ArrayList<>();
+		SkillMark skillMark;
+		for (PersonSkillConnection personSkillConnection : personSkillConnectionDAO.findByIdPersonId(personId)) {
+			skillMark = new SkillMark();
+			skillMark.setSkillName(personSkillConnection.getId().getSkill().getName());
+			skillMark.setMark(personSkillConnection.getMark());
+			skillMarkList.add(skillMark);
+		}
+		return skillMarkList;
+	}
+
+	@Override
+	public List<PersonBean> searchPeopleByBeans(final SearchPeopleObject searchPeopleObject) {
 		List<PersonBean> peopleByBeans = new ArrayList<>();
 		PersonBean personBean;
-		SkillMark skillMark;
-		List<SkillMark> skillMarkList;
 		for (Person person : personDAO.searchPeople(searchPeopleObject)) {
 			personBean = new PersonBean();
 			personBean.setId(person.getId());
 			personBean.setUsername(person.getUsername());
 			personBean.setName(person.getName());
 			personBean.setSurname(person.getSurname());
-			skillMarkList = new ArrayList<>();
-			for (PersonSkillConnection personSkillConnection : personSkillConnectionDAO
-					.searchPersonSkillConnection(person.getId(), searchPeopleObject)) {
-				skillMark = new SkillMark();
-				skillMark.setSkillName(personSkillConnection.getId().getSkill().getName());
-				skillMark.setMark(personSkillConnection.getMark());
-				skillMarkList.add(skillMark);
-			}
-			personBean.setSkillMarkList(skillMarkList);
 			peopleByBeans.add(personBean);
 		}
 		return peopleByBeans;

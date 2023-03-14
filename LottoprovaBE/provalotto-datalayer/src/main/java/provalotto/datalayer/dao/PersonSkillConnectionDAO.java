@@ -14,7 +14,7 @@ import provalotto.bean.key.PersonSkillConnectionKey;
 @Repository
 public interface PersonSkillConnectionDAO extends JpaRepository<PersonSkillConnection, PersonSkillConnectionKey> {
 
-	@Query("SELECT DISTINCT ps " 
+	/*@Query("SELECT DISTINCT ps " 
 		 + "FROM PersonSkillConnection ps "
 			+ "left join skill s on ps.id.skill.id=s.id "
 			+ "left join topic t on s.skillTopic=t.id "
@@ -23,6 +23,8 @@ public interface PersonSkillConnectionDAO extends JpaRepository<PersonSkillConne
 		 	   + "OR s.id=:#{#model.skillId} )"
 		  )
 	List<PersonSkillConnection> searchPersonSkillConnection(Long personId,
-			@Param("model") SearchPeopleObject searchPeopleObject);
+			@Param("model") SearchPeopleObject searchPeopleObject);*/
+	
+	List<PersonSkillConnection> findByIdPersonId(Long personId);
 
 }

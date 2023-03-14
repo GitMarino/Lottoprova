@@ -9,6 +9,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { PersonComponent } from './person/person.component';
+import { InfoPersonSkillsComponent } from './person/info-person-skills/info-person-skills.component';
 import { TopicComponent } from './topic/topic.component';
 import { AreaComponent } from './area/area.component';
 import { AddPersonComponent } from './add/add-person/add-person.component';
@@ -30,13 +31,14 @@ import { IconsModule } from './icons/icons.module';
 const routes: Routes = [
   { path: '', component: AppComponent},
   { path: 'area', component: AreaComponent},
-  { path: 'area/add', component: AddAreaComponent},
+  { path: 'addArea', component: AddAreaComponent},
   { path: 'person', component: PersonComponent},
-  { path: 'person/add', component:AddPersonComponent},
+  { path: 'infoPerson/:id', component: InfoPersonSkillsComponent},
+  { path: 'addPerson', component:AddPersonComponent},
   { path: 'skill', component: SkillComponent},
-  { path: 'skill/add', component: AddSkillComponent},
+  { path: 'addSkill', component: AddSkillComponent},
   { path: 'topic', component: TopicComponent},
-  { path: 'topic/add', component: AddTopicComponent},
+  { path: 'addTopic', component: AddTopicComponent},
   { path: 'personArea', component: AddPersonAreaConnectionComponent},
   { path: 'personTopic', component: AddPersonTopicConnectionComponent},
   { path: 'personSkill', component: AddPersonSkillConnectionComponent},
@@ -46,9 +48,12 @@ const routes: Routes = [
 
 @NgModule({
   declarations: 
-  [ AppComponent,
+  [ PageComponent,
+    AppComponent,
+
     AreaComponent, 
     PersonComponent,
+    InfoPersonSkillsComponent, 
     SkillComponent,
     TopicComponent,
     
@@ -61,7 +66,6 @@ const routes: Routes = [
     AddPersonTopicConnectionComponent,
     AddPersonSkillConnectionComponent,
     AddAreaTopicConnectionComponent,
-    PageComponent, 
   ],
   imports: 
   [ BrowserModule,
