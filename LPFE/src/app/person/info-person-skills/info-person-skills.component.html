@@ -1,3 +1,51 @@
 <app-page [iconName]="iconName" pageTitle="Dettagli persona">
-    <!--<td> <img class="images" [src]="'/assets/images/mark'+skillMark.mark+'.png'" /> </td>-->
+    <div *ngIf="person"> 
+        <div class="row">
+            <div class="col-md-1"> 
+                <h6> username: </h6>
+            </div>
+            <div class="col-md-1"> 
+                <h5> {{person.username}} </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1"> 
+                <h6> nome: </h6>
+            </div>
+            <div class="col-md-1"> 
+                <h5> {{person.name}} </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1"> 
+                <h6> cognome: </h6>
+            </div>
+            <div class="col-md-1"> 
+                <h5> {{person.surname}} </h5>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!person">
+        <h6> Oops! Non è stato possibile caricare i dati </h6> 
+    </div>
+    <br/>
+    <div *ngIf="skillMarks">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th> <h6> competenza </h6> </th>
+                    <th> <h6> voto </h6> </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let skillMark of skillMarks">
+                    <td> <h5> {{skillMark.skillName}} </h5> </td>
+                    <td> <img class="images" [src]="'/assets/images/mark'+skillMark.mark+'.png'" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="!skillMarks">
+        <h6> Oops! Non è stato possibile caricare le competenze </h6>
+    </div>
 </app-page>
