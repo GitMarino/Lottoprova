@@ -20,7 +20,7 @@ public class Topic extends AbstractIdentifiedBean {
 		return TABLE_NAME;
 	}
 
-	@Column(nullable = false, length = 50)
+	@Column(nullable = false, length = 50, unique = true)
 	private String name;
 
 	@Column(nullable = false, length = 50)
