@@ -61,21 +61,25 @@ public class PersonManagerImpl implements PersonManager {
 	@Autowired
 	private SkillDAO skillDAO;
 
+	@Transactional
 	@Override
 	public PersonBean createPerson(final PersonBean personBean) throws ServiceErrorException {
-		try {
+		if (!personDAO.existsByUsername(personBean.getUsername())) {
 			Person person = new Person();
 			person.setUsername(personBean.getUsername());
 			person.setName(personBean.getName());
 			person.setSurname(personBean.getSurname());
 			person.setMaker("Christian Marino");
 			person.setDateTime(LocalDateTime.now());
-			personDAO.save(person);
+			try {
+				personDAO.save(person);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+				throw new ServiceErrorException(e);
+			}
 			return personBean;
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			throw new ServiceErrorException(e);
 		}
+		throw new ServiceErrorException("Dati inconsistenti");
 	}
 
 	@Transactional

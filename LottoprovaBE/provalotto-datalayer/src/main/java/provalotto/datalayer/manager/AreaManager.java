@@ -2,13 +2,12 @@ package provalotto.datalayer.manager;
 
 import java.util.List;
 
-import provalotto.bean.bean.AreaBean;
 import provalotto.bean.bean.BeanKeyValue;
 import provalotto.datalayer.manager.impl.ServiceErrorException;
 
 public interface AreaManager {
 
-	AreaBean createArea(AreaBean areaBean) throws ServiceErrorException;
+	void createArea(final String name, final Long personBeanId) throws ServiceErrorException;
 
 	void createAreaTopicConnection(Long areaId, Long topicId) throws ServiceErrorException;
 

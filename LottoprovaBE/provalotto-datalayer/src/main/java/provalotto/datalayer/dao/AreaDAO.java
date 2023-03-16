@@ -11,6 +11,8 @@ import provalotto.bean.entity.Area;
 @Repository
 public interface AreaDAO extends JpaRepository<Area, Long> {
 
+	boolean existsByName(String name);
+
 	List<Area> findAllByOrderByName();
 
 	@Override

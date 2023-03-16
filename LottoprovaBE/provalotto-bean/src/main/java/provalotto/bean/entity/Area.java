@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 import org.joda.time.LocalDateTime;
 
@@ -23,8 +24,8 @@ public class Area extends AbstractIdentifiedBean {
 	@Column(nullable = false, length = 50, unique = true)
 	private String name;
 
-	@Column(nullable = false, length = 50)
-	private String areaManager;
+	@ManyToOne
+	private Person manager;
 
 	@Column(nullable = false, length = 50)
 	private String maker;
@@ -41,12 +42,8 @@ public class Area extends AbstractIdentifiedBean {
 		if (getClass() != obj.getClass())
 			return false;
 		Area other = (Area) obj;
-		return Objects.equals(areaManager, other.areaManager) && Objects.equals(dateTime, other.dateTime)
-				&& Objects.equals(maker, other.maker) && Objects.equals(name, other.name);
-	}
-
-	public String getAreaManager() {
-		return areaManager;
+		return Objects.equals(dateTime, other.dateTime) && Objects.equals(maker, other.maker)
+				&& Objects.equals(manager, other.manager) && Objects.equals(name, other.name);
 	}
 
 	public LocalDateTime getDateTime() {
@@ -57,6 +54,10 @@ public class Area extends AbstractIdentifiedBean {
 		return maker;
 	}
 
+	public Person getManager() {
+		return manager;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -65,12 +66,8 @@ public class Area extends AbstractIdentifiedBean {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(areaManager, dateTime, maker, name);
+		result = prime * result + Objects.hash(dateTime, maker, manager, name);
 		return result;
-	}
-
-	public void setAreaManager(final String areaManager) {
-		this.areaManager = areaManager;
 	}
 
 	public void setDateTime(final LocalDateTime dateTime) {
@@ -81,14 +78,17 @@ public class Area extends AbstractIdentifiedBean {
 		this.maker = maker;
 	}
 
+	public void setManager(final Person manager) {
+		this.manager = manager;
+	}
+
 	public void setName(final String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return "Area [name=" + name + ", areaManager=" + areaManager + ", maker=" + maker + ", dateTime=" + dateTime
-				+ "]";
+		return "Area [name=" + name + ", manager=" + manager + ", maker=" + maker + ", dateTime=" + dateTime + "]";
 	}
 
 }

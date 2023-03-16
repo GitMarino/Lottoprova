@@ -12,14 +12,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import provalotto.bean.bean.AreaBean;
 import provalotto.bean.bean.BeanKeyValue;
 import provalotto.bean.connection.AreaTopicConnection;
 import provalotto.bean.entity.Area;
+import provalotto.bean.entity.Person;
 import provalotto.bean.entity.Topic;
 import provalotto.bean.key.AreaTopicConnectionKey;
 import provalotto.datalayer.dao.AreaDAO;
 import provalotto.datalayer.dao.AreaTopicConnectionDAO;
+import provalotto.datalayer.dao.PersonDAO;
 import provalotto.datalayer.dao.TopicDAO;
 import provalotto.datalayer.manager.AreaManager;
 
@@ -32,24 +33,36 @@ public class AreaManagerImpl implements AreaManager {
 	private AreaDAO areaDAO;
 
 	@Autowired
+	private PersonDAO personDAO;
+
+	@Autowired
 	private TopicDAO topicDAO;
 
 	@Autowired
 	private AreaTopicConnectionDAO areaTopicConnectionDAO;
 
+	@Transactional
 	@Override
-	public AreaBean createArea(final AreaBean areaBean) throws ServiceErrorException {
-		try {
-			Area area = new Area();
-			area.setName(areaBean.getName());
-			area.setAreaManager(areaBean.getAreaManager());
-			area.setMaker("Christian Marino");
-			area.setDateTime(LocalDateTime.now());
-			areaDAO.save(area);
-			return areaBean;
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			throw new ServiceErrorException(e);
+	public void createArea(final String name, final Long personBeanId) throws ServiceErrorException {
+		if (!areaDAO.existsByName(name)) {
+			Optional<Person> personOptional = personDAO.findById(personBeanId);
+			if (personOptional.isPresent()) {
+				Area area = new Area();
+				area.setName(name);
+				area.setManager(personOptional.get());
+				area.setMaker("Christian Marino");
+				area.setDateTime(LocalDateTime.now());
+				try {
+					areaDAO.save(area);
+				} catch (Exception e) {
+					log.error(e.getMessage(), e);
+					throw new ServiceErrorException(e);
+				}
+			} else {
+				throw new ServiceErrorException("Dati incosistenti");
+			}
+		} else {
+			throw new ServiceErrorException("Dati inconsistenti");
 		}
 	}
 
@@ -75,7 +88,7 @@ public class AreaManagerImpl implements AreaManager {
 				throw new ServiceErrorException(e);
 			}
 		} else {
-			throw new ServiceErrorException("Dati incosistenti");
+			throw new ServiceErrorException("Dati inconsistenti");
 		}
 
 	}

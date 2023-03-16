@@ -14,6 +14,8 @@ import provalotto.bean.entity.Person;
 @Repository
 public interface PersonDAO extends JpaRepository<Person, Long> {
 
+	boolean existsByUsername(String username);
+
 	List<Person> findAllByOrderBySurname();
 
 	@Override
@@ -27,5 +29,4 @@ public interface PersonDAO extends JpaRepository<Person, Long> {
 			+ "AND (:#{#model.skillId} IS NULL OR s.id=:#{#model.skillId}) "
 			+ "AND (:#{#model.topicId} IS NULL OR t.id=:#{#model.topicId}) " + "ORDER BY p.surname")
 	List<Person> searchPeople(@Param("model") SearchPeopleObject searchPeopleObject);
-
 }

@@ -11,6 +11,8 @@ import provalotto.bean.entity.Skill;
 @Repository
 public interface SkillDAO extends JpaRepository<Skill, Long> {
 
+	boolean existsByName(String name);
+
 	List<Skill> findAllByOrderByName();
 
 	@Override

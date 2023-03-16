@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import provalotto.bean.bean.AreaBean;
 import provalotto.bean.bean.BeanKeyValue;
 import provalotto.datalayer.manager.AreaManager;
 
@@ -25,9 +23,10 @@ public class AreaController {
 	private AreaManager areaManager;
 
 	@PostMapping
-	public ResponseEntity<AreaBean> createArea(final @RequestBody AreaBean areaBean) {
+	public ResponseEntity<Integer> createArea(final String name, final Long personBeanId) {
 		try {
-			return ResponseEntity.ok(areaManager.createArea(areaBean));
+			areaManager.createArea(name, personBeanId);
+			return ResponseEntity.ok(1);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}

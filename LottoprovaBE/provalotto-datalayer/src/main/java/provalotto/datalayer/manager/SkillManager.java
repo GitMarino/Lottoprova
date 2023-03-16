@@ -7,7 +7,7 @@ import provalotto.datalayer.manager.impl.ServiceErrorException;
 
 public interface SkillManager {
 
-	void createSkill(String name, String description, Long skillTopicBeanId) throws ServiceErrorException;
+	void createSkill(String name, String description, Long topicBeanId) throws ServiceErrorException;
 
 	boolean deleteSkill(Long skillBeanId);
 

@@ -34,7 +34,7 @@ public class Skill extends AbstractIdentifiedBean {
 	private LocalDateTime dateTime;
 
 	@ManyToOne
-	private Topic skillTopic;
+	private Topic topic;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -47,7 +47,7 @@ public class Skill extends AbstractIdentifiedBean {
 		Skill other = (Skill) obj;
 		return Objects.equals(dateTime, other.dateTime) && Objects.equals(description, other.description)
 				&& Objects.equals(maker, other.maker) && Objects.equals(name, other.name)
-				&& Objects.equals(skillTopic, other.skillTopic);
+				&& Objects.equals(topic, other.topic);
 	}
 
 	public LocalDateTime getDateTime() {
@@ -66,15 +66,15 @@ public class Skill extends AbstractIdentifiedBean {
 		return name;
 	}
 
-	public Topic getSkillTopic() {
-		return skillTopic;
+	public Topic getTopic() {
+		return topic;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(dateTime, description, maker, name, skillTopic);
+		result = prime * result + Objects.hash(dateTime, description, maker, name, topic);
 		return result;
 	}
 
@@ -94,14 +94,14 @@ public class Skill extends AbstractIdentifiedBean {
 		this.name = name;
 	}
 
-	public void setSkillTopic(final Topic skillTopic) {
-		this.skillTopic = skillTopic;
+	public void setTopic(final Topic topic) {
+		this.topic = topic;
 	}
 
 	@Override
 	public String toString() {
 		return "Skill [name=" + name + ", description=" + description + ", maker=" + maker + ", dateTime=" + dateTime
-				+ ", skillTopic=" + skillTopic + "]";
+				+ ", topic=" + topic + "]";
 	}
 
 }

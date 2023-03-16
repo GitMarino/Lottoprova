@@ -11,6 +11,8 @@ import provalotto.bean.entity.Topic;
 @Repository
 public interface TopicDAO extends JpaRepository<Topic, Long> {
 
+	boolean existsByName(String name);
+
 	List<Topic> findAllByOrderByName();
 
 	@Override

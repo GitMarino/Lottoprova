@@ -11,7 +11,7 @@ public class AreaBean implements Serializable {
 
 	private String name;
 
-	private String areaManager;
+	private PersonBean manager;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -22,16 +22,16 @@ public class AreaBean implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		AreaBean other = (AreaBean) obj;
-		return Objects.equals(areaManager, other.areaManager) && Objects.equals(id, other.id)
+		return Objects.equals(id, other.id) && Objects.equals(manager, other.manager)
 				&& Objects.equals(name, other.name);
-	}
-
-	public String getAreaManager() {
-		return areaManager;
 	}
 
 	public Long getId() {
 		return id;
+	}
+
+	public PersonBean getManager() {
+		return manager;
 	}
 
 	public String getName() {
@@ -40,15 +40,15 @@ public class AreaBean implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(areaManager, id, name);
-	}
-
-	public void setAreaManager(final String areaManager) {
-		this.areaManager = areaManager;
+		return Objects.hash(id, manager, name);
 	}
 
 	public void setId(final Long id) {
 		this.id = id;
+	}
+
+	public void setManager(final PersonBean manager) {
+		this.manager = manager;
 	}
 
 	public void setName(final String name) {
@@ -57,7 +57,7 @@ public class AreaBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AreaBean [id=" + id + ", name=" + name + ", areaManager=" + areaManager + "]";
+		return "AreaBean [id=" + id + ", name=" + name + ", manager=" + manager + "]";
 	}
 
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,19 +26,23 @@ public class TopicManagerImpl implements TopicManager {
 	@Autowired
 	private TopicDAO topicDAO;
 
+	@Transactional
 	@Override
 	public TopicBean createTopic(final TopicBean topicBean) throws ServiceErrorException {
-		try {
+		if (!topicDAO.existsByName(topicBean.getName())) {
 			Topic topic = new Topic();
 			topic.setName(topicBean.getName());
 			topic.setMaker("Christian Marino");
 			topic.setDateTime(LocalDateTime.now());
-			topicDAO.save(topic);
+			try {
+				topicDAO.save(topic);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+				throw new ServiceErrorException(e);
+			}
 			return topicBean;
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			throw new ServiceErrorException(e);
 		}
+		throw new ServiceErrorException("Dati inconsistenti");
 	}
 
 	@Override

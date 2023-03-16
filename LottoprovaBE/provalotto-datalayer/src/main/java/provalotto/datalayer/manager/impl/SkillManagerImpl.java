@@ -32,27 +32,29 @@ public class SkillManagerImpl implements SkillManager {
 
 	@Transactional
 	@Override
-	public void createSkill(final String name, final String description, final Long skillTopicBeanId)
+	public void createSkill(final String name, final String description, final Long topicBeanId)
 			throws ServiceErrorException {
-
-		Optional<Topic> topicOptional = topicDAO.findById(skillTopicBeanId);
-		if (topicOptional.isPresent()) {
-			Skill skill = new Skill();
-			skill.setName(name);
-			skill.setDescription(description);
-			skill.setSkillTopic(topicOptional.get());
-			skill.setMaker("Christian Marino");
-			skill.setDateTime(LocalDateTime.now());
-			try {
-				skillDAO.save(skill);
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-				throw new ServiceErrorException(e);
+		if (!skillDAO.existsByName(name)) {
+			Optional<Topic> topicOptional = topicDAO.findById(topicBeanId);
+			if (topicOptional.isPresent()) {
+				Skill skill = new Skill();
+				skill.setName(name);
+				skill.setDescription(description);
+				skill.setTopic(topicOptional.get());
+				skill.setMaker("Christian Marino");
+				skill.setDateTime(LocalDateTime.now());
+				try {
+					skillDAO.save(skill);
+				} catch (Exception e) {
+					log.error(e.getMessage(), e);
+					throw new ServiceErrorException(e);
+				}
+			} else {
+				throw new ServiceErrorException("Dati incosistenti");
 			}
 		} else {
-			throw new ServiceErrorException("Dati incosistenti");
+			throw new ServiceErrorException("Dati inconsistenti");
 		}
-
 	}
 
 	@Override

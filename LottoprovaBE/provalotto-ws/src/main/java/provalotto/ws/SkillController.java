@@ -21,10 +21,9 @@ public class SkillController {
 	private SkillManager skillManager;
 
 	@PostMapping
-	public ResponseEntity<Integer> createSkill(final String name, final String description,
-			final Long skillTopicBeanId) {
+	public ResponseEntity<Integer> createSkill(final String name, final String description, final Long topicBeanId) {
 		try {
-			skillManager.createSkill(name, description, skillTopicBeanId);
+			skillManager.createSkill(name, description, topicBeanId);
 			return ResponseEntity.ok(1);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();

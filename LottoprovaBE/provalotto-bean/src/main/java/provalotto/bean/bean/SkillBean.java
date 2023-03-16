@@ -13,7 +13,7 @@ public class SkillBean implements Serializable {
 
 	private String description;
 
-	private TopicBean skillTopic;
+	private TopicBean topic;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -25,7 +25,7 @@ public class SkillBean implements Serializable {
 			return false;
 		SkillBean other = (SkillBean) obj;
 		return Objects.equals(description, other.description) && Objects.equals(id, other.id)
-				&& Objects.equals(name, other.name) && Objects.equals(skillTopic, other.skillTopic);
+				&& Objects.equals(name, other.name) && Objects.equals(topic, other.topic);
 	}
 
 	public String getDescription() {
@@ -40,13 +40,13 @@ public class SkillBean implements Serializable {
 		return name;
 	}
 
-	public TopicBean getSkillTopic() {
-		return skillTopic;
+	public TopicBean getTopic() {
+		return topic;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, name, skillTopic);
+		return Objects.hash(description, id, name, topic);
 	}
 
 	public void setDescription(final String description) {
@@ -61,14 +61,13 @@ public class SkillBean implements Serializable {
 		this.name = name;
 	}
 
-	public void setSkillTopic(final TopicBean skillTopic) {
-		this.skillTopic = skillTopic;
+	public void setTopic(final TopicBean topic) {
+		this.topic = topic;
 	}
 
 	@Override
 	public String toString() {
-		return "SkillBean [id=" + id + ", name=" + name + ", description=" + description + ", skillTopic=" + skillTopic
-				+ "]";
+		return "SkillBean [id=" + id + ", name=" + name + ", description=" + description + ", topic=" + topic + "]";
 	}
 
 }
