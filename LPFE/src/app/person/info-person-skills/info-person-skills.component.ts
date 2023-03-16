@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Person } from 'src/app/model/objects/person';
 import { SkillMark } from 'src/app/model/objects/skill-marks';
@@ -9,7 +9,7 @@ import { HttpCallsService } from '../../model/service/http-calls.service';
   templateUrl: './info-person-skills.component.html',
   styleUrls: ['./info-person-skills.component.scss']
 })
-export class InfoPersonSkillsComponent {
+export class InfoPersonSkillsComponent implements OnInit {
   
   personId?: number;
 

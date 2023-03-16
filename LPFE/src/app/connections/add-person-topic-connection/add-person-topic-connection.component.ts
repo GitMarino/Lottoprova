@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Button } from 'src/app/model/objects/button';
 import { KeyValue } from 'src/app/model/objects/key-value';
 import { HttpCallsService } from '../../model/service/http-calls.service';
@@ -8,7 +8,7 @@ import { HttpCallsService } from '../../model/service/http-calls.service';
   templateUrl: './add-person-topic-connection.component.html',
   styleUrls: ['./add-person-topic-connection.component.css']
 })
-export class AddPersonTopicConnectionComponent {
+export class AddPersonTopicConnectionComponent implements OnInit {
 
   iconName: string = "git-commit";
   buttons: Button[] = [];

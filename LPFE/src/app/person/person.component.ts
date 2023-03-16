@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Button } from '../model/objects/button';
 import { KeyValue } from '../model/objects/key-value';
 import { Person } from '../model/objects/person';
@@ -9,7 +9,7 @@ import { HttpCallsService } from '../model/service/http-calls.service';
   templateUrl: './person.component.html',
   styleUrls: ['./person.component.css']
 })
-export class PersonComponent
+export class PersonComponent implements OnInit
 { 
   selectedArea?: number;
   selectedSkill?: number;

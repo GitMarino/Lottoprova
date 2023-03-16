@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Button } from 'src/app/model/objects/button';
 import { KeyValue } from 'src/app/model/objects/key-value';
-import { Skill } from 'src/app/model/objects/skill';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
 @Component({
@@ -9,12 +8,11 @@ import { HttpCallsService } from '../../model/service/http-calls.service';
   templateUrl: './add-skill.component.html',
   styleUrls: ['./add-skill.component.css']
 })
-export class AddSkillComponent {
+export class AddSkillComponent implements OnInit {
 
   iconName: string = "plus-square"
   buttons: Button[] = [];
 
-  skill: Skill = new Skill;
   name: string = "";
   description: string = "";
   selectedTopic?: number;
