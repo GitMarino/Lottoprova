@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Button } from 'src/app/model/objects/button';
-import { Area } from '../../model/objects/area';
+import { KeyValue } from 'src/app/model/objects/key-value';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
 @Component({
@@ -8,12 +8,14 @@ import { HttpCallsService } from '../../model/service/http-calls.service';
   templateUrl: './add-area.component.html',
   styleUrls: ['./add-area.component.css']
 })
-export class AddAreaComponent {
+export class AddAreaComponent implements OnInit {
   
   iconName: string = "plus-square"
   buttons: Button[] = [];
 
-  area: Area = new Area();
+  name: string = "";
+  selectedPerson?: number;
+  people: KeyValue[] = [];
 
   error: boolean = false;
   success: boolean = false;
@@ -27,10 +29,19 @@ export class AddAreaComponent {
     ];
   }
 
-  addArea = () =>
-  { this.httpCalls.createArea(this.area)
+  ngOnInit(): void
+  { this.httpCalls.getAllPeople()
       .subscribe({
-        next: (response: Area) => {
+        next: (response: KeyValue[]) => {
+          this.people = response as KeyValue[];
+        }
+      });
+  }
+
+  addArea = () =>
+  { this.httpCalls.createArea(this.name, this.selectedPerson!)
+      .subscribe({
+        next: (response: void) => {
           this.success = true;
           this.error = false;
         },

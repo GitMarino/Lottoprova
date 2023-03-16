@@ -2,12 +2,16 @@
     <form ngForm>
         <div class="row justify-content-center">
             <div class="col-md-4 form-floating">
-                <input [(ngModel)]="area.name" type="text" name="name" class="form-control" id="name">
+                <input [(ngModel)]="name" type="text" name="name" class="form-control" id="name">
                 <label for="name"> nome </label>
             </div>
-            <div class="col-md-4 offset-md-1 form-floating">
-                <input [(ngModel)]="area.areaManager" type="text" name="areaManager" class="form-control" id="areaManager">
-                <label for="areaManager"> responsabile </label>
+            <div class="col-md-4 offset-md-1">
+                <div class="form-floating">
+                    <select class="form-select" [(ngModel)]="selectedPerson" aria-label="manager" name="manager" id="managerId">
+                        <option *ngFor="let person of people" [ngValue]="person.id"> {{person.value}} </option>
+                    </select>
+                    <label for="managerId"> responsabile </label>
+                 </div>
             </div>
         </div>
     </form>

@@ -20,8 +20,8 @@ export class HttpCallsService
   { return this.http.get<KeyValue[]>(BACKEND_ENDPOINT+AREA);
   }
 
-  public createArea(area: Area): Observable<Area>
-  { return this.http.post<Area>(BACKEND_ENDPOINT+AREA, area, {'headers': STANDARD_JSON_HEADERS});
+  public createArea(name: string, personBeanId: number): Observable<void>
+  { return this.http.post<void>(BACKEND_ENDPOINT+AREA+"?name="+name+"&personBeanId="+personBeanId, {'headers': STANDARD_JSON_HEADERS});
   }
 
   //PERSON
@@ -61,8 +61,8 @@ export class HttpCallsService
   { return this.http.get<KeyValue[]>(BACKEND_ENDPOINT+SKILL);
   }
 
-  public createSkill(name: string, description: string, skillTopicBeanId: number): Observable<void>
-  { return this.http.post<void>(BACKEND_ENDPOINT+SKILL+"?name="+name+"&description="+description+"&skillTopicBeanId="+skillTopicBeanId,  {'headers': STANDARD_JSON_HEADERS})
+  public createSkill(name: string, description: string, topicBeanId: number): Observable<void>
+  { return this.http.post<void>(BACKEND_ENDPOINT+SKILL+"?name="+name+"&description="+description+"&topicBeanId="+topicBeanId,  {'headers': STANDARD_JSON_HEADERS})
   }
   
   //TOPIC
