@@ -14,7 +14,7 @@ import provalotto.bean.entity.Person;
 @Repository
 public interface PersonDAO extends JpaRepository<Person, Long> {
 
-	boolean existsByUsername(String username);
+	boolean existsBySerial(Long serial);
 
 	List<Person> findAllByOrderBySurname();
 

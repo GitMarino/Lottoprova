@@ -21,7 +21,7 @@ public class Person extends AbstractIdentifiedBean {
 	}
 
 	@Column(nullable = false, length = 50, unique = true)
-	private String username;
+	private Long serial;
 
 	@Column(nullable = false, length = 50)
 	private String name;
@@ -45,8 +45,8 @@ public class Person extends AbstractIdentifiedBean {
 			return false;
 		Person other = (Person) obj;
 		return Objects.equals(dateTime, other.dateTime) && Objects.equals(maker, other.maker)
-				&& Objects.equals(name, other.name) && Objects.equals(surname, other.surname)
-				&& Objects.equals(username, other.username);
+				&& Objects.equals(name, other.name) && Objects.equals(serial, other.serial)
+				&& Objects.equals(surname, other.surname);
 	}
 
 	public LocalDateTime getDateTime() {
@@ -61,19 +61,19 @@ public class Person extends AbstractIdentifiedBean {
 		return name;
 	}
 
-	public String getSurname() {
-		return surname;
+	public Long getSerial() {
+		return serial;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getSurname() {
+		return surname;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(dateTime, maker, name, surname, username);
+		result = prime * result + Objects.hash(dateTime, maker, name, serial, surname);
 		return result;
 	}
 
@@ -89,17 +89,17 @@ public class Person extends AbstractIdentifiedBean {
 		this.name = name;
 	}
 
+	public void setSerial(final Long serial) {
+		this.serial = serial;
+	}
+
 	public void setSurname(final String surname) {
 		this.surname = surname;
 	}
 
-	public void setUsername(final String username) {
-		this.username = username;
-	}
-
 	@Override
 	public String toString() {
-		return "Person [username=" + username + ", name=" + name + ", surname=" + surname + ", maker=" + maker
+		return "Person [serial=" + serial + ", name=" + name + ", surname=" + surname + ", maker=" + maker
 				+ ", dateTime=" + dateTime + "]";
 	}
 

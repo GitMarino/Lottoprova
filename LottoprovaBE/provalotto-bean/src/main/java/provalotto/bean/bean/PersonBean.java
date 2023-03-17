@@ -9,7 +9,7 @@ public class PersonBean implements Serializable {
 
 	private Long id;
 
-	private String username;
+	private Long serial;
 
 	private String name;
 
@@ -24,8 +24,8 @@ public class PersonBean implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		PersonBean other = (PersonBean) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name)
-				&& Objects.equals(surname, other.surname) && Objects.equals(username, other.username);
+		return Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(serial, other.serial)
+				&& Objects.equals(surname, other.surname);
 	}
 
 	public Long getId() {
@@ -36,17 +36,17 @@ public class PersonBean implements Serializable {
 		return name;
 	}
 
+	public Long getSerial() {
+		return serial;
+	}
+
 	public String getSurname() {
 		return surname;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, surname, username);
+		return Objects.hash(id, name, serial, surname);
 	}
 
 	public void setId(final Long id) {
@@ -57,17 +57,17 @@ public class PersonBean implements Serializable {
 		this.name = name;
 	}
 
+	public void setSerial(final Long serial) {
+		this.serial = serial;
+	}
+
 	public void setSurname(final String surname) {
 		this.surname = surname;
 	}
 
-	public void setUsername(final String username) {
-		this.username = username;
-	}
-
 	@Override
 	public String toString() {
-		return "PersonBean [id=" + id + ", username=" + username + ", name=" + name + ", surname=" + surname + "]";
+		return "PersonBean [id=" + id + ", serial=" + serial + ", name=" + name + ", surname=" + surname + "]";
 	}
 
 }

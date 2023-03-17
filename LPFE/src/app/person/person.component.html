@@ -46,7 +46,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th> username </th>
+                <th> matricola </th>
                 <th> nome </th>
                 <th> cognome </th>
                 <th> </th>
@@ -54,7 +54,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let person of people! | slice: (currentPage-1) * pageSize : currentPage * pageSize">
-                <td> {{person.username}} </td>
+                <td> {{person.serial}} </td>
                 <td> {{person.name}} </td>
                 <td> {{person.surname}} </td>
                 <td> <a [routerLink]="['/infoPerson', person.id]"> <i-feather name="file-text"></i-feather> </a> </td>

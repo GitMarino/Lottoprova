@@ -1,7 +1,7 @@
 export class Person
 {   
     id?: number;
-    username!: string;
+    serial!: string;
     name!: string;
     surname!: string;
 
