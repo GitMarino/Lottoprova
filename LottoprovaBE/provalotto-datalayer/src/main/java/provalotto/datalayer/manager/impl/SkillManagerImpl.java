@@ -34,26 +34,26 @@ public class SkillManagerImpl implements SkillManager {
 	@Override
 	public void createSkill(final String name, final String description, final Long topicBeanId)
 			throws ServiceErrorException {
-		if (!skillDAO.existsByName(name)) {
-			Optional<Topic> topicOptional = topicDAO.findById(topicBeanId);
-			if (topicOptional.isPresent()) {
-				Skill skill = new Skill();
-				skill.setName(name);
-				skill.setDescription(description);
-				skill.setTopic(topicOptional.get());
-				skill.setMaker("Christian Marino");
-				skill.setDateTime(LocalDateTime.now());
-				try {
+		try {
+			if (!skillDAO.existsByName(name)) {
+				Optional<Topic> topicOptional = topicDAO.findById(topicBeanId);
+				if (topicOptional.isPresent()) {
+					Skill skill = new Skill();
+					skill.setName(name);
+					skill.setDescription(description);
+					skill.setTopic(topicOptional.get());
+					skill.setMaker("Christian Marino");
+					skill.setDateTime(LocalDateTime.now());
 					skillDAO.save(skill);
-				} catch (Exception e) {
-					log.error(e.getMessage(), e);
-					throw new ServiceErrorException(e);
+				} else {
+					throw new ServiceErrorException("Dati incosistenti");
 				}
 			} else {
-				throw new ServiceErrorException("Dati incosistenti");
+				throw new ServiceErrorException("Dati inconsistenti");
 			}
-		} else {
-			throw new ServiceErrorException("Dati inconsistenti");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
 	}
 
@@ -76,11 +76,15 @@ public class SkillManagerImpl implements SkillManager {
 	public List<BeanKeyValue> getAllSkills() {
 		List<BeanKeyValue> allBeans = new ArrayList<>();
 		BeanKeyValue beanKeyValue;
-		for (Skill skill : skillDAO.findAllByOrderByName()) {
-			beanKeyValue = new BeanKeyValue();
-			beanKeyValue.setId(skill.getId());
-			beanKeyValue.setValue(skill.getName());
-			allBeans.add(beanKeyValue);
+		try {
+			for (Skill skill : skillDAO.findAllByOrderByName()) {
+				beanKeyValue = new BeanKeyValue();
+				beanKeyValue.setId(skill.getId());
+				beanKeyValue.setValue(skill.getName());
+				allBeans.add(beanKeyValue);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 		}
 		return allBeans;
 	}

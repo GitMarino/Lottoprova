@@ -29,19 +29,21 @@ public class TopicManagerImpl implements TopicManager {
 	@Transactional
 	@Override
 	public TopicBean createTopic(final TopicBean topicBean) throws ServiceErrorException {
-		if (!topicDAO.existsByName(topicBean.getName())) {
-			Topic topic = new Topic();
-			topic.setName(topicBean.getName());
-			topic.setMaker("Christian Marino");
-			topic.setDateTime(LocalDateTime.now());
-			try {
+		try {
+			if (!topicDAO.existsByName(topicBean.getName())) {
+				Topic topic = new Topic();
+				topic.setName(topicBean.getName());
+				topic.setMaker("Christian Marino");
+				topic.setDateTime(LocalDateTime.now());
 				topicDAO.save(topic);
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-				throw new ServiceErrorException(e);
+
+				return topicBean;
 			}
-			return topicBean;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
+
 		throw new ServiceErrorException("Dati inconsistenti");
 	}
 
@@ -64,11 +66,15 @@ public class TopicManagerImpl implements TopicManager {
 	public List<BeanKeyValue> getAllTopics() {
 		List<BeanKeyValue> allBeans = new ArrayList<>();
 		BeanKeyValue beanKeyValue;
-		for (Topic topic : topicDAO.findAllByOrderByName()) {
-			beanKeyValue = new BeanKeyValue();
-			beanKeyValue.setId(topic.getId());
-			beanKeyValue.setValue(topic.getName());
-			allBeans.add(beanKeyValue);
+		try {
+			for (Topic topic : topicDAO.findAllByOrderByName()) {
+				beanKeyValue = new BeanKeyValue();
+				beanKeyValue.setId(topic.getId());
+				beanKeyValue.setValue(topic.getName());
+				allBeans.add(beanKeyValue);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 		}
 		return allBeans;
 	}

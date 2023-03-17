@@ -64,47 +64,46 @@ public class PersonManagerImpl implements PersonManager {
 	@Transactional
 	@Override
 	public PersonBean createPerson(final PersonBean personBean) throws ServiceErrorException {
-		if (!personDAO.existsByUsername(personBean.getUsername())) {
-			Person person = new Person();
-			person.setUsername(personBean.getUsername());
-			person.setName(personBean.getName());
-			person.setSurname(personBean.getSurname());
-			person.setMaker("Christian Marino");
-			person.setDateTime(LocalDateTime.now());
-			try {
+		try {
+			if (!personDAO.existsBySerial(personBean.getSerial())) {
+				Person person = new Person();
+				person.setSerial(personBean.getSerial());
+				person.setName(personBean.getName());
+				person.setSurname(personBean.getSurname());
+				person.setMaker("Christian Marino");
+				person.setDateTime(LocalDateTime.now());
 				personDAO.save(person);
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-				throw new ServiceErrorException(e);
+				return personBean;
 			}
-			return personBean;
+			throw new ServiceErrorException("Dati inconsistenti");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
-		throw new ServiceErrorException("Dati inconsistenti");
 	}
 
 	@Transactional
 	@Override
 	public void createPersonAreaConnection(final Long personId, final Long areaId) throws ServiceErrorException {
+		try {
+			Optional<Area> areaOptional = areaDAO.findById(areaId);
+			Optional<Person> personOptional = personDAO.findById(personId);
+			if (areaOptional.isPresent() && personOptional.isPresent()) {
+				PersonAreaConnectionKey personAreaConnectionKey = new PersonAreaConnectionKey();
+				personAreaConnectionKey.setArea(areaOptional.get());
+				personAreaConnectionKey.setPerson(personOptional.get());
 
-		Optional<Area> areaOptional = areaDAO.findById(areaId);
-		Optional<Person> personOptional = personDAO.findById(personId);
-		if (areaOptional.isPresent() && personOptional.isPresent()) {
-			PersonAreaConnectionKey personAreaConnectionKey = new PersonAreaConnectionKey();
-			personAreaConnectionKey.setArea(areaOptional.get());
-			personAreaConnectionKey.setPerson(personOptional.get());
-
-			PersonAreaConnection personAreaConnection = new PersonAreaConnection();
-			personAreaConnection.setId(personAreaConnectionKey);
-			personAreaConnection.setMaker("Christian Marino");
-			personAreaConnection.setDateTime(LocalDateTime.now());
-			try {
+				PersonAreaConnection personAreaConnection = new PersonAreaConnection();
+				personAreaConnection.setId(personAreaConnectionKey);
+				personAreaConnection.setMaker("Christian Marino");
+				personAreaConnection.setDateTime(LocalDateTime.now());
 				personAreaConnectionDAO.save(personAreaConnection);
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-				throw new ServiceErrorException(e);
+			} else {
+				throw new ServiceErrorException("Dati inconsistenti");
 			}
-		} else {
-			throw new ServiceErrorException("Dati inconsistenti");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
 
 	}
@@ -114,53 +113,52 @@ public class PersonManagerImpl implements PersonManager {
 	public void createPersonSkillConnection(final Long personId, final Long skillId, final Integer mark)
 			throws ServiceErrorException {
 
-		Optional<Person> personOptional = personDAO.findById(personId);
-		Optional<Skill> skillOptional = skillDAO.findById(skillId);
-		if (personOptional.isPresent() && skillOptional.isPresent()) {
-			PersonSkillConnectionKey personSkillConnectionKey = new PersonSkillConnectionKey();
-			personSkillConnectionKey.setPerson(personOptional.get());
-			personSkillConnectionKey.setSkill(skillOptional.get());
+		try {
+			Optional<Person> personOptional = personDAO.findById(personId);
+			Optional<Skill> skillOptional = skillDAO.findById(skillId);
+			if (personOptional.isPresent() && skillOptional.isPresent()) {
+				PersonSkillConnectionKey personSkillConnectionKey = new PersonSkillConnectionKey();
+				personSkillConnectionKey.setPerson(personOptional.get());
+				personSkillConnectionKey.setSkill(skillOptional.get());
 
-			PersonSkillConnection personSkillConnection = new PersonSkillConnection();
-			personSkillConnection.setId(personSkillConnectionKey);
-			personSkillConnection.setMark(mark);
-			personSkillConnection.setMaker("Christian Marino");
-			personSkillConnection.setDateTime(LocalDateTime.now());
-			try {
+				PersonSkillConnection personSkillConnection = new PersonSkillConnection();
+				personSkillConnection.setId(personSkillConnectionKey);
+				personSkillConnection.setMark(mark);
+				personSkillConnection.setMaker("Christian Marino");
+				personSkillConnection.setDateTime(LocalDateTime.now());
 				personSkillConnectionDAO.save(personSkillConnection);
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-				throw new ServiceErrorException(e);
+			} else {
+				throw new ServiceErrorException("Dati inconsistenti");
 			}
-		} else {
-			throw new ServiceErrorException("Dati inconsistenti");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
 	}
 
 	@Transactional
 	@Override
 	public void createPersonTopicConnection(final Long personId, final Long topicId) throws ServiceErrorException {
+		try {
+			Optional<Person> personOptional = personDAO.findById(personId);
+			Optional<Topic> topicOptional = topicDAO.findById(topicId);
 
-		Optional<Person> personOptional = personDAO.findById(personId);
-		Optional<Topic> topicOptional = topicDAO.findById(topicId);
+			if (personOptional.isPresent() && topicOptional.isPresent()) {
+				PersonTopicConnectionKey personTopicConnectionKey = new PersonTopicConnectionKey();
+				personTopicConnectionKey.setPerson(personOptional.get());
+				personTopicConnectionKey.setTopic(topicOptional.get());
 
-		if (personOptional.isPresent() && topicOptional.isPresent()) {
-			PersonTopicConnectionKey personTopicConnectionKey = new PersonTopicConnectionKey();
-			personTopicConnectionKey.setPerson(personOptional.get());
-			personTopicConnectionKey.setTopic(topicOptional.get());
-
-			PersonTopicConnection personTopicConnection = new PersonTopicConnection();
-			personTopicConnection.setId(personTopicConnectionKey);
-			personTopicConnection.setMaker("Christian Marino");
-			personTopicConnection.setDateTime(LocalDateTime.now());
-			try {
+				PersonTopicConnection personTopicConnection = new PersonTopicConnection();
+				personTopicConnection.setId(personTopicConnectionKey);
+				personTopicConnection.setMaker("Christian Marino");
+				personTopicConnection.setDateTime(LocalDateTime.now());
 				personTopicConnectionDAO.save(personTopicConnection);
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-				throw new ServiceErrorException(e);
+			} else {
+				throw new ServiceErrorException("Dati inconsistenti");
 			}
-		} else {
-			throw new ServiceErrorException("Dati inconsistenti");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
 	}
 
@@ -183,11 +181,15 @@ public class PersonManagerImpl implements PersonManager {
 	public List<BeanKeyValue> getAllPeople() {
 		List<BeanKeyValue> allBeans = new ArrayList<>();
 		BeanKeyValue beanKeyValue;
-		for (Person person : personDAO.findAllByOrderBySurname()) {
-			beanKeyValue = new BeanKeyValue();
-			beanKeyValue.setId(person.getId());
-			beanKeyValue.setValue(person.getUsername());
-			allBeans.add(beanKeyValue);
+		try {
+			for (Person person : personDAO.findAllByOrderBySurname()) {
+				beanKeyValue = new BeanKeyValue();
+				beanKeyValue.setId(person.getId());
+				beanKeyValue.setValue(person.getSurname());
+				allBeans.add(beanKeyValue);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 		}
 		return allBeans;
 	}
@@ -195,31 +197,39 @@ public class PersonManagerImpl implements PersonManager {
 	@Override
 	public PersonBean getPerson(final Long personId) throws ServiceErrorException {
 		PersonBean personBean;
-		Optional<Person> personOptional = personDAO.findById(personId);
-		if (personOptional.isPresent()) {
-			Person person = personOptional.get();
+		try {
+			Optional<Person> personOptional = personDAO.findById(personId);
+			if (personOptional.isPresent()) {
+				Person person = personOptional.get();
 
-			personBean = new PersonBean();
-			personBean.setId(person.getId());
-			personBean.setUsername(person.getUsername());
-			personBean.setName(person.getName());
-			personBean.setSurname(person.getSurname());
+				personBean = new PersonBean();
+				personBean.setId(person.getId());
+				personBean.setSerial(person.getSerial());
+				personBean.setName(person.getName());
+				personBean.setSurname(person.getSurname());
 
-			return personBean;
-		} else {
-			throw new ServiceErrorException("Dati inconsistenti");
+				return personBean;
+
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 		}
+		throw new ServiceErrorException("Dati inconsistenti");
 	}
 
 	@Override
 	public List<SkillMark> getPersonSkillMarks(final Long personId) {
 		List<SkillMark> skillMarkList = new ArrayList<>();
 		SkillMark skillMark;
-		for (PersonSkillConnection personSkillConnection : personSkillConnectionDAO.findByIdPersonId(personId)) {
-			skillMark = new SkillMark();
-			skillMark.setSkillName(personSkillConnection.getId().getSkill().getName());
-			skillMark.setMark(personSkillConnection.getMark());
-			skillMarkList.add(skillMark);
+		try {
+			for (PersonSkillConnection personSkillConnection : personSkillConnectionDAO.findByIdPersonId(personId)) {
+				skillMark = new SkillMark();
+				skillMark.setSkillName(personSkillConnection.getId().getSkill().getName());
+				skillMark.setMark(personSkillConnection.getMark());
+				skillMarkList.add(skillMark);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 		}
 		return skillMarkList;
 	}
@@ -228,13 +238,17 @@ public class PersonManagerImpl implements PersonManager {
 	public List<PersonBean> searchPeopleByBeans(final SearchPeopleObject searchPeopleObject) {
 		List<PersonBean> peopleByBeans = new ArrayList<>();
 		PersonBean personBean;
-		for (Person person : personDAO.searchPeople(searchPeopleObject)) {
-			personBean = new PersonBean();
-			personBean.setId(person.getId());
-			personBean.setUsername(person.getUsername());
-			personBean.setName(person.getName());
-			personBean.setSurname(person.getSurname());
-			peopleByBeans.add(personBean);
+		try {
+			for (Person person : personDAO.searchPeople(searchPeopleObject)) {
+				personBean = new PersonBean();
+				personBean.setId(person.getId());
+				personBean.setSerial(person.getSerial());
+				personBean.setName(person.getName());
+				personBean.setSurname(person.getSurname());
+				peopleByBeans.add(personBean);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 		}
 		return peopleByBeans;
 	}
