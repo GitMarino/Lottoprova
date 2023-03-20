@@ -63,7 +63,7 @@ public class TopicManagerImpl implements TopicManager {
 	}
 
 	@Override
-	public List<BeanKeyValue> getAllTopics() {
+	public List<BeanKeyValue> getAllTopics() throws ServiceErrorException {
 		List<BeanKeyValue> allBeans = new ArrayList<>();
 		BeanKeyValue beanKeyValue;
 		try {
@@ -75,8 +75,27 @@ public class TopicManagerImpl implements TopicManager {
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
 		return allBeans;
+	}
+
+	@Override
+	public List<BeanKeyValue> getTopicsByPerson(final Long personId) throws ServiceErrorException {
+		List<BeanKeyValue> topicBeans = new ArrayList<>();
+		BeanKeyValue beanKeyValue;
+		try {
+			for (Topic topic : topicDAO.findTopicsByPerson(personId)) {
+				beanKeyValue = new BeanKeyValue();
+				beanKeyValue.setId(topic.getId());
+				beanKeyValue.setValue(topic.getName());
+				topicBeans.add(beanKeyValue);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
+		}
+		return topicBeans;
 	}
 
 }

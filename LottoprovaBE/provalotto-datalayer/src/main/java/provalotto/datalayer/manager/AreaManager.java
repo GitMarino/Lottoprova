@@ -13,6 +13,8 @@ public interface AreaManager {
 
 	boolean deleteArea(Long areaBeanId);
 
-	List<BeanKeyValue> getAllAreas();
+	List<BeanKeyValue> getAllAreas() throws ServiceErrorException;
+
+	List<BeanKeyValue> getAreasByPerson(Long personId) throws ServiceErrorException;
 
 }

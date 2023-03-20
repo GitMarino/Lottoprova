@@ -28,6 +28,21 @@
     <div *ngIf="!person">
         <h6> Oops! Non è stato possibile caricare i dati </h6> 
     </div>
+
+    <br/>
+    <div *ngIf="topics">
+        <div *ngFor="let topic of topics">
+            <h5> {{topic.value}} </h5>
+        </div>
+    </div>
+
+    <br/>
+    <div *ngIf="areas">
+        <div *ngFor="let area of areas">
+            <h5> {{area.value}} </h5>
+        </div>
+    </div>
+
     <br/>
     <div *ngIf="skillMarks">
         <table class="table">

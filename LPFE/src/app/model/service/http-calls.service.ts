@@ -23,6 +23,10 @@ export class HttpCallsService
   { return this.http.post<void>(BACKEND_ENDPOINT+AREA+"?name="+name+"&personBeanId="+personBeanId, {'headers': STANDARD_JSON_HEADERS});
   }
 
+  public getAreasByPerson(personId: number): Observable<KeyValue[]>
+  { return this.http.get<KeyValue[]>(BACKEND_ENDPOINT+AREA+PERSON+"?personId="+personId);
+  }
+
   //PERSON
 
   public getPerson(personId: number): Observable<Person>
@@ -72,6 +76,10 @@ export class HttpCallsService
   
   public createTopic(topic: Topic): Observable<Topic>
   { return this.http.post<Topic>(BACKEND_ENDPOINT+TOPIC, topic, {'headers': STANDARD_JSON_HEADERS});
+  }
+
+  public getTopicsByPerson(personId: number): Observable<KeyValue[]>
+  { return this.http.get<KeyValue[]>(BACKEND_ENDPOINT+TOPIC+PERSON+"?personId="+personId);
   }
 
   //CONNECTIONS

@@ -108,7 +108,7 @@ public class AreaManagerImpl implements AreaManager {
 	}
 
 	@Override
-	public List<BeanKeyValue> getAllAreas() {
+	public List<BeanKeyValue> getAllAreas() throws ServiceErrorException {
 		List<BeanKeyValue> allBeans = new ArrayList<>();
 		BeanKeyValue beanKeyValue;
 		try {
@@ -120,8 +120,27 @@ public class AreaManagerImpl implements AreaManager {
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
 		return allBeans;
+	}
+
+	@Override
+	public List<BeanKeyValue> getAreasByPerson(final Long personId) throws ServiceErrorException {
+		List<BeanKeyValue> areaBeans = new ArrayList<>();
+		BeanKeyValue beanKeyValue;
+		try {
+			for (Area area : areaDAO.findAreasByPerson(personId)) {
+				beanKeyValue = new BeanKeyValue();
+				beanKeyValue.setId(area.getId());
+				beanKeyValue.setValue(area.getName());
+				areaBeans.add(beanKeyValue);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
+		}
+		return areaBeans;
 	}
 
 }

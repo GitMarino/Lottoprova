@@ -73,7 +73,7 @@ public class SkillManagerImpl implements SkillManager {
 	}
 
 	@Override
-	public List<BeanKeyValue> getAllSkills() {
+	public List<BeanKeyValue> getAllSkills() throws ServiceErrorException {
 		List<BeanKeyValue> allBeans = new ArrayList<>();
 		BeanKeyValue beanKeyValue;
 		try {
@@ -85,8 +85,27 @@ public class SkillManagerImpl implements SkillManager {
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
 		return allBeans;
+	}
+
+	@Override
+	public List<BeanKeyValue> getSkillsByTopic(final Long topicId) throws ServiceErrorException {
+		List<BeanKeyValue> skillBeans = new ArrayList<>();
+		BeanKeyValue beanKeyValue;
+		try {
+			for (Skill skill : skillDAO.findByTopicIdOrderByName(topicId)) {
+				beanKeyValue = new BeanKeyValue();
+				beanKeyValue.setId(skill.getId());
+				beanKeyValue.setValue(skill.getName());
+				skillBeans.add(beanKeyValue);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
+		}
+		return skillBeans;
 	}
 
 }

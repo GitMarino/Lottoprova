@@ -37,8 +37,21 @@ public class TopicController {
 	}
 
 	@GetMapping
-	public List<BeanKeyValue> getAllTopics() {
-		return topicManager.getAllTopics();
+	public ResponseEntity<List<BeanKeyValue>> getAllTopics() {
+		try {
+			return ResponseEntity.ok(topicManager.getAllTopics());
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	@GetMapping("/person")
+	public ResponseEntity<List<BeanKeyValue>> getTopicsByPerson(final Long personId) {
+		try {
+			return ResponseEntity.ok(topicManager.getTopicsByPerson(personId));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 }

@@ -36,8 +36,21 @@ public class SkillController {
 	}
 
 	@GetMapping
-	public List<BeanKeyValue> getAllSkills() {
-		return skillManager.getAllSkills();
+	public ResponseEntity<List<BeanKeyValue>> getAllSkills() {
+		try {
+			return ResponseEntity.ok(skillManager.getAllSkills());
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	@GetMapping("/topic")
+	public ResponseEntity<List<BeanKeyValue>> getSkillsByTopic(final Long topicId) {
+		try {
+			return ResponseEntity.ok(skillManager.getSkillsByTopic(topicId));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 }

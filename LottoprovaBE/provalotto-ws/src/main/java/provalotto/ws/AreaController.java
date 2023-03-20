@@ -49,8 +49,21 @@ public class AreaController {
 	}
 
 	@GetMapping
-	public List<BeanKeyValue> getAllAreas() {
-		return areaManager.getAllAreas();
+	public ResponseEntity<List<BeanKeyValue>> getAllAreas() {
+		try {
+			return ResponseEntity.ok(areaManager.getAllAreas());
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	@GetMapping("/person")
+	public ResponseEntity<List<BeanKeyValue>> getAreasByPerson(final Long personId) {
+		try {
+			return ResponseEntity.ok(areaManager.getAreasByPerson(personId));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 }

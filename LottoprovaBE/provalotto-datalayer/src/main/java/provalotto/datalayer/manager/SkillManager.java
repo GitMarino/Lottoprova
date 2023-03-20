@@ -11,6 +11,8 @@ public interface SkillManager {
 
 	boolean deleteSkill(Long skillBeanId);
 
-	List<BeanKeyValue> getAllSkills();
+	List<BeanKeyValue> getAllSkills() throws ServiceErrorException;
+
+	List<BeanKeyValue> getSkillsByTopic(Long personId) throws ServiceErrorException;
 
 }
