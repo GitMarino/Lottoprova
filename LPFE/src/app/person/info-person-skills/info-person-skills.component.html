@@ -1,4 +1,8 @@
 <app-page [iconName]="iconName" pageTitle="Dettagli persona">
+    <div *ngIf="!person && !topics && !areas">
+        <h6> Oops! Non è stato possibile caricare i dati </h6> 
+    </div>
+    
     <div *ngIf="person"> 
         <div class="row">
             <div class="col-md-1"> 
@@ -25,12 +29,10 @@
             </div>
         </div>
     </div>
-    <div *ngIf="!person">
-        <h6> Oops! Non è stato possibile caricare i dati </h6> 
-    </div>
 
     <br/>
     <div *ngIf="topics">
+        <h6> tematiche: </h6>
         <div *ngFor="let topic of topics">
             <h5> {{topic.value}} </h5>
         </div>
@@ -38,6 +40,7 @@
 
     <br/>
     <div *ngIf="areas">
+        <h6> aree: </h6>
         <div *ngFor="let area of areas">
             <h5> {{area.value}} </h5>
         </div>
