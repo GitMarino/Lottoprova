@@ -1,4 +1,4 @@
-package provalotto.datalayer.manager.impl;
+package provalotto.datalayer.exceptions;
 
 public class ServiceErrorException extends Exception {
 

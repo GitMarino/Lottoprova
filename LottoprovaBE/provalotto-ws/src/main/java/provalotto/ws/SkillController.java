@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import provalotto.bean.bean.BeanKeyValue;
+import provalotto.bean.bean.KeyValueBean;
 import provalotto.datalayer.manager.SkillManager;
 
 @RestController
@@ -36,7 +36,7 @@ public class SkillController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<BeanKeyValue>> getAllSkills() {
+	public ResponseEntity<List<KeyValueBean>> getAllSkills() {
 		try {
 			return ResponseEntity.ok(skillManager.getAllSkills());
 		} catch (Exception e) {
@@ -45,7 +45,7 @@ public class SkillController {
 	}
 
 	@GetMapping("/topic")
-	public ResponseEntity<List<BeanKeyValue>> getSkillsByTopic(final Long topicId) {
+	public ResponseEntity<List<KeyValueBean>> getSkillsByTopic(final Long topicId) {
 		try {
 			return ResponseEntity.ok(skillManager.getSkillsByTopic(topicId));
 		} catch (Exception e) {

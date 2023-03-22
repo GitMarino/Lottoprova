@@ -3,7 +3,7 @@ package provalotto.bean.bean;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class BeanKeyValue implements Serializable {
+public class KeyValueBean implements Serializable {
 
 	private static final long serialVersionUID = -5797384763938225572L;
 
@@ -19,7 +19,7 @@ public class BeanKeyValue implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BeanKeyValue other = (BeanKeyValue) obj;
+		KeyValueBean other = (KeyValueBean) obj;
 		return Objects.equals(id, other.id) && Objects.equals(value, other.value);
 	}
 

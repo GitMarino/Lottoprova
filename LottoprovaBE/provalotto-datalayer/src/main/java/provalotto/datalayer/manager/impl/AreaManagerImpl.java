@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import provalotto.bean.bean.BeanKeyValue;
+import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.connection.AreaTopicConnection;
 import provalotto.bean.entity.Area;
 import provalotto.bean.entity.Person;
@@ -22,6 +22,7 @@ import provalotto.datalayer.dao.AreaDAO;
 import provalotto.datalayer.dao.AreaTopicConnectionDAO;
 import provalotto.datalayer.dao.PersonDAO;
 import provalotto.datalayer.dao.TopicDAO;
+import provalotto.datalayer.exceptions.ServiceErrorException;
 import provalotto.datalayer.manager.AreaManager;
 
 @Component
@@ -108,12 +109,12 @@ public class AreaManagerImpl implements AreaManager {
 	}
 
 	@Override
-	public List<BeanKeyValue> getAllAreas() throws ServiceErrorException {
-		List<BeanKeyValue> allBeans = new ArrayList<>();
-		BeanKeyValue beanKeyValue;
+	public List<KeyValueBean> getAllAreas() throws ServiceErrorException {
+		List<KeyValueBean> allBeans = new ArrayList<>();
+		KeyValueBean beanKeyValue;
 		try {
 			for (Area area : areaDAO.findAllByOrderByName()) {
-				beanKeyValue = new BeanKeyValue();
+				beanKeyValue = new KeyValueBean();
 				beanKeyValue.setId(area.getId());
 				beanKeyValue.setValue(area.getName());
 				allBeans.add(beanKeyValue);
@@ -126,12 +127,12 @@ public class AreaManagerImpl implements AreaManager {
 	}
 
 	@Override
-	public List<BeanKeyValue> getAreasByPerson(final Long personId) throws ServiceErrorException {
-		List<BeanKeyValue> areaBeans = new ArrayList<>();
-		BeanKeyValue beanKeyValue;
+	public List<KeyValueBean> getAreasByPerson(final Long personId) throws ServiceErrorException {
+		List<KeyValueBean> areaBeans = new ArrayList<>();
+		KeyValueBean beanKeyValue;
 		try {
 			for (Area area : areaDAO.findAreasByPerson(personId)) {
-				beanKeyValue = new BeanKeyValue();
+				beanKeyValue = new KeyValueBean();
 				beanKeyValue.setId(area.getId());
 				beanKeyValue.setValue(area.getName());
 				areaBeans.add(beanKeyValue);

@@ -12,10 +12,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import provalotto.bean.bean.BeanKeyValue;
+import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.bean.TopicBean;
 import provalotto.bean.entity.Topic;
 import provalotto.datalayer.dao.TopicDAO;
+import provalotto.datalayer.exceptions.ServiceErrorException;
 import provalotto.datalayer.manager.TopicManager;
 
 @Component
@@ -63,12 +64,12 @@ public class TopicManagerImpl implements TopicManager {
 	}
 
 	@Override
-	public List<BeanKeyValue> getAllTopics() throws ServiceErrorException {
-		List<BeanKeyValue> allBeans = new ArrayList<>();
-		BeanKeyValue beanKeyValue;
+	public List<KeyValueBean> getAllTopics() throws ServiceErrorException {
+		List<KeyValueBean> allBeans = new ArrayList<>();
+		KeyValueBean beanKeyValue;
 		try {
 			for (Topic topic : topicDAO.findAllByOrderByName()) {
-				beanKeyValue = new BeanKeyValue();
+				beanKeyValue = new KeyValueBean();
 				beanKeyValue.setId(topic.getId());
 				beanKeyValue.setValue(topic.getName());
 				allBeans.add(beanKeyValue);
@@ -81,12 +82,12 @@ public class TopicManagerImpl implements TopicManager {
 	}
 
 	@Override
-	public List<BeanKeyValue> getTopicsByPerson(final Long personId) throws ServiceErrorException {
-		List<BeanKeyValue> topicBeans = new ArrayList<>();
-		BeanKeyValue beanKeyValue;
+	public List<KeyValueBean> getTopicsByPerson(final Long personId) throws ServiceErrorException {
+		List<KeyValueBean> topicBeans = new ArrayList<>();
+		KeyValueBean beanKeyValue;
 		try {
 			for (Topic topic : topicDAO.findTopicsByPerson(personId)) {
-				beanKeyValue = new BeanKeyValue();
+				beanKeyValue = new KeyValueBean();
 				beanKeyValue.setId(topic.getId());
 				beanKeyValue.setValue(topic.getName());
 				topicBeans.add(beanKeyValue);

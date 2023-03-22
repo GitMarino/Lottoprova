@@ -2,8 +2,8 @@ package provalotto.datalayer.manager;
 
 import java.util.List;
 
-import provalotto.bean.bean.BeanKeyValue;
-import provalotto.datalayer.manager.impl.ServiceErrorException;
+import provalotto.bean.bean.KeyValueBean;
+import provalotto.datalayer.exceptions.ServiceErrorException;
 
 public interface AreaManager {
 
@@ -13,8 +13,8 @@ public interface AreaManager {
 
 	boolean deleteArea(Long areaBeanId);
 
-	List<BeanKeyValue> getAllAreas() throws ServiceErrorException;
+	List<KeyValueBean> getAllAreas() throws ServiceErrorException;
 
-	List<BeanKeyValue> getAreasByPerson(Long personId) throws ServiceErrorException;
+	List<KeyValueBean> getAreasByPerson(Long personId) throws ServiceErrorException;
 
 }

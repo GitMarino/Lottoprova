@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import provalotto.bean.bean.BeanKeyValue;
+import provalotto.bean.bean.KeyValueBean;
 import provalotto.datalayer.manager.AreaManager;
 
 @RestController
@@ -49,7 +49,7 @@ public class AreaController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<BeanKeyValue>> getAllAreas() {
+	public ResponseEntity<List<KeyValueBean>> getAllAreas() {
 		try {
 			return ResponseEntity.ok(areaManager.getAllAreas());
 		} catch (Exception e) {
@@ -58,7 +58,7 @@ public class AreaController {
 	}
 
 	@GetMapping("/person")
-	public ResponseEntity<List<BeanKeyValue>> getAreasByPerson(final Long personId) {
+	public ResponseEntity<List<KeyValueBean>> getAreasByPerson(final Long personId) {
 		try {
 			return ResponseEntity.ok(areaManager.getAreasByPerson(personId));
 		} catch (Exception e) {

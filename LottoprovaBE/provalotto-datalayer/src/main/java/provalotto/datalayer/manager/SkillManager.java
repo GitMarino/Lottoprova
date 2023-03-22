@@ -2,8 +2,8 @@ package provalotto.datalayer.manager;
 
 import java.util.List;
 
-import provalotto.bean.bean.BeanKeyValue;
-import provalotto.datalayer.manager.impl.ServiceErrorException;
+import provalotto.bean.bean.KeyValueBean;
+import provalotto.datalayer.exceptions.ServiceErrorException;
 
 public interface SkillManager {
 
@@ -11,8 +11,8 @@ public interface SkillManager {
 
 	boolean deleteSkill(Long skillBeanId);
 
-	List<BeanKeyValue> getAllSkills() throws ServiceErrorException;
+	List<KeyValueBean> getAllSkills() throws ServiceErrorException;
 
-	List<BeanKeyValue> getSkillsByTopic(Long personId) throws ServiceErrorException;
+	List<KeyValueBean> getSkillsByTopic(Long personId) throws ServiceErrorException;
 
 }

@@ -1,8 +1,8 @@
-package provalotto.bean.utility;
+package provalotto.bean.bean;
 
 import java.util.Objects;
 
-public class SkillMark {
+public class SkillMarkBean {
 
 	private String skillName;
 
@@ -16,7 +16,7 @@ public class SkillMark {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SkillMark other = (SkillMark) obj;
+		SkillMarkBean other = (SkillMarkBean) obj;
 		return mark == other.mark && Objects.equals(skillName, other.skillName);
 	}
 

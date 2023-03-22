@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import provalotto.bean.bean.BeanKeyValue;
+import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.bean.TopicBean;
 import provalotto.datalayer.manager.TopicManager;
 
@@ -37,7 +37,7 @@ public class TopicController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<BeanKeyValue>> getAllTopics() {
+	public ResponseEntity<List<KeyValueBean>> getAllTopics() {
 		try {
 			return ResponseEntity.ok(topicManager.getAllTopics());
 		} catch (Exception e) {
@@ -46,7 +46,7 @@ public class TopicController {
 	}
 
 	@GetMapping("/person")
-	public ResponseEntity<List<BeanKeyValue>> getTopicsByPerson(final Long personId) {
+	public ResponseEntity<List<KeyValueBean>> getTopicsByPerson(final Long personId) {
 		try {
 			return ResponseEntity.ok(topicManager.getTopicsByPerson(personId));
 		} catch (Exception e) {

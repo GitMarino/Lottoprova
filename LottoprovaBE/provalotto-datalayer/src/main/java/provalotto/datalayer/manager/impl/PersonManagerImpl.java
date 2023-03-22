@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import provalotto.bean.bean.BeanKeyValue;
+import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.bean.PersonBean;
-import provalotto.bean.bean.SearchPeopleObject;
+import provalotto.bean.bean.SkillMarkBean;
 import provalotto.bean.connection.PersonAreaConnection;
 import provalotto.bean.connection.PersonSkillConnection;
 import provalotto.bean.connection.PersonTopicConnection;
@@ -25,7 +25,7 @@ import provalotto.bean.entity.Topic;
 import provalotto.bean.key.PersonAreaConnectionKey;
 import provalotto.bean.key.PersonSkillConnectionKey;
 import provalotto.bean.key.PersonTopicConnectionKey;
-import provalotto.bean.utility.SkillMark;
+import provalotto.bean.utility.SearchPeopleObject;
 import provalotto.datalayer.dao.AreaDAO;
 import provalotto.datalayer.dao.PersonAreaConnectionDAO;
 import provalotto.datalayer.dao.PersonDAO;
@@ -33,6 +33,7 @@ import provalotto.datalayer.dao.PersonSkillConnectionDAO;
 import provalotto.datalayer.dao.PersonTopicConnectionDAO;
 import provalotto.datalayer.dao.SkillDAO;
 import provalotto.datalayer.dao.TopicDAO;
+import provalotto.datalayer.exceptions.ServiceErrorException;
 import provalotto.datalayer.manager.PersonManager;
 
 @Component
@@ -178,12 +179,12 @@ public class PersonManagerImpl implements PersonManager {
 	}
 
 	@Override
-	public List<BeanKeyValue> getAllPeople() {
-		List<BeanKeyValue> allBeans = new ArrayList<>();
-		BeanKeyValue beanKeyValue;
+	public List<KeyValueBean> getAllPeople() {
+		List<KeyValueBean> allBeans = new ArrayList<>();
+		KeyValueBean beanKeyValue;
 		try {
 			for (Person person : personDAO.findAllByOrderBySurname()) {
-				beanKeyValue = new BeanKeyValue();
+				beanKeyValue = new KeyValueBean();
 				beanKeyValue.setId(person.getId());
 				beanKeyValue.setValue(person.getSurname());
 				allBeans.add(beanKeyValue);
@@ -218,12 +219,12 @@ public class PersonManagerImpl implements PersonManager {
 	}
 
 	@Override
-	public List<SkillMark> getPersonSkillMarks(final Long personId) {
-		List<SkillMark> skillMarkList = new ArrayList<>();
-		SkillMark skillMark;
+	public List<SkillMarkBean> getPersonSkillMarks(final Long personId) {
+		List<SkillMarkBean> skillMarkList = new ArrayList<>();
+		SkillMarkBean skillMark;
 		try {
 			for (PersonSkillConnection personSkillConnection : personSkillConnectionDAO.findByIdPersonId(personId)) {
-				skillMark = new SkillMark();
+				skillMark = new SkillMarkBean();
 				skillMark.setSkillName(personSkillConnection.getId().getSkill().getName());
 				skillMark.setMark(personSkillConnection.getMark());
 				skillMarkList.add(skillMark);

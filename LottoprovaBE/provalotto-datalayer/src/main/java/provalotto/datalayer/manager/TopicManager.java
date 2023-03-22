@@ -2,9 +2,9 @@ package provalotto.datalayer.manager;
 
 import java.util.List;
 
-import provalotto.bean.bean.BeanKeyValue;
+import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.bean.TopicBean;
-import provalotto.datalayer.manager.impl.ServiceErrorException;
+import provalotto.datalayer.exceptions.ServiceErrorException;
 
 public interface TopicManager {
 
@@ -12,8 +12,8 @@ public interface TopicManager {
 
 	boolean deleteTopic(Long topicBeanId);
 
-	List<BeanKeyValue> getAllTopics() throws ServiceErrorException;
+	List<KeyValueBean> getAllTopics() throws ServiceErrorException;
 
-	List<BeanKeyValue> getTopicsByPerson(Long personId) throws ServiceErrorException;
+	List<KeyValueBean> getTopicsByPerson(Long personId) throws ServiceErrorException;
 
 }

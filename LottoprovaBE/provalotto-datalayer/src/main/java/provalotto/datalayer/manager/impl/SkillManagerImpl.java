@@ -12,11 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import provalotto.bean.bean.BeanKeyValue;
+import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.entity.Skill;
 import provalotto.bean.entity.Topic;
 import provalotto.datalayer.dao.SkillDAO;
 import provalotto.datalayer.dao.TopicDAO;
+import provalotto.datalayer.exceptions.ServiceErrorException;
 import provalotto.datalayer.manager.SkillManager;
 
 @Component
@@ -73,12 +74,12 @@ public class SkillManagerImpl implements SkillManager {
 	}
 
 	@Override
-	public List<BeanKeyValue> getAllSkills() throws ServiceErrorException {
-		List<BeanKeyValue> allBeans = new ArrayList<>();
-		BeanKeyValue beanKeyValue;
+	public List<KeyValueBean> getAllSkills() throws ServiceErrorException {
+		List<KeyValueBean> allBeans = new ArrayList<>();
+		KeyValueBean beanKeyValue;
 		try {
 			for (Skill skill : skillDAO.findAllByOrderByName()) {
-				beanKeyValue = new BeanKeyValue();
+				beanKeyValue = new KeyValueBean();
 				beanKeyValue.setId(skill.getId());
 				beanKeyValue.setValue(skill.getName());
 				allBeans.add(beanKeyValue);
@@ -91,12 +92,12 @@ public class SkillManagerImpl implements SkillManager {
 	}
 
 	@Override
-	public List<BeanKeyValue> getSkillsByTopic(final Long topicId) throws ServiceErrorException {
-		List<BeanKeyValue> skillBeans = new ArrayList<>();
-		BeanKeyValue beanKeyValue;
+	public List<KeyValueBean> getSkillsByTopic(final Long topicId) throws ServiceErrorException {
+		List<KeyValueBean> skillBeans = new ArrayList<>();
+		KeyValueBean beanKeyValue;
 		try {
 			for (Skill skill : skillDAO.findByTopicIdOrderByName(topicId)) {
-				beanKeyValue = new BeanKeyValue();
+				beanKeyValue = new KeyValueBean();
 				beanKeyValue.setId(skill.getId());
 				beanKeyValue.setValue(skill.getName());
 				skillBeans.add(beanKeyValue);

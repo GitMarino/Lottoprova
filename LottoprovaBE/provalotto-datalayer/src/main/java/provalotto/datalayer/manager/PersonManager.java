@@ -2,11 +2,11 @@ package provalotto.datalayer.manager;
 
 import java.util.List;
 
-import provalotto.bean.bean.BeanKeyValue;
+import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.bean.PersonBean;
-import provalotto.bean.bean.SearchPeopleObject;
-import provalotto.bean.utility.SkillMark;
-import provalotto.datalayer.manager.impl.ServiceErrorException;
+import provalotto.bean.bean.SkillMarkBean;
+import provalotto.bean.utility.SearchPeopleObject;
+import provalotto.datalayer.exceptions.ServiceErrorException;
 
 public interface PersonManager {
 
@@ -20,11 +20,12 @@ public interface PersonManager {
 
 	boolean deletePerson(Long personId);
 
-	List<BeanKeyValue> getAllPeople();
+	List<KeyValueBean> getAllPeople();
 
-	PersonBean getPerson(Long personId) throws ServiceErrorException;;
+	PersonBean getPerson(Long personId) throws ServiceErrorException;
 
-	List<SkillMark> getPersonSkillMarks(Long personId);
+	List<SkillMarkBean> getPersonSkillMarks(Long personId);
 
 	List<PersonBean> searchPeopleByBeans(SearchPeopleObject searchPeopleObject);
+
 }

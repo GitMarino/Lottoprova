@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import provalotto.bean.bean.SearchPeopleObject;
 import provalotto.bean.entity.Person;
+import provalotto.bean.utility.SearchPeopleObject;
 
 @Repository
 public interface PersonDAO extends JpaRepository<Person, Long> {
