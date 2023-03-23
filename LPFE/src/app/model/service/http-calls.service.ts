@@ -19,8 +19,8 @@ export class HttpCallsService
   { return this.http.get<KeyValue[]>(BACKEND_ENDPOINT+AREA);
   }
 
-  public createArea(name: string, personBeanId: number): Observable<void>
-  { return this.http.post<void>(BACKEND_ENDPOINT+AREA+"?name="+name+"&personBeanId="+personBeanId, {'headers': STANDARD_JSON_HEADERS});
+  public createArea(name: string, personBeanId: number, topicBeanId: number): Observable<void>
+  { return this.http.post<void>(BACKEND_ENDPOINT+AREA+"?name="+name+"&personBeanId="+personBeanId+"&topicBeanId="+topicBeanId, {'headers': STANDARD_JSON_HEADERS});
   }
 
   public getAreasByPerson(personId: number): Observable<KeyValue[]>
@@ -80,6 +80,12 @@ export class HttpCallsService
 
   public getTopicsByPerson(personId: number): Observable<KeyValue[]>
   { return this.http.get<KeyValue[]>(BACKEND_ENDPOINT+TOPIC+PERSON+"?personId="+personId);
+  }
+
+  //AREA TOPIC SKILL
+
+  public getAreaTopicSkill(): Observable<KeyValue[][]>
+  { return this.http.get<KeyValue[][]>(BACKEND_ENDPOINT+AREA+TOPIC+SKILL);
   }
 
   //CONNECTIONS

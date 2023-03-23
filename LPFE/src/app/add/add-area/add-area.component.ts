@@ -16,6 +16,8 @@ export class AddAreaComponent implements OnInit {
   name: string = "";
   selectedPerson?: number;
   people: KeyValue[] = [];
+  selectedTopic?: number;
+  topics: KeyValue[] = [];
 
   error: boolean = false;
   success: boolean = false;
@@ -36,10 +38,17 @@ export class AddAreaComponent implements OnInit {
           this.people = response as KeyValue[];
         }
       });
+
+    this.httpCalls.getAllTopics()
+      .subscribe({
+        next: (response: KeyValue[]) => {
+          this.topics = response as KeyValue[];
+        }
+      })
   }
 
   addArea = () =>
-  { this.httpCalls.createArea(this.name, this.selectedPerson!)
+  { this.httpCalls.createArea(this.name, this.selectedPerson!, this.selectedTopic!)
       .subscribe({
         next: (response: void) => {
           this.success = true;
