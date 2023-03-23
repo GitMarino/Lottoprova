@@ -9,7 +9,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { PersonComponent } from './person/person.component';
-import { InfoPersonSkillsComponent } from './person/info-person-skills/info-person-skills.component';
+import { InfoPersonComponent } from './person/info-person/info-person.component';
 import { TopicComponent } from './topic/topic.component';
 import { AreaComponent } from './area/area.component';
 import { AddPersonComponent } from './add/add-person/add-person.component';
@@ -33,7 +33,7 @@ const routes: Routes = [
   { path: 'area', component: AreaComponent},
   { path: 'addArea', component: AddAreaComponent},
   { path: 'person', component: PersonComponent},
-  { path: 'infoPerson/:id', component: InfoPersonSkillsComponent},
+  { path: 'infoPerson/:id', component: InfoPersonComponent},
   { path: 'addPerson', component:AddPersonComponent},
   { path: 'skill', component: SkillComponent},
   { path: 'addSkill', component: AddSkillComponent},
@@ -53,7 +53,7 @@ const routes: Routes = [
 
     AreaComponent, 
     PersonComponent,
-    InfoPersonSkillsComponent, 
+    InfoPersonComponent, 
     SkillComponent,
     TopicComponent,
     

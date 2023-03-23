@@ -17,13 +17,6 @@
           </div>
         </li>
         <li ngbDropdown class="nav-item">
-          <a href (click)="false" class="nav-link" ngbDropdownToggle> Competenze </a>
-          <div ngbDropdownMenu>
-            <!--<a ngbDropdownItem href="/skill"> Gestione competenze </a>-->
-            <a ngbDropdownItem href="/addSkill"> Registrazione competenze </a>
-          </div>
-        </li>
-        <li ngbDropdown class="nav-item">
           <a href (click)="false" class="nav-link" ngbDropdownToggle> Tematiche </a>
           <div ngbDropdownMenu>
             <!--<a ngbDropdownItem href="/topic"> Gestione tematiche </a>-->
@@ -31,11 +24,18 @@
           </div>
         </li>
         <li ngbDropdown class="nav-item">
+          <a href (click)="false" class="nav-link" ngbDropdownToggle> Competenze </a>
+          <div ngbDropdownMenu>
+            <!--<a ngbDropdownItem href="/skill"> Gestione competenze </a>-->
+            <a ngbDropdownItem href="/addSkill"> Registrazione competenze </a>
+          </div>
+        </li>
+        <li ngbDropdown class="nav-item">
           <a href (click)="false" class="nav-link" ngbDropdownToggle> Associazioni </a>
           <div ngbDropdownMenu>
             <a ngbDropdownItem routerLink="/personArea"> Persone ad Aree </a>
-            <a ngbDropdownItem href="/personSkill"> Persone a Competenze </a>
             <a ngbDropdownItem href="/personTopic"> Persone a Tematiche </a>
+            <a ngbDropdownItem href="/personSkill"> Persone a Competenze </a>
             <a ngbDropdownItem href="/areaTopic"> Tematiche ad Aree </a>
           </div>
         </li>

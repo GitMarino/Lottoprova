@@ -14,5 +14,5 @@ export const SKILLS = "/skills";
 //TOPIC
 export const TOPIC = "/topic";
 
-//search
+//OTHER
 export const SEARCH = "/search";

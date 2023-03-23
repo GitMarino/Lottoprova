@@ -33,6 +33,9 @@
     <br/>
     <div *ngIf="topics">
         <h6> tematiche: </h6>
+        <div *ngIf="topics.length===0">
+            <h6> Nessuna </h6>
+        </div>
         <div *ngFor="let topic of topics">
             <h5> {{topic.value}} </h5>
         </div>
@@ -41,11 +44,15 @@
     <br/>
     <div *ngIf="areas">
         <h6> aree: </h6>
+        <div *ngIf="areas.length===0">
+            <h6> Nessuna </h6>
+        </div>
         <div *ngFor="let area of areas">
             <h5> {{area.value}} </h5>
         </div>
     </div>
 
+    <!--
     <br/>
     <div *ngIf="skillMarks">
         <table class="table">
@@ -65,5 +72,5 @@
     </div>
     <div *ngIf="!skillMarks">
         <h6> Oops! Non è stato possibile caricare le competenze </h6>
-    </div>
+    </div> -->
 </app-page>

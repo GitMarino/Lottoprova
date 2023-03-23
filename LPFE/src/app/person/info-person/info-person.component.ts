@@ -7,11 +7,11 @@ import { forkJoin } from 'rxjs';
 import { KeyValue } from 'src/app/model/objects/key-value';
 
 @Component({
-  selector: 'app-info-person-skills',
-  templateUrl: './info-person-skills.component.html',
-  styleUrls: ['./info-person-skills.component.scss']
+  selector: 'app-info-person',
+  templateUrl: './info-person.component.html',
+  styleUrls: ['./info-person.component.scss']
 })
-export class InfoPersonSkillsComponent implements OnInit {
+export class InfoPersonComponent implements OnInit {
   
   personId?: number;
 
