@@ -7,7 +7,7 @@ import provalotto.datalayer.exceptions.ServiceErrorException;
 
 public interface AreaManager {
 
-	void createArea(final String name, final Long personBeanId) throws ServiceErrorException;
+	void createArea(final String name, final Long personBeanId, Long topicBeanId) throws ServiceErrorException;
 
 	void createAreaTopicConnection(Long areaId, Long topicId) throws ServiceErrorException;
 
@@ -16,5 +16,7 @@ public interface AreaManager {
 	List<KeyValueBean> getAllAreas() throws ServiceErrorException;
 
 	List<KeyValueBean> getAreasByPerson(Long personId) throws ServiceErrorException;
+
+	List<List<KeyValueBean>> getAreaTopicSkillMap();
 
 }

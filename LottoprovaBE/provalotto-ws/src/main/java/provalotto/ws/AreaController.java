@@ -3,6 +3,7 @@ package provalotto.ws;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import provalotto.bean.bean.KeyValueBean;
 import provalotto.datalayer.manager.AreaManager;
+import provalotto.ws.response.Answer;
 
 @RestController
 @RequestMapping("/area")
@@ -23,9 +25,9 @@ public class AreaController {
 	private AreaManager areaManager;
 
 	@PostMapping
-	public ResponseEntity<Integer> createArea(final String name, final Long personBeanId) {
+	public ResponseEntity<Integer> createArea(final String name, final Long personBeanId, final Long topicBeanId) {
 		try {
-			areaManager.createArea(name, personBeanId);
+			areaManager.createArea(name, personBeanId, topicBeanId);
 			return ResponseEntity.ok(1);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
@@ -64,6 +66,11 @@ public class AreaController {
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
+	}
+
+	@GetMapping("/topic/skill")
+	public Answer<List<List<KeyValueBean>>> getAreaTopicSkillMap() {
+		return Answer.ok(areaManager.getAreaTopicSkillMap(), HttpStatus.OK);
 	}
 
 }
