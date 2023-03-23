@@ -40,12 +40,14 @@ public class TopicManagerImpl implements TopicManager {
 
 				return topicBean;
 			}
+			throw new ServiceErrorException("Dati inconsistenti");
+		} catch (ServiceErrorException e) {
+			log.error(e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
 		}
-
-		throw new ServiceErrorException("Dati inconsistenti");
 	}
 
 	@Override
@@ -74,11 +76,11 @@ public class TopicManagerImpl implements TopicManager {
 				beanKeyValue.setValue(topic.getName());
 				allBeans.add(beanKeyValue);
 			}
+			return allBeans;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
 		}
-		return allBeans;
 	}
 
 	@Override
@@ -92,11 +94,11 @@ public class TopicManagerImpl implements TopicManager {
 				beanKeyValue.setValue(topic.getName());
 				topicBeans.add(beanKeyValue);
 			}
+			return topicBeans;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
 		}
-		return topicBeans;
 	}
 
 }

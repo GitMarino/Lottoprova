@@ -52,6 +52,9 @@ public class SkillManagerImpl implements SkillManager {
 			} else {
 				throw new ServiceErrorException("Dati inconsistenti");
 			}
+		} catch (ServiceErrorException e) {
+			log.error(e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
@@ -84,11 +87,11 @@ public class SkillManagerImpl implements SkillManager {
 				beanKeyValue.setValue(skill.getName());
 				allBeans.add(beanKeyValue);
 			}
+			return allBeans;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
 		}
-		return allBeans;
 	}
 
 	@Override
@@ -102,11 +105,11 @@ public class SkillManagerImpl implements SkillManager {
 				beanKeyValue.setValue(skill.getName());
 				skillBeans.add(beanKeyValue);
 			}
+			return skillBeans;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
 		}
-		return skillBeans;
 	}
 
 }

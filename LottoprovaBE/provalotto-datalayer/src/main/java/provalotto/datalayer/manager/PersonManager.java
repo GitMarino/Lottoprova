@@ -20,12 +20,12 @@ public interface PersonManager {
 
 	boolean deletePerson(Long personId);
 
-	List<KeyValueBean> getAllPeople();
+	List<KeyValueBean> getAllPeople() throws ServiceErrorException;
 
 	PersonBean getPerson(Long personId) throws ServiceErrorException;
 
-	List<SkillMarkBean> getPersonSkillMarks(Long personId);
+	List<SkillMarkBean> getPersonSkillMarks(Long personId) throws ServiceErrorException;
 
-	List<PersonBean> searchPeopleByBeans(SearchPeopleObject searchPeopleObject);
+	List<PersonBean> searchPeopleByBeans(SearchPeopleObject searchPeopleObject) throws ServiceErrorException;
 
 }

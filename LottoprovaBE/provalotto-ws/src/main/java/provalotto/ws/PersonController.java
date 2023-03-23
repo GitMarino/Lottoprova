@@ -75,8 +75,12 @@ public class PersonController {
 	}
 
 	@GetMapping
-	public List<KeyValueBean> getAllPeople() {
-		return personManager.getAllPeople();
+	public ResponseEntity<List<KeyValueBean>> getAllPeople() {
+		try {
+			return ResponseEntity.ok(personManager.getAllPeople());
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 	@GetMapping("/{id}")
@@ -91,18 +95,26 @@ public class PersonController {
 	}
 
 	@GetMapping("/{id}/skill")
-	public List<SkillMarkBean> getPersonSkillMarks(@PathVariable("id") final Long personId) {
-		return personManager.getPersonSkillMarks(personId);
+	public ResponseEntity<List<SkillMarkBean>> getPersonSkillMarks(@PathVariable("id") final Long personId) {
+		try {
+			return ResponseEntity.ok(personManager.getPersonSkillMarks(personId));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 	@GetMapping("/search")
-	public List<PersonBean> searchPeopleByBeans(final @RequestParam(required = false) Long areaId,
+	public ResponseEntity<List<PersonBean>> searchPeopleByBeans(final @RequestParam(required = false) Long areaId,
 			final @RequestParam(required = false) Long skillId, final @RequestParam(required = false) Long topicId) {
 		SearchPeopleObject searchPeopleObject = new SearchPeopleObject();
 		searchPeopleObject.setAreaId(areaId);
 		searchPeopleObject.setSkillId(skillId);
 		searchPeopleObject.setTopicId(topicId);
-		return personManager.searchPeopleByBeans(searchPeopleObject);
+		try {
+			return ResponseEntity.ok(personManager.searchPeopleByBeans(searchPeopleObject));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 }
