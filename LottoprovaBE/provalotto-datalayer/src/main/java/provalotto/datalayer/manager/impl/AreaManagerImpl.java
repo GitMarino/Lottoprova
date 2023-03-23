@@ -14,14 +14,19 @@ import org.springframework.stereotype.Component;
 
 import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.connection.AreaTopicConnection;
+import provalotto.bean.connection.PersonAreaConnection;
 import provalotto.bean.entity.Area;
 import provalotto.bean.entity.Person;
 import provalotto.bean.entity.Topic;
 import provalotto.bean.key.AreaTopicConnectionKey;
+import provalotto.bean.key.PersonAreaConnectionKey;
+import provalotto.bean.utility.ATSKeyValue;
 import provalotto.datalayer.dao.AreaDAO;
 import provalotto.datalayer.dao.AreaTopicConnectionDAO;
+import provalotto.datalayer.dao.PersonAreaConnectionDAO;
 import provalotto.datalayer.dao.PersonDAO;
 import provalotto.datalayer.dao.TopicDAO;
+import provalotto.datalayer.exceptions.DataBaseException;
 import provalotto.datalayer.exceptions.ServiceErrorException;
 import provalotto.datalayer.manager.AreaManager;
 
@@ -42,25 +47,66 @@ public class AreaManagerImpl implements AreaManager {
 	@Autowired
 	private AreaTopicConnectionDAO areaTopicConnectionDAO;
 
+	@Autowired
+	private PersonAreaConnectionDAO personAreaConnectionDAO;
+
 	@Transactional
 	@Override
-	public void createArea(final String name, final Long personBeanId) throws ServiceErrorException {
+	public void createArea(final String name, final Long personBeanId, final Long topicBeanId)
+			throws ServiceErrorException {
 		try {
+			Area areaDB;
+			Person personDB;
+
+			// save area
 			if (!areaDAO.existsByName(name)) {
 				Optional<Person> personOptional = personDAO.findById(personBeanId);
 				if (personOptional.isPresent()) {
+					personDB = personOptional.get();
+
 					Area area = new Area();
 					area.setName(name);
-					area.setManager(personOptional.get());
+					area.setManager(personDB);
 					area.setMaker("Christian Marino");
 					area.setDateTime(LocalDateTime.now());
-					areaDAO.save(area);
+					areaDB = areaDAO.save(area);
 				} else {
 					throw new ServiceErrorException("Dati incosistenti");
 				}
 			} else {
 				throw new ServiceErrorException("Dati inconsistenti");
 			}
+
+			// save PersonAreaConnection
+			PersonAreaConnectionKey personAreaConnectionKey = new PersonAreaConnectionKey();
+			personAreaConnectionKey.setArea(areaDB);
+			personAreaConnectionKey.setPerson(personDB);
+			PersonAreaConnection personAreaConnection = new PersonAreaConnection();
+			personAreaConnection.setId(personAreaConnectionKey);
+			personAreaConnection.setMaker("Christian Marino");
+			personAreaConnection.setDateTime(LocalDateTime.now());
+			personAreaConnectionDAO.save(personAreaConnection);
+
+			// save AreaTopicConnection
+			Optional<Topic> topicOptional = topicDAO.findById(topicBeanId);
+			if (topicOptional.isPresent()) {
+				AreaTopicConnectionKey areaTopicConnectionKey = new AreaTopicConnectionKey();
+				areaTopicConnectionKey.setArea(areaDB);
+				areaTopicConnectionKey.setTopic(topicOptional.get());
+
+				AreaTopicConnection areaTopicConnection = new AreaTopicConnection();
+				areaTopicConnection.setId(areaTopicConnectionKey);
+				areaTopicConnection.setMaker("Christian Marino");
+				areaTopicConnection.setDateTime(LocalDateTime.now());
+				areaTopicConnectionDAO.save(areaTopicConnection);
+
+			} else {
+				throw new ServiceErrorException("Dati inconsistenti");
+			}
+
+		} catch (ServiceErrorException e) {
+			log.error(e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
@@ -87,6 +133,9 @@ public class AreaManagerImpl implements AreaManager {
 			} else {
 				throw new ServiceErrorException("Dati inconsistenti");
 			}
+		} catch (ServiceErrorException e) {
+			log.error(e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
@@ -119,11 +168,11 @@ public class AreaManagerImpl implements AreaManager {
 				beanKeyValue.setValue(area.getName());
 				allBeans.add(beanKeyValue);
 			}
+			return allBeans;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
 		}
-		return allBeans;
 	}
 
 	@Override
@@ -137,11 +186,45 @@ public class AreaManagerImpl implements AreaManager {
 				beanKeyValue.setValue(area.getName());
 				areaBeans.add(beanKeyValue);
 			}
+			return areaBeans;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
 		}
-		return areaBeans;
+	}
+
+	@Override
+	public List<List<KeyValueBean>> getAreaTopicSkillMap() {
+		try {
+			List<List<KeyValueBean>> ATSmap = new ArrayList<>();
+			List<KeyValueBean> ATSrow;
+			KeyValueBean keyValueBean;
+			for (ATSKeyValue ATSinterfaceRow : topicDAO.getMap()) {
+				ATSrow = new ArrayList<>();
+
+				keyValueBean = new KeyValueBean();
+				keyValueBean.setId(ATSinterfaceRow.getAreaId());
+				keyValueBean.setValue(ATSinterfaceRow.getAreaName());
+				ATSrow.add(keyValueBean);
+
+				keyValueBean = new KeyValueBean();
+				keyValueBean.setId(ATSinterfaceRow.getTopicId());
+				keyValueBean.setValue(ATSinterfaceRow.getTopicName());
+				ATSrow.add(keyValueBean);
+
+				keyValueBean = new KeyValueBean();
+				keyValueBean.setId(ATSinterfaceRow.getSkillId());
+				keyValueBean.setValue(ATSinterfaceRow.getSkillName());
+				ATSrow.add(keyValueBean);
+
+				ATSmap.add(ATSrow);
+			}
+			return ATSmap;
+
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new DataBaseException();
+		}
 	}
 
 }

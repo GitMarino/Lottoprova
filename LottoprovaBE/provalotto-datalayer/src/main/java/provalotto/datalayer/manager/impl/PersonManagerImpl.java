@@ -77,6 +77,9 @@ public class PersonManagerImpl implements PersonManager {
 				return personBean;
 			}
 			throw new ServiceErrorException("Dati inconsistenti");
+		} catch (ServiceErrorException e) {
+			log.error(e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
@@ -102,11 +105,13 @@ public class PersonManagerImpl implements PersonManager {
 			} else {
 				throw new ServiceErrorException("Dati inconsistenti");
 			}
+		} catch (ServiceErrorException e) {
+			log.error(e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
 		}
-
 	}
 
 	@Transactional
@@ -115,12 +120,19 @@ public class PersonManagerImpl implements PersonManager {
 			throws ServiceErrorException {
 
 		try {
+			Person personDB;
+			Skill skillDB;
+
+			// save PersonSkillConnection
 			Optional<Person> personOptional = personDAO.findById(personId);
 			Optional<Skill> skillOptional = skillDAO.findById(skillId);
 			if (personOptional.isPresent() && skillOptional.isPresent()) {
+				personDB = personOptional.get();
+				skillDB = skillOptional.get();
+
 				PersonSkillConnectionKey personSkillConnectionKey = new PersonSkillConnectionKey();
-				personSkillConnectionKey.setPerson(personOptional.get());
-				personSkillConnectionKey.setSkill(skillOptional.get());
+				personSkillConnectionKey.setPerson(personDB);
+				personSkillConnectionKey.setSkill(skillDB);
 
 				PersonSkillConnection personSkillConnection = new PersonSkillConnection();
 				personSkillConnection.setId(personSkillConnectionKey);
@@ -131,6 +143,26 @@ public class PersonManagerImpl implements PersonManager {
 			} else {
 				throw new ServiceErrorException("Dati inconsistenti");
 			}
+
+			// save PersonTopicConnection
+			Topic topic = skillDB.getTopic();
+			if (topic != null) {
+				PersonTopicConnectionKey personTopicConnectionKey = new PersonTopicConnectionKey();
+				personTopicConnectionKey.setPerson(personDB);
+				personTopicConnectionKey.setTopic(topic);
+
+				PersonTopicConnection personTopicConnection = new PersonTopicConnection();
+				personTopicConnection.setId(personTopicConnectionKey);
+				personTopicConnection.setMaker("Christian Marino");
+				personTopicConnection.setDateTime(LocalDateTime.now());
+				personTopicConnectionDAO.save(personTopicConnection);
+			} else {
+				throw new ServiceErrorException("Dati inconsistenti");
+			}
+
+		} catch (ServiceErrorException e) {
+			log.error(e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
@@ -157,6 +189,9 @@ public class PersonManagerImpl implements PersonManager {
 			} else {
 				throw new ServiceErrorException("Dati inconsistenti");
 			}
+		} catch (ServiceErrorException e) {
+			log.error(e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
@@ -179,7 +214,7 @@ public class PersonManagerImpl implements PersonManager {
 	}
 
 	@Override
-	public List<KeyValueBean> getAllPeople() {
+	public List<KeyValueBean> getAllPeople() throws ServiceErrorException {
 		List<KeyValueBean> allBeans = new ArrayList<>();
 		KeyValueBean beanKeyValue;
 		try {
@@ -189,10 +224,11 @@ public class PersonManagerImpl implements PersonManager {
 				beanKeyValue.setValue(person.getSurname());
 				allBeans.add(beanKeyValue);
 			}
+			return allBeans;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
-		return allBeans;
 	}
 
 	@Override
@@ -212,14 +248,18 @@ public class PersonManagerImpl implements PersonManager {
 				return personBean;
 
 			}
+			throw new ServiceErrorException("Dati inconsistenti");
+		} catch (ServiceErrorException e) {
+			log.error(e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
-		throw new ServiceErrorException("Dati inconsistenti");
 	}
 
 	@Override
-	public List<SkillMarkBean> getPersonSkillMarks(final Long personId) {
+	public List<SkillMarkBean> getPersonSkillMarks(final Long personId) throws ServiceErrorException {
 		List<SkillMarkBean> skillMarkList = new ArrayList<>();
 		SkillMarkBean skillMark;
 		try {
@@ -229,14 +269,16 @@ public class PersonManagerImpl implements PersonManager {
 				skillMark.setMark(personSkillConnection.getMark());
 				skillMarkList.add(skillMark);
 			}
+			return skillMarkList;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
-		return skillMarkList;
 	}
 
 	@Override
-	public List<PersonBean> searchPeopleByBeans(final SearchPeopleObject searchPeopleObject) {
+	public List<PersonBean> searchPeopleByBeans(final SearchPeopleObject searchPeopleObject)
+			throws ServiceErrorException {
 		List<PersonBean> peopleByBeans = new ArrayList<>();
 		PersonBean personBean;
 		try {
@@ -248,10 +290,11 @@ public class PersonManagerImpl implements PersonManager {
 				personBean.setSurname(person.getSurname());
 				peopleByBeans.add(personBean);
 			}
+			return peopleByBeans;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			throw new ServiceErrorException(e);
 		}
-		return peopleByBeans;
 	}
 
 }
