@@ -3,21 +3,24 @@ import { Button } from '../model/objects/button';
 import { KeyValue } from '../model/objects/key-value';
 import { Person } from '../model/objects/person';
 import { HttpCallsService } from '../model/service/http-calls.service';
+import { FEutilityService } from '../model/service/fe-utility.service';
 
 @Component({
   selector: 'app-person',
   templateUrl: './person.component.html',
   styleUrls: ['./person.component.css']
 })
-export class PersonComponent implements OnInit
-{ 
+export class PersonComponent implements OnInit {
+  ATSmapBE?: KeyValue[][] = [];
+  ATSsubMap?: KeyValue[][] = [];
+
   selectedArea?: number;
-  selectedSkill?: number;
   selectedTopic?: number;
+  selectedSkill?: number;
 
   areas: KeyValue[] = [];
-  skills: KeyValue[] = [];
   topics: KeyValue[] = [];
+  skills: KeyValue[] = [];
 
   iconName: string = "users";
   buttons: Button[] = [];
@@ -29,8 +32,7 @@ export class PersonComponent implements OnInit
   success: boolean = false;
   error: boolean = false;
 
-  constructor(private httpCalls: HttpCallsService) 
-  { 
+  constructor(private httpCalls: HttpCallsService, private feUtilityService: FEutilityService) {
     this.buttons = [
       {
         name: 'cerca',
@@ -43,32 +45,20 @@ export class PersonComponent implements OnInit
     ];
   }
 
-  ngOnInit(): void
-  { this.httpCalls.getAllAreas()
+  ngOnInit(): void {
+    this.httpCalls.getAreaTopicSkill()
       .subscribe({
-        next: (response: KeyValue[]) => {
-          this.areas = response as KeyValue[];
+        next: (response: KeyValue[][]) => {
+          this.ATSmapBE = response as KeyValue[][];
+          this.ATSsubMap = this.ATSmapBE;
+          this.populateSelects(this.ATSmapBE);
         }
-      });
-    
-    this.httpCalls.getAllSkills()
-      .subscribe({
-        next: (response: KeyValue[]) => {
-          this.skills = response as KeyValue[];
-        },
-      });
-
-    this.httpCalls.getAllTopics()
-      .subscribe({
-        next: (response: KeyValue[]) => {
-          this.topics = response as KeyValue[];
-        },
-      });
+      })
   }
 
   onClick(indentifier: string) {
     switch (indentifier) {
-      case 'search': 
+      case 'search':
         this.searchPeople();
         break;
       case 'reset':
@@ -77,8 +67,26 @@ export class PersonComponent implements OnInit
     }
   }
 
-  searchPeople()
-  {
+  setSelects(column: number) {
+    var selectedId: number;
+
+    if (column == 0) {
+      selectedId = this.selectedArea!;
+    }
+    else {
+      if (column == 1) {
+        selectedId = this.selectedTopic!;
+      }
+      else
+        selectedId = this.selectedSkill!;
+    }
+
+    var resultMap: KeyValue[][] = this.feUtilityService.getMapBySelected(selectedId, column, this.ATSsubMap!);
+    this.ATSsubMap = resultMap;
+    this.populateSelects(this.ATSsubMap);
+  }
+
+  searchPeople() {
     this.httpCalls.searchPeopleByBeans(this.selectedArea!, this.selectedSkill!, this.selectedTopic!)
       .subscribe({
         next: (response: Person[]) => {
@@ -87,7 +95,7 @@ export class PersonComponent implements OnInit
           console.log(this.collectionSize);
           this.success = true;
         },
-        error : error => {
+        error: error => {
           this.error = true;
           this.success = false;
           this.people = [];
@@ -95,10 +103,40 @@ export class PersonComponent implements OnInit
       })
   }
 
-  reset()
-  { this.people = undefined;
+  reset() {
+    this.people = undefined;
     this.selectedArea = undefined;
     this.selectedSkill = undefined;
     this.selectedTopic = undefined;
+
+    this.populateSelects(this.ATSmapBE!);
+    this.ATSsubMap = this.ATSmapBE;
+  }
+
+  populateSelects(map: KeyValue[][]) {
+    this.areas = [];
+    this.topics = [];
+    this.skills = [];
+
+    var area: KeyValue;
+    var topic: KeyValue;
+    var skill: KeyValue;
+
+    for (var row of map) {
+      area = row[0];
+      if (area.id != null && !this.areas.find(listArea => listArea.id === area.id)) {
+        this.areas.push(area);
+      }
+
+      topic = row[1];
+      if (topic.id != null && !this.topics.find(listTopic => listTopic.id === topic.id)) {
+        this.topics.push(topic);
+      }
+
+      skill = row[2];
+      if (skill.id != null && !this.skills.find(listSkill => listSkill.id === skill.id)) {
+        this.skills.push(skill);
+      }
+    }
   }
 }

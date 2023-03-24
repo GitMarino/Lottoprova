@@ -4,7 +4,7 @@
         <div class="row justify-content-center">
             <div class="col-md-3">
                 <div class="form-floating">
-                    <select class="form-select" [(ngModel)]="selectedArea" aria-label="area" name="area" id="areaId">
+                    <select class="form-select" [(ngModel)]="selectedArea" (change)="setSelects(0)" aria-label="area" name="area" id="areaId">
                         <option selected> </option>
                         <option *ngFor="let area of areas" [ngValue]="area.id"> {{area.value}} </option>
                     </select>
@@ -14,22 +14,22 @@
 
             <div class="col-md-3 offset-md-1">
                 <div class="form-floating">
-                    <select class="form-select" [(ngModel)]="selectedSkill" aria-label="skill" name="skill" id="skillId">
-                        <option selected> </option>
-                        <option *ngFor="let skill of skills" [ngValue]="skill.id"> {{skill.value}} </option>
-                    </select>
-                    <label for="skillId"> competenza </label>
-                </div>    
-            </div>
-
-            <div class="col-md-3 offset-md-1">
-                <div class="form-floating">
-                    <select class="form-select" [(ngModel)]="selectedTopic" aria-label="topic" name="tematica" id="topicId">
+                    <select class="form-select" [(ngModel)]="selectedTopic" (change)="setSelects(1)" aria-label="topic" name="tematica" id="topicId">
                         <option selected> </option>
                         <option *ngFor="let topic of topics" [ngValue]="topic.id"> {{topic.value}} </option>
                     </select>
                     <label for="topicId"> tematica </label>
                 </div>
+            </div>
+
+            <div class="col-md-3 offset-md-1">
+                <div class="form-floating">
+                    <select class="form-select" [(ngModel)]="selectedSkill" (change)="setSelects(2)" aria-label="skill" name="skill" id="skillId">
+                        <option selected> </option>
+                        <option *ngFor="let skill of skills" [ngValue]="skill.id"> {{skill.value}} </option>
+                    </select>
+                    <label for="skillId"> competenza </label>
+                </div>    
             </div>
         </div>
     </form>
