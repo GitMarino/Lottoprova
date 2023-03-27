@@ -25,7 +25,7 @@ public interface TopicDAO extends JpaRepository<Topic, Long> {
 	List<Topic> findTopicsByPerson(Long personId);
 
 	@Query("SELECT DISTINCT a.id as areaId, a.name as areaName, t.id as topicId, t.name as topicName, s.id as skillId, s.name as skillName "
-			+ "FROM topic t left join skill s on t.id=s.topic.id left join AreaTopicConnection at on t.id=at.id.topic.id left join area a on at.id.area.id=a.id")
+		 + "FROM topic t left join skill s on t.id=s.topic.id left join AreaTopicConnection at on t.id=at.id.topic.id left join area a on at.id.area.id=a.id")
 	List<ATSKeyValue> getMap();
 
 }
