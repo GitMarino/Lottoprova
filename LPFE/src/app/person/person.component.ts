@@ -51,7 +51,7 @@ export class PersonComponent implements OnInit {
         next: (response: KeyValue[][]) => {
           this.ATSmapBE = response as KeyValue[][];
           this.ATSsubMap = this.ATSmapBE;
-          this.populateSelects(this.ATSmapBE);
+          this.populateSelects(this.ATSsubMap);
         }
       })
   }
@@ -68,20 +68,7 @@ export class PersonComponent implements OnInit {
   }
 
   setSelects(column: number) {
-    var selectedId: number;
-
-    if (column == 0) {
-      selectedId = this.selectedArea!;
-    }
-    else {
-      if (column == 1) {
-        selectedId = this.selectedTopic!;
-      }
-      else
-        selectedId = this.selectedSkill!;
-    }
-
-    var resultMap: KeyValue[][] = this.feUtilityService.getMapBySelected(selectedId, column, this.ATSsubMap!);
+    var resultMap: KeyValue[][] = this.feUtilityService.getMapBySelected(this.ATSmapBE!, this.selectedArea, this.selectedTopic, this.selectedSkill);
     this.ATSsubMap = resultMap;
     this.populateSelects(this.ATSsubMap);
   }
@@ -109,8 +96,8 @@ export class PersonComponent implements OnInit {
     this.selectedSkill = undefined;
     this.selectedTopic = undefined;
 
-    this.populateSelects(this.ATSmapBE!);
     this.ATSsubMap = this.ATSmapBE;
+    this.populateSelects(this.ATSsubMap!);
   }
 
   populateSelects(map: KeyValue[][]) {
@@ -138,5 +125,35 @@ export class PersonComponent implements OnInit {
         this.skills.push(skill);
       }
     }
+
+    this.areas.sort( (n1,n2) => {
+      if(n1.value>n2.value) {
+        return 1;
+      }
+      if(n1.value<n2.value) {
+        return -1;
+      }
+      return 0;
+    });
+
+    this.topics.sort( (n1,n2) => {
+      if(n1.value>n2.value) {
+        return 1;
+      }
+      if(n1.value<n2.value) {
+        return -1;
+      }
+      return 0;
+    });
+
+    this.skills.sort( (n1,n2) => {
+      if(n1.value>n2.value) {
+        return 1;
+      }
+      if(n1.value<n2.value) {
+        return -1;
+      }
+      return 0;
+    });
   }
 }

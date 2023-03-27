@@ -6,10 +6,10 @@ export class FEutilityService
 { 
   constructor() {}
 
-  public getMapBySelected(id: number, column: number, map: KeyValue[][]): KeyValue[][]
+  public getMapBySelected(map: KeyValue[][], areaId?: number, topicId?: number, skillId?: number): KeyValue[][]
   { var resultMap: KeyValue[][] = [];
     for(var row of map)
-    { if(id===undefined || row[column].id===id)
+    { if((areaId===undefined || row[0].id===areaId) && (topicId===undefined || row[1].id===topicId) && (skillId===undefined || row[2].id===skillId))
       { resultMap.push(row);
       }
     }
