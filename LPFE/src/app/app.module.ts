@@ -27,18 +27,24 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FeatherModule } from 'angular-feather';
 import { PageComponent } from './page/page.component';
 import { IconsModule } from './icons/icons.module';
+import { PopupComponent } from './model/popup/popup.component';
 
 const routes: Routes = [
   { path: '', component: AppComponent},
+
   { path: 'area', component: AreaComponent},
   { path: 'addArea', component: AddAreaComponent},
+
   { path: 'person', component: PersonComponent},
   { path: 'infoPerson/:id', component: InfoPersonComponent},
   { path: 'addPerson', component:AddPersonComponent},
+
   { path: 'skill', component: SkillComponent},
   { path: 'addSkill', component: AddSkillComponent},
+
   { path: 'topic', component: TopicComponent},
   { path: 'addTopic', component: AddTopicComponent},
+
   { path: 'personArea', component: AddPersonAreaConnectionComponent},
   { path: 'personTopic', component: AddPersonTopicConnectionComponent},
   { path: 'personSkill', component: AddPersonSkillConnectionComponent},
@@ -66,6 +72,7 @@ const routes: Routes = [
     AddPersonTopicConnectionComponent,
     AddPersonSkillConnectionComponent,
     AddAreaTopicConnectionComponent,
+
   ],
   imports: 
   [ BrowserModule,

@@ -5,7 +5,7 @@
                 <input [(ngModel)]="name" type="text" name="name" class="form-control" id="name">
                 <label for="name"> nome </label>
             </div>
-            <div class="col-md-3 offset-md-1">
+            <div class="col-md-3">
                 <div class="form-floating">
                     <select class="form-select" [(ngModel)]="selectedPerson" aria-label="manager" name="manager" id="managerId">
                         <option *ngFor="let person of people" [ngValue]="person.id"> {{person.value}} </option>
@@ -13,7 +13,7 @@
                     <label for="managerId"> responsabile </label>
                  </div>
             </div>
-            <div class="col-md-3 offset-md-1">
+            <div class="col-md-3">
                 <div class="form-floating">
                     <select class="form-select" [(ngModel)]="selectedTopic" aria-label="topic" name="topic" id="topicId">
                         <option *ngFor="let topic of topics" [ngValue]="topic.id"> {{topic.value}} </option>

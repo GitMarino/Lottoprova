@@ -9,7 +9,7 @@
                     <label for="personId"> persona </label>
                  </div>
             </div>
-            <div class="col-md-4 offset-md-1">
+            <div class="col-md-4">
                 <div class="form-floating">
                     <select class="form-select" [(ngModel)]="selectedTopic" aria-label="topic" name="topic" id="topicId">
                         <option *ngFor="let topic of topics" [ngValue]="topic.id"> {{topic.value}} </option>

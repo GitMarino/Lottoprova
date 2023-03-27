@@ -5,11 +5,11 @@
                 <input [(ngModel)]="person.serial" type="number" name="serial" class="form-control" id="serial">
                 <label for="serial"> matricola </label>
             </div>
-            <div class="col-md-3 offset-md-1 form-floating">
+            <div class="col-md-3 form-floating">
                 <input [(ngModel)]="person.name" type="text" name="name" class="form-control" id="name">
                 <label for="name"> nome </label>
             </div>
-            <div class="col-md-3 offset-md-1 form-floating">
+            <div class="col-md-3 form-floating">
                 <input [(ngModel)]="person.surname" type="text" name="surname" class="form-control" id="surname">
                 <label for="surname"> cognome </label>
             </div>
@@ -23,4 +23,6 @@
         <br />
         <h6> Oops! Non è stato possibile salvare la persona </h6>
     </div>
+
+    <app-popup #popup> </app-popup>
 </app-page>
