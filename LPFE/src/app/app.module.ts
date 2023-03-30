@@ -36,7 +36,7 @@ const routes: Routes = [
   { path: 'addArea', component: AddAreaComponent},
 
   { path: 'person', component: PersonComponent},
-  { path: 'infoPerson/:id', component: InfoPersonComponent},
+  { path: 'person/:id', component: InfoPersonComponent},
   { path: 'addPerson', component:AddPersonComponent},
 
   { path: 'skill', component: SkillComponent},
@@ -56,6 +56,7 @@ const routes: Routes = [
   declarations: 
   [ PageComponent,
     AppComponent,
+    PopupComponent,
 
     AreaComponent, 
     PersonComponent,

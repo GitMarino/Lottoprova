@@ -1,4 +1,4 @@
-<app-page [iconName]="iconName" pageTitle="Dettagli persona">
+<app-page [iconName]="iconName" pageTitle="Dettagli persona" [buttons]="buttons">
     <div *ngIf="!person && !topics && !areas">
         <h6> Oops! Non è stato possibile caricare i dati </h6> 
     </div>
@@ -8,7 +8,7 @@
             <div class="col-md-1"> 
                 <h6> matricola: </h6>
             </div>
-            <div class="col-md-1"> 
+            <div class="col"> 
                 <h5> {{person.serial}} </h5>
             </div>
         </div>
@@ -16,7 +16,7 @@
             <div class="col-md-1"> 
                 <h6> nome: </h6>
             </div>
-            <div class="col-md-1"> 
+            <div class="col"> 
                 <h5> {{person.name}} </h5>
             </div>
         </div>
@@ -24,7 +24,7 @@
             <div class="col-md-1"> 
                 <h6> cognome: </h6>
             </div>
-            <div class="col-md-1"> 
+            <div class="col"> 
                 <h5> {{person.surname}} </h5>
             </div>
         </div>
