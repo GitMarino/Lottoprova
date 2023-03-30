@@ -16,7 +16,6 @@ export class PageComponent {
   @Input() buttons: Button[] = [];
   
   @Output() selection = new EventEmitter<string>();
-  
   onClick(button: Button) {
     if( button.action ) {
       button.action!();

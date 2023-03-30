@@ -56,8 +56,8 @@ export class PersonComponent implements OnInit {
       })
   }
 
-  onClick(indentifier: string) {
-    switch (indentifier) {
+  onClick(identifier: string) {
+    switch (identifier) {
       case 'search':
         this.searchPeople();
         break;
@@ -79,7 +79,6 @@ export class PersonComponent implements OnInit {
         next: (response: Person[]) => {
           this.people = response as Person[];
           this.collectionSize = this.people.length;
-          console.log(this.collectionSize);
           this.success = true;
         },
         error: error => {

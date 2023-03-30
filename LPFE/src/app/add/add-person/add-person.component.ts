@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Button } from 'src/app/model/objects/button';
 import { Person } from '../../model/objects/person';
 import { HttpCallsService } from '../../model/service/http-calls.service';
@@ -17,7 +17,7 @@ export class AddPersonComponent {
 
   error: boolean = false;
   success: boolean = false;
-
+  
   constructor(private httpCalls: HttpCallsService) 
   { this.buttons = [
       {

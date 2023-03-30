@@ -14,7 +14,7 @@
             <ng-content></ng-content>
         </div>
         <div class="card-footer" *ngIf="buttons.length!==0">
-            <button *ngFor="let button of buttons" (click)="onClick(button)" class="btn btn-dark" color="dark"> {{button.name}} </button>
+            <button *ngFor="let button of buttons" (click)="onClick(button)" type="button" class="btn btn-dark" color="dark"> {{button.name}} </button>
         </div>
     </div>
 </div>
