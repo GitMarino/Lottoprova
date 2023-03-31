@@ -1,0 +1,11 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title"> {{popupTitle}} </h4>
+    </div>
+    <div class="modal-body">
+        <p> {{popupBody}} </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="c('Save click')"> OK </button>
+    </div>
+</ng-template>

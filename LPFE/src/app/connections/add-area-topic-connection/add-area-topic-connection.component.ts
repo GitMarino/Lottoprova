@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Button } from 'src/app/model/objects/button';
 import { KeyValue } from 'src/app/model/objects/key-value';
 import { HttpCallsService } from '../../model/service/http-calls.service';
+import { PopupComponent } from 'src/app/model/popup/popup.component';
+import { ERROR_BODY, ERROR_TITLE, SUCCESS_BODY, SUCCESS_TITLE } from 'src/app/model/constants/constants';
 
 @Component({
   selector: 'app-add-area-topic-connection',
@@ -10,17 +12,15 @@ import { HttpCallsService } from '../../model/service/http-calls.service';
 })
 export class AddAreaTopicConnectionComponent implements OnInit {
 
-  iconName: string = "git-commit";
+  iconName: string = 'git-commit';
   buttons: Button[] = [];
 
   selectedTopic?: number;
-  selectedArea?: number;
-
   topics: KeyValue[] = [];
+  selectedArea?: number;
   areas: KeyValue[] = [];
 
-  error: boolean = false;
-  success: boolean = false;
+  @ViewChild('popup') myPopup!: PopupComponent;
 
   constructor(private httpCalls: HttpCallsService) 
   { this.buttons = [
@@ -51,14 +51,15 @@ export class AddAreaTopicConnectionComponent implements OnInit {
   { this.httpCalls.createAreaTopicConnection(this.selectedArea!, this.selectedTopic!)
       .subscribe({
         next: (response: void) => {
-          this.success = true;
-          this.error = false;
+          this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
+
+          this.selectedTopic = undefined;
+          this.selectedArea = undefined;
         },
         error : error => {
-          console.error(error);
-          this.error = true;
-          this.success = false;
+          this.myPopup.show(ERROR_TITLE, ERROR_BODY);
         }
       })
   }
+  
 }

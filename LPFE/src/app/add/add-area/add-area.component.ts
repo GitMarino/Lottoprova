@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ERROR_BODY, ERROR_TITLE, SUCCESS_BODY, SUCCESS_TITLE } from 'src/app/model/constants/constants';
 import { Button } from 'src/app/model/objects/button';
 import { KeyValue } from 'src/app/model/objects/key-value';
+import { PopupComponent } from 'src/app/model/popup/popup.component';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
 @Component({
@@ -10,18 +12,17 @@ import { HttpCallsService } from '../../model/service/http-calls.service';
 })
 export class AddAreaComponent implements OnInit {
   
-  iconName: string = "plus-square"
+  iconName: string = 'plus-square';
   buttons: Button[] = [];
 
-  name: string = "";
+  name?: string;
   selectedPerson?: number;
   people: KeyValue[] = [];
   selectedTopic?: number;
   topics: KeyValue[] = [];
 
-  error: boolean = false;
-  success: boolean = false;
-
+  @ViewChild('popup') myPopup!: PopupComponent;
+  
   constructor(private httpCalls: HttpCallsService) 
   { this.buttons = [
       {
@@ -48,17 +49,18 @@ export class AddAreaComponent implements OnInit {
   }
 
   addArea = () =>
-  { this.httpCalls.createArea(this.name, this.selectedPerson!, this.selectedTopic!)
+  { this.httpCalls.createArea(this.name!, this.selectedPerson!, this.selectedTopic!)
       .subscribe({
         next: (response: void) => {
-          this.success = true;
-          this.error = false;
+          this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
+
+          this.name = undefined;
+          this.selectedPerson = undefined;
+          this.selectedTopic = undefined;
         },
         error : error => {
-          this.error = true;
-          this.success = false;
+          this.myPopup.show(ERROR_TITLE, ERROR_BODY);
         }
       });
   }
-
 }

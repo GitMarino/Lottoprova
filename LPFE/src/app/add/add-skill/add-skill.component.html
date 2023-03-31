@@ -19,12 +19,5 @@
             </div>
         </div>
     </form>
-    <div *ngIf="success && !error">
-        <br/>
-        <h6> Salvataggio andato a buon fine! </h6>
-    </div>
-    <div *ngIf="error && !success">
-        <br/>
-        <h6> Oops! Non è stato possibile salvare la competenza </h6>
-    </div>
 </app-page>
+<app-popup #popup></app-popup>

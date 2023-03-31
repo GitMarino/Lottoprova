@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { ERROR_BODY, ERROR_TITLE, SUCCESS_BODY, SUCCESS_TITLE } from 'src/app/model/constants/constants';
 import { Button } from 'src/app/model/objects/button';
+import { PopupComponent } from 'src/app/model/popup/popup.component';
 import { Topic } from '../../model/objects/topic';
 import { HttpCallsService } from '../../model/service/http-calls.service';
 
@@ -15,8 +17,7 @@ export class AddTopicComponent {
 
   topic: Topic = new Topic();
 
-  error: boolean = false;
-  success: boolean = false;
+  @ViewChild('popup') myPopup!: PopupComponent;
 
   constructor(private httpCalls: HttpCallsService) 
   { this.buttons = [
@@ -31,12 +32,12 @@ export class AddTopicComponent {
   { this.httpCalls.createTopic(this.topic)
       .subscribe({
         next: (response: Topic) => {
-          this.success = true;
-          this.error = false;
+          this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
+          
+          this.topic = new Topic();
         },
         error : error => {
-          this.error = true;
-          this.success = false;
+          this.myPopup.show(ERROR_TITLE, ERROR_BODY);
         }
       });
   }

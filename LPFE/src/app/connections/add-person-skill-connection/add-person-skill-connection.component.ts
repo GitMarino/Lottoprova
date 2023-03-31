@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Button } from 'src/app/model/objects/button';
 import { KeyValue } from 'src/app/model/objects/key-value';
 import { HttpCallsService } from '../../model/service/http-calls.service';
+import { PopupComponent } from 'src/app/model/popup/popup.component';
+import { ERROR_BODY, ERROR_TITLE, SUCCESS_BODY, SUCCESS_TITLE } from 'src/app/model/constants/constants';
 
 @Component({
   selector: 'app-add-person-skill-connection',
@@ -14,14 +16,12 @@ export class AddPersonSkillConnectionComponent implements OnInit {
   buttons: Button[] = [];
 
   selectedPerson?: number;
+  people: KeyValue[] = [];
   selectedSkill?: number;
+  skills: KeyValue[] = [];
   mark?: number;
 
-  people: KeyValue[] = [];
-  skills: KeyValue[] = [];
-
-  error: boolean = false;
-  success: boolean = false;
+  @ViewChild('popup') myPopup!: PopupComponent;
 
   constructor(private httpCalls: HttpCallsService) 
   { this.buttons = [
@@ -52,13 +52,14 @@ export class AddPersonSkillConnectionComponent implements OnInit {
   { this.httpCalls.createPersonSkillConnection(this.selectedPerson!, this.selectedSkill!, this.mark!)
       .subscribe({
         next: (response: void) => {
-          this.success = true;
-          this.error = false;
+          this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
+
+          this.selectedPerson = undefined;
+          this.selectedSkill = undefined;
+          this.mark = undefined;
         },
         error: error => {
-          console.error(error);
-          this.error = true;
-          this.success = false;
+          this.myPopup.show(ERROR_TITLE, ERROR_BODY);
         }
       })
   }

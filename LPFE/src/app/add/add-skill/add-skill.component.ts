@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Button } from 'src/app/model/objects/button';
 import { KeyValue } from 'src/app/model/objects/key-value';
 import { HttpCallsService } from '../../model/service/http-calls.service';
+import { PopupComponent } from 'src/app/model/popup/popup.component';
+import { ERROR_BODY, ERROR_TITLE, SUCCESS_BODY, SUCCESS_TITLE } from 'src/app/model/constants/constants';
 
 @Component({
   selector: 'app-add-skill',
@@ -13,13 +15,12 @@ export class AddSkillComponent implements OnInit {
   iconName: string = "plus-square"
   buttons: Button[] = [];
 
-  name: string = "";
-  description: string = "";
+  name?: string;
+  description?: string;
   selectedTopic?: number;
   topics: KeyValue[] = [];
 
-  error: boolean = false;
-  success: boolean = false;
+  @ViewChild('popup') myPopup!: PopupComponent;
 
   constructor(private httpCalls: HttpCallsService) 
   { this.buttons = [
@@ -40,15 +41,17 @@ export class AddSkillComponent implements OnInit {
   }
 
   addSkill = () =>
-  { this.httpCalls.createSkill(this.name, this.description, this.selectedTopic!)
+  { this.httpCalls.createSkill(this.name!, this.description!, this.selectedTopic!)
       .subscribe({
         next: (response: void) => {
-          this.success = true;
-          this.error = false;
+          this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
+
+          this.name = undefined;
+          this.description = undefined;
+          this.selectedTopic = undefined;       
         },
         error: error => {
-          this.error = true;
-          this.success = false;
+          this.myPopup.show(ERROR_TITLE, ERROR_BODY);
         }
       })
   }
