@@ -6,6 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./area.component.css']
 })
 export class AreaComponent 
-{ iconName: string = "box";
-
+{ iconName: string = 'box';
 }

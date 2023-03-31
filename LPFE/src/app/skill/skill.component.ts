@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./skill.component.css']
 })
 export class SkillComponent 
-{ iconName: string = "file-text";
+{ iconName: string = 'file-text';
 }

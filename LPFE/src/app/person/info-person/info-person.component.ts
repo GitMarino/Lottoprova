@@ -17,7 +17,7 @@ export class InfoPersonComponent implements OnInit {
 
   personId?: number;
 
-  iconName: string = "file-text";
+  iconName: string = 'file-text';
   buttons: Button[] = [];
 
   person?: Person;

@@ -22,7 +22,7 @@ export class PersonComponent implements OnInit {
   topics: KeyValue[] = [];
   skills: KeyValue[] = [];
 
-  iconName: string = "users";
+  iconName: string = 'users';
   buttons: Button[] = [];
 
   people?: Person[];

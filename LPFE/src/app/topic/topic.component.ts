@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./topic.component.css']
 })
 export class TopicComponent 
-{ iconName: string = "book";
+{ iconName: string = 'book';
 
 }
