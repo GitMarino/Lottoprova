@@ -33,22 +33,35 @@
             </div>
         </div>
     </form>
-    <div *ngIf="success && !error && people && people.length==0">
-        <br/>
-        <h6> Nessuna persona soddisfa la ricerca </h6>
-    </div>
-    <div *ngIf="error">
-        <br/>
-        <h6> Oops! Non è stato possibile caricare le persone </h6>
-    </div>
 </app-page>
 <app-page *ngIf="people && collectionSize && people.length>0" cardTitle="Risultato ricerca">
     <table class="table">
         <thead>
             <tr>
-                <th> matricola </th>
-                <th> nome </th>
-                <th> cognome </th>
+                <th (click)="onSortClick(1)">
+                  <div class="row"> 
+                        <div *ngIf="arrow && sortColumn===1" class="col-md-1"> 
+                            <i-feather [name]="arrow"></i-feather>  
+                        </div>
+                        <h6 class="text-primary col-md-4"> matricola </h6>
+                    </div> 
+                </th>
+                <th (click)="onSortClick(2)"> 
+                    <div class="row"> 
+                        <div *ngIf="arrow && sortColumn===2" class="col-md-1"> 
+                            <i-feather [name]="arrow"></i-feather>  
+                        </div>
+                        <h6 class="text-primary col-md-3"> nome </h6>
+                    </div> 
+                </th>
+                <th (click)="onSortClick(3)"> 
+                    <div class="row"> 
+                        <div *ngIf="arrow && sortColumn===3" class="col-md-1"> 
+                            <i-feather [name]="arrow"></i-feather>  
+                        </div>
+                        <h6 class="text-primary col-md-4"> cognome </h6>
+                    </div>
+                </th>
                 <th> </th>
             </tr>
         </thead>
@@ -63,91 +76,3 @@
     </table>
     <ngb-pagination [(page)]="currentPage" [pageSize]="pageSize" [collectionSize]="collectionSize" [directionLinks]="false"></ngb-pagination>
 </app-page>
-<!-- <div class="container">
-    <h2> PERSONE </h2>
-    <div>
-        <a routerLink="/person/add"> Aggiungi una persona </a>
-    </div>
-    <div class="col-md-12 card">
-        <div class="card-body">
-            <i-feather name="search"></i-feather>
-            <h4 class="card-title"> Cerca persone </h4>
-            <br/>
-            <form ngForm>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                                <select class="form-select" [(ngModel)]="selectedArea" aria-label="area" name="area" id="areaId">
-                                    <option selected> </option>
-                                    <option *ngFor="let area of areas" [ngValue]="area.id"> {{area.value}} </option>
-                                </select>
-                                <label for="areaId"> area </label>
-                            </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <select class="form-select" [(ngModel)]="selectedSkill" aria-label="skill" name="skill" id="skillId">
-                                <option selected> </option>
-                                <option *ngFor="let skill of skills" [ngValue]="skill.id"> {{skill.value}} </option>
-                            </select>
-                            <label for="skillId"> competenza </label>
-                        </div>    
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <select class="form-select" [(ngModel)]="selectedTopic" aria-label="topic" name="tematica" id="topicId">
-                                <option selected> </option>
-                                <option *ngFor="let topic of topics" [ngValue]="topic.id"> {{topic.value}} </option>
-                            </select>
-                            <label for="topicId"> tematica </label>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <br />
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-2">
-                    <button class="btn btn-dark" color="dark" (click)="searchPeople()"> Cerca </button>
-                </div>
-                <div class="col-md-2">
-                    <button class="btn btn-primary" color="primary" (click)="reset()"> Pulisci </button>
-                </div>
-            </div>
-        
-     
-   
-            <div *ngIf="success && !error && people.length>0">
-                <table>
-                    <thead>
-                        <tr>
-                            <th> username </th>
-                            <th> nome </th>
-                            <th> cognome </th>
-                            <th> competenza </th>
-                            <th> voto </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <ng-container *ngFor="let person of people">
-                            <tr *ngFor="let skillMark of person.skillMarkList">
-                                <td> {{person.username}} </td>
-                                <td> {{person.name}} </td>
-                                <td> {{person.surname}} </td>
-                                <td> {{skillMark.skillName}} </td>
-                                <td> <img class="images" [src]="'/assets/images/mark'+skillMark.mark+'.png'" /> </td>
-                            </tr>
-                        </ng-container>
-                    </tbody>
-                </table>
-            </div>
-            <div *ngIf="success && !error && people.length==0">
-                <h4> Nessuna persona soddisfa la ricerca </h4>
-            </div>
-            <div *ngIf="error">
-                <h4> Oops! Non è stato possibile caricare le persone </h4>
-            </div>
-                </div>
-            </div>
-</div> -->

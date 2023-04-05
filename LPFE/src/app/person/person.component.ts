@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Button } from '../model/objects/button';
 import { KeyValue } from '../model/objects/key-value';
 import { Person } from '../model/objects/person';
@@ -11,26 +11,26 @@ import { FEutilityService } from '../model/service/fe-utility.service';
   styleUrls: ['./person.component.css']
 })
 export class PersonComponent implements OnInit {
+  iconName: string = 'users';
+  buttons: Button[] = [];
+  
   ATSmapBE?: KeyValue[][] = [];
   ATSsubMap?: KeyValue[][] = [];
 
+  areas: KeyValue[] = [];
   selectedArea?: number;
+  topics: KeyValue[] = [];
   selectedTopic?: number;
+  skills: KeyValue[] = [];
   selectedSkill?: number;
 
-  areas: KeyValue[] = [];
-  topics: KeyValue[] = [];
-  skills: KeyValue[] = [];
-
-  iconName: string = 'users';
-  buttons: Button[] = [];
-
   people?: Person[];
+  arrow?: string;
+  sortColumn: number = 3;
+  ascending: number = 0;
   currentPage: number = 1;
   pageSize: number = 5;
   collectionSize?: number;
-  success: boolean = false;
-  error: boolean = false;
 
   constructor(private httpCalls: HttpCallsService, private feUtilityService: FEutilityService) {
     this.buttons = [
@@ -79,13 +79,7 @@ export class PersonComponent implements OnInit {
         next: (response: Person[]) => {
           this.people = response as Person[];
           this.collectionSize = this.people.length;
-          this.success = true;
         },
-        error: error => {
-          this.error = true;
-          this.success = false;
-          this.people = [];
-        }
       })
   }
 
@@ -154,5 +148,105 @@ export class PersonComponent implements OnInit {
       }
       return 0;
     });
+  }
+
+  onSortClick(column: number)
+  { if(this.sortColumn !== column)
+    { this.ascending = 0;
+      this.sortColumn = column;
+    }
+    this.sortColumn = column;
+    if(this.ascending===0)
+    { switch (column) {
+        case 1:
+          this.people!.sort( (n1,n2) => {
+            if(n1.serial>n2.serial) {
+              return 1;
+            }
+            if(n1.serial<n2.serial) {
+              return -1;
+            }
+            return 0;
+          });
+          break;
+        case 2:
+          this.people!.sort( (n1,n2) => {
+            if(n1.name>n2.name) {
+              return 1;
+            }
+            if(n1.name<n2.name) {
+              return -1;
+            }
+            return 0;
+          });
+          break;
+        case 3:
+          this.people!.sort( (n1,n2) => {
+            if(n1.surname>n2.surname) {
+              return 1;
+            }
+            if(n1.surname<n2.surname) {
+              return -1;
+            }
+            return 0;
+          });
+          break;
+      } 
+      this.arrow = 'arrow-up';
+      this.ascending = 1;
+    }
+    else if(this.ascending === 1)
+    { this.arrow = 'arrow-down';
+      switch (column)
+      { case 1:
+          this.people!.sort( (n1,n2) => {
+            if(n1.serial<n2.serial) {
+              return 1;
+            }
+            if(n1.serial>n2.serial) {
+              return -1;
+            }
+            return 0;
+          });
+          break;
+        case 2:
+          this.people!.sort( (n1,n2) => {
+            if(n1.name<n2.name) {
+              return 1;
+            }
+            if(n1.name>n2.name) {
+              return -1;
+            }
+            return 0;
+          });
+          break;
+        case 3:
+          this.people!.sort( (n1,n2) => {
+            if(n1.surname<n2.surname) {
+              return 1;
+            }
+            if(n1.surname>n2.surname) {
+              return -1;
+            }
+            return 0;
+          });
+          break;
+      }
+      this.arrow = 'arrow-down';
+      this.ascending = 2;
+    }
+    else
+    { this.people!.sort( (n1,n2) => {
+        if(n1.surname>n2.surname) {
+          return 1;
+        }
+        if(n1.surname<n2.surname) {
+          return -1;
+        }
+        return 0;
+      });
+      this.arrow = undefined;
+      this.ascending = 0;
+    }
   }
 }

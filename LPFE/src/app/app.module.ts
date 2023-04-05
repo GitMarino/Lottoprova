@@ -73,7 +73,6 @@ const routes: Routes = [
     AddPersonTopicConnectionComponent,
     AddPersonSkillConnectionComponent,
     AddAreaTopicConnectionComponent,
-
   ],
   imports: 
   [ BrowserModule,
@@ -85,7 +84,7 @@ const routes: Routes = [
     NoopAnimationsModule,
     NgbModule,
 
-    IconsModule
+    IconsModule,
   ],
   exports: [RouterModule],
   providers: [],
