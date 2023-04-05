@@ -4,6 +4,7 @@ import java.util.List;
 
 import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.bean.TopicBean;
+import provalotto.bean.bean.TopicSkillsBean;
 import provalotto.datalayer.exceptions.ServiceErrorException;
 
 public interface TopicManager {
@@ -16,4 +17,5 @@ public interface TopicManager {
 
 	List<KeyValueBean> getTopicsByPerson(Long personId) throws ServiceErrorException;
 
+	List<TopicSkillsBean> getTopicsSkillsByPerson(Long personId);
 }

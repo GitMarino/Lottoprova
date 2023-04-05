@@ -6,7 +6,7 @@ public class SkillMarkBean {
 
 	private String skillName;
 
-	private int mark;
+	private Integer mark;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -17,10 +17,10 @@ public class SkillMarkBean {
 		if (getClass() != obj.getClass())
 			return false;
 		SkillMarkBean other = (SkillMarkBean) obj;
-		return mark == other.mark && Objects.equals(skillName, other.skillName);
+		return Objects.equals(mark, other.mark) && Objects.equals(skillName, other.skillName);
 	}
 
-	public int getMark() {
+	public Integer getMark() {
 		return mark;
 	}
 
@@ -33,7 +33,7 @@ public class SkillMarkBean {
 		return Objects.hash(mark, skillName);
 	}
 
-	public void setMark(final int mark) {
+	public void setMark(final Integer mark) {
 		this.mark = mark;
 	}
 
@@ -43,7 +43,7 @@ public class SkillMarkBean {
 
 	@Override
 	public String toString() {
-		return "SkillMark [skillName=" + skillName + ", mark=" + mark + "]";
+		return "SkillMarkBean [skillName=" + skillName + ", mark=" + mark + "]";
 	}
 
 }

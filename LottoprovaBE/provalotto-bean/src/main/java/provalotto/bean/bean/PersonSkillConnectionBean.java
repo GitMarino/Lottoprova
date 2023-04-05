@@ -11,7 +11,7 @@ public class PersonSkillConnectionBean implements Serializable {
 
 	private Long skillId;
 
-	private String mark;
+	private Integer mark;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -26,7 +26,7 @@ public class PersonSkillConnectionBean implements Serializable {
 				&& Objects.equals(skillId, other.skillId);
 	}
 
-	public String getMark() {
+	public Integer getMark() {
 		return mark;
 	}
 
@@ -43,7 +43,7 @@ public class PersonSkillConnectionBean implements Serializable {
 		return Objects.hash(mark, personId, skillId);
 	}
 
-	public void setMark(final String mark) {
+	public void setMark(final Integer mark) {
 		this.mark = mark;
 	}
 

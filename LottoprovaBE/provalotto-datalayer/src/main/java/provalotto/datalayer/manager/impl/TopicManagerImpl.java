@@ -13,8 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import provalotto.bean.bean.KeyValueBean;
+import provalotto.bean.bean.SkillMarkBean;
 import provalotto.bean.bean.TopicBean;
+import provalotto.bean.bean.TopicSkillsBean;
+import provalotto.bean.connection.PersonTopicConnection;
 import provalotto.bean.entity.Topic;
+import provalotto.bean.utility.SkillMark;
+import provalotto.datalayer.dao.PersonTopicConnectionDAO;
+import provalotto.datalayer.dao.SkillDAO;
 import provalotto.datalayer.dao.TopicDAO;
 import provalotto.datalayer.exceptions.ServiceErrorException;
 import provalotto.datalayer.manager.TopicManager;
@@ -26,6 +32,12 @@ public class TopicManagerImpl implements TopicManager {
 
 	@Autowired
 	private TopicDAO topicDAO;
+
+	@Autowired
+	private PersonTopicConnectionDAO personTopicConnectionDAO;
+
+	@Autowired
+	private SkillDAO skillDAO;
 
 	@Transactional
 	@Override
@@ -99,6 +111,41 @@ public class TopicManagerImpl implements TopicManager {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
 		}
+	}
+
+	@Transactional
+	@Override
+	public List<TopicSkillsBean> getTopicsSkillsByPerson(final Long personId) {
+		List<TopicSkillsBean> topicsSkills = new ArrayList<>();
+		Topic topic;
+		TopicSkillsBean topicSkills;
+		List<SkillMarkBean> skillsMarks;
+		SkillMarkBean skillMark;
+		Integer markDB;
+		for (PersonTopicConnection personTopicConnection : personTopicConnectionDAO.findByIdPersonId(personId)) {
+			topic = personTopicConnection.getId().getTopic();
+
+			topicSkills = new TopicSkillsBean();
+			topicSkills.setTopicName(topic.getName());
+
+			Integer marksSum = 0;
+			skillsMarks = new ArrayList<>();
+			List<SkillMark> skillsMarksDB = skillDAO.findSkillsByPersonAndTopic(personId, topic.getId());
+			for (SkillMark skillMarkDB : skillsMarksDB) {
+				skillMark = new SkillMarkBean();
+				skillMark.setSkillName(skillMarkDB.getSkillName());
+				markDB = skillMarkDB.getMark();
+				skillMark.setMark(markDB);
+				marksSum += markDB;
+				skillsMarks.add(skillMark);
+			}
+
+			topicSkills.setAverage(marksSum / skillsMarksDB.size());
+			topicSkills.setSkillsMarks(skillsMarks);
+
+			topicsSkills.add(topicSkills);
+		}
+		return topicsSkills;
 	}
 
 }
