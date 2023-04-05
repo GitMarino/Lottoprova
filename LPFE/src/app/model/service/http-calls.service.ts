@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Topic } from '../objects/topic';
-import { AREA, BACKEND_ENDPOINT, PERSON, SEARCH, SKILL, STANDARD_JSON_HEADERS, TOPIC } from '../constants/constants';
+import { AREA, BACKEND_ENDPOINT, PERSON, SEARCH, SKILL, SKILLS, STANDARD_JSON_HEADERS, TOPIC } from '../constants/constants';
 import { Person } from '../objects/person';
 import { KeyValue } from '../objects/key-value';
-import { SkillMark } from '../objects/skill-marks';
+import { SkillMark } from '../objects/skill-mark';
+import { TopicSkills } from '../objects/topic-skills';
 
 @Injectable({providedIn: 'root'})
 export class HttpCallsService
@@ -80,6 +81,11 @@ export class HttpCallsService
 
   public getTopicsByPerson(personId: number): Observable<KeyValue[]>
   { return this.http.get<KeyValue[]>(BACKEND_ENDPOINT+TOPIC+PERSON+"?personId="+personId);
+  }
+
+  //TOPICS SKILLS
+  public getTopicsSkillsByPerson(personId: number): Observable<TopicSkills[]>
+  { return this.http.get<TopicSkills[]>(BACKEND_ENDPOINT+TOPIC+SKILLS+"?personId="+personId);
   }
 
   //AREA TOPIC SKILL

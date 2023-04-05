@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Person } from 'src/app/model/objects/person';
-import { SkillMark } from 'src/app/model/objects/skill-marks';
 import { HttpCallsService } from '../../model/service/http-calls.service';
-import { forkJoin } from 'rxjs';
+import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, forkJoin, map } from 'rxjs';
 import { KeyValue } from 'src/app/model/objects/key-value';
 import { Location } from '@angular/common';
 import { Button } from 'src/app/model/objects/button';
+import { TopicSkills } from 'src/app/model/objects/topic-skills';
 
 @Component({
   selector: 'app-info-person',
@@ -16,14 +16,23 @@ import { Button } from 'src/app/model/objects/button';
 export class InfoPersonComponent implements OnInit {
 
   personId?: number;
-
   iconName: string = 'file-text';
-  buttons: Button[] = [];
-
   person?: Person;
-  topics?: KeyValue[];
   areas?: KeyValue[];
-  skillMarks?: SkillMark[];
+
+  topicsSkills?: TopicSkills[];
+  public topicSearched: any;
+  search: OperatorFunction<string, readonly TopicSkills[]> = (text$: Observable<string>) =>
+		text$.pipe(
+			debounceTime(200),
+			distinctUntilChanged(),
+			map((topicWritten) =>
+				topicWritten.length < 2 ? [] : this.topicsSkills!.filter((t) => t.topicName.toLowerCase().indexOf(topicWritten.toLowerCase()) > -1).slice(0, 10),
+			),
+		);
+  notCollapsed: boolean[] = [];
+
+  buttons: Button[] = [];
 
   constructor(private activatedRoute: ActivatedRoute, private httpCalls: HttpCallsService, private location: Location) {
     this.buttons = [
@@ -42,15 +51,18 @@ export class InfoPersonComponent implements OnInit {
     { 
       forkJoin({
         responsePerson: this.httpCalls.getPerson(this.personId!),
-        responseTopics: this.httpCalls.getTopicsByPerson(this.personId!),
-        responseAreas: this.httpCalls.getAreasByPerson(this.personId!)
+        responseAreas: this.httpCalls.getAreasByPerson(this.personId!),
+        responseTopicsSkills: this.httpCalls.getTopicsSkillsByPerson(this.personId!),
       })
-      .subscribe(({ responsePerson, responseTopics, responseAreas }) => {
+      .subscribe(({ responsePerson, responseAreas, responseTopicsSkills}) => {
         this.person = responsePerson as Person;
-        this.topics = responseTopics as KeyValue[];
         this.areas = responseAreas as KeyValue[];
-      }
-      )
+        this.topicsSkills = responseTopicsSkills as TopicSkills[];
+        
+        for(let i of this.topicsSkills!)
+        { this.notCollapsed.push(true);
+        }
+      })
     }
   }
 

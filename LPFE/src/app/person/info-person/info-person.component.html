@@ -1,76 +1,74 @@
-<app-page [iconName]="iconName" pageTitle="Dettagli persona" [buttons]="buttons">
-    <div *ngIf="!person && !topics && !areas">
+<app-page [iconName]="iconName" pageTitle="Dettagli persona">
+    <div *ngIf="!person && !topicsSkills && !areas">
         <h6> Oops! Non è stato possibile caricare i dati </h6> 
     </div>
     
-    <div *ngIf="person"> 
-        <div class="row">
-            <div class="col-md-1"> 
-                <h6> matricola: </h6>
+    <div class="row">
+        <div *ngIf="person" class="col-md-6"> 
+            <div class="row">
+                <div class="col-md-3"> 
+                    <h6> MATRICOLA: </h6>
+                </div>
+                <div class="col"> 
+                    <h5 class="text-primary"> {{person.serial}} </h5>
+                </div>
             </div>
-            <div class="col"> 
-                <h5> {{person.serial}} </h5>
+            <div class="row">
+                <div class="col-md-3"> 
+                    <h6> NOME: </h6>
+                </div>
+                <div class="col"> 
+                    <h5 class="text-primary"> {{person.name}} </h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"> 
+                    <h6> COGNOME: </h6>
+                </div>
+                <div class="col"> 
+                    <h5 class="text-primary"> {{person.surname}} </h5>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-1"> 
-                <h6> nome: </h6>
+        <div *ngIf="areas" class="col-md-6">
+            <h6> AREE: </h6>
+            <div *ngIf="areas.length===0">
+                <h5 class="text-primary"> nessuna </h5>
             </div>
-            <div class="col"> 
-                <h5> {{person.name}} </h5>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-1"> 
-                <h6> cognome: </h6>
-            </div>
-            <div class="col"> 
-                <h5> {{person.surname}} </h5>
+            <div class="row">
+                <div *ngFor="let area of areas" class="col-md-3">
+                    <h5 class="text-primary"> {{area.value}} </h5>
+                </div>
             </div>
         </div>
     </div>
-
+</app-page>
+<app-page *ngIf="topicsSkills && topicsSkills.length>0" cardTitle="Tematiche e competenze" [buttons]="buttons">
+    <div style="position:absolute; left:900px; top:70px;">
+        <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="topicSearched" [ngbTypeahead]="search" />
+    </div>
     <br/>
-    <div *ngIf="topics">
-        <h6> tematiche: </h6>
-        <div *ngIf="topics.length===0">
-            <h6> Nessuna </h6>
-        </div>
-        <div *ngFor="let topic of topics">
-            <h5> {{topic.value}} </h5>
-        </div>
-    </div>
-
     <br/>
-    <div *ngIf="areas">
-        <h6> aree: </h6>
-        <div *ngIf="areas.length===0">
-            <h6> Nessuna </h6>
-        </div>
-        <div *ngFor="let area of areas">
-            <h5> {{area.value}} </h5>
+    <div class="row">
+        <div *ngFor="let topicSkills of topicsSkills; let i = index" class="col-md-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-link btn-lg" (click)="notCollapsed[i] = !notCollapsed[i]"> {{topicSkills.topicName}} </button>
+                </div>
+                <div class="col-md-1"> 
+                    <img class="images" [src]="'/assets/images/mark'+topicSkills.average+'.png'" /> 
+                </div>
+            </div>
+            <div #collapse="ngbCollapse" [(ngbCollapse)]="notCollapsed[i]">
+                <div *ngFor="let skillMark of topicSkills.skillsMarks">
+                    <div class="row">
+                        <h5 class="col-md-4 offset-1"> {{skillMark.skillName}} </h5>
+                        <div class="col-md-1">
+                            <img class="images" [src]="'/assets/images/mark'+skillMark.mark+'.png'" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <!--
-    <br/>
-    <div *ngIf="skillMarks">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th> <h6> competenza </h6> </th>
-                    <th> <h6> voto </h6> </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let skillMark of skillMarks">
-                    <td> <h5> {{skillMark.skillName}} </h5> </td>
-                    <td> <img class="images" [src]="'/assets/images/mark'+skillMark.mark+'.png'" /></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div *ngIf="!skillMarks">
-        <h6> Oops! Non è stato possibile caricare le competenze </h6>
-    </div> -->
 </app-page>
