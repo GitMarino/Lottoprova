@@ -9,4 +9,5 @@ import provalotto.bean.key.AreaTopicConnectionKey;
 @Repository
 public interface AreaTopicConnectionDAO extends JpaRepository<AreaTopicConnection, AreaTopicConnectionKey> {
 
+	boolean existsByIdAreaIdAndIdTopicId(Long areaId, Long topicId);
 }

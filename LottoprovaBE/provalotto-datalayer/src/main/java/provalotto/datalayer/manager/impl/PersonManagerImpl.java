@@ -92,7 +92,8 @@ public class PersonManagerImpl implements PersonManager {
 		try {
 			Optional<Area> areaOptional = areaDAO.findById(areaId);
 			Optional<Person> personOptional = personDAO.findById(personId);
-			if (areaOptional.isPresent() && personOptional.isPresent()) {
+			if (areaOptional.isPresent() && personOptional.isPresent()
+					&& !personAreaConnectionDAO.existsByIdPersonIdAndIdAreaId(personId, areaId)) {
 				PersonAreaConnectionKey personAreaConnectionKey = new PersonAreaConnectionKey();
 				personAreaConnectionKey.setArea(areaOptional.get());
 				personAreaConnectionKey.setPerson(personOptional.get());
@@ -126,7 +127,8 @@ public class PersonManagerImpl implements PersonManager {
 			// save PersonSkillConnection
 			Optional<Person> personOptional = personDAO.findById(personId);
 			Optional<Skill> skillOptional = skillDAO.findById(skillId);
-			if (personOptional.isPresent() && skillOptional.isPresent()) {
+			if (personOptional.isPresent() && skillOptional.isPresent()
+					&& !personSkillConnectionDAO.existsByIdPersonIdAndIdSkillId(personId, skillId)) {
 				personDB = personOptional.get();
 				skillDB = skillOptional.get();
 
@@ -146,7 +148,7 @@ public class PersonManagerImpl implements PersonManager {
 
 			// save PersonTopicConnection
 			Topic topic = skillDB.getTopic();
-			if (topic != null) {
+			if (topic != null && personTopicConnectionDAO.existsByIdPersonIdAndIdTopicId(personId, topic.getId())) {
 				PersonTopicConnectionKey personTopicConnectionKey = new PersonTopicConnectionKey();
 				personTopicConnectionKey.setPerson(personDB);
 				personTopicConnectionKey.setTopic(topic);
@@ -176,7 +178,8 @@ public class PersonManagerImpl implements PersonManager {
 			Optional<Person> personOptional = personDAO.findById(personId);
 			Optional<Topic> topicOptional = topicDAO.findById(topicId);
 
-			if (personOptional.isPresent() && topicOptional.isPresent()) {
+			if (personOptional.isPresent() && topicOptional.isPresent()
+					&& !personTopicConnectionDAO.existsByIdPersonIdAndIdTopicId(personId, topicId)) {
 				PersonTopicConnectionKey personTopicConnectionKey = new PersonTopicConnectionKey();
 				personTopicConnectionKey.setPerson(personOptional.get());
 				personTopicConnectionKey.setTopic(topicOptional.get());

@@ -120,7 +120,8 @@ public class AreaManagerImpl implements AreaManager {
 			Optional<Area> areaOptional = areaDAO.findById(areaId);
 			Optional<Topic> topicOptional = topicDAO.findById(topicId);
 
-			if (areaOptional.isPresent() && topicOptional.isPresent()) {
+			if (areaOptional.isPresent() && topicOptional.isPresent()
+					&& !areaTopicConnectionDAO.existsByIdAreaIdAndIdTopicId(areaId, topicId)) {
 				AreaTopicConnectionKey areaTopicConnectionKey = new AreaTopicConnectionKey();
 				areaTopicConnectionKey.setArea(areaOptional.get());
 				areaTopicConnectionKey.setTopic(topicOptional.get());
