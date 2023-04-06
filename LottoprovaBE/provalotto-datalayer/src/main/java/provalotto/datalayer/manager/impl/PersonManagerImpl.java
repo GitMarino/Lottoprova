@@ -115,8 +115,8 @@ public class PersonManagerImpl implements PersonManager {
 		}
 	}
 
-	@Transactional
 	@Override
+	@Transactional
 	public void createPersonSkillConnection(final Long personId, final Long skillId, final Integer mark)
 			throws ServiceErrorException {
 
@@ -148,7 +148,7 @@ public class PersonManagerImpl implements PersonManager {
 
 			// save PersonTopicConnection
 			Topic topic = skillDB.getTopic();
-			if (topic != null && personTopicConnectionDAO.existsByIdPersonIdAndIdTopicId(personId, topic.getId())) {
+			if (topic != null && !personTopicConnectionDAO.existsByIdPersonIdAndIdTopicId(personId, topic.getId())) {
 				PersonTopicConnectionKey personTopicConnectionKey = new PersonTopicConnectionKey();
 				personTopicConnectionKey.setPerson(personDB);
 				personTopicConnectionKey.setTopic(topic);

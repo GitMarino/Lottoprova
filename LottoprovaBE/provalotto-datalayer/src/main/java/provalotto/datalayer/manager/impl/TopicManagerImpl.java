@@ -127,8 +127,7 @@ public class TopicManagerImpl implements TopicManager {
 
 			topicSkills = new TopicSkillsBean();
 			topicSkills.setTopicName(topic.getName());
-
-			Integer marksSum = 0;
+			double marksSum = 0;
 			skillsMarks = new ArrayList<>();
 			List<SkillMark> skillsMarksDB = skillDAO.findSkillsByPersonAndTopic(personId, topic.getId());
 			for (SkillMark skillMarkDB : skillsMarksDB) {
@@ -139,8 +138,7 @@ public class TopicManagerImpl implements TopicManager {
 				marksSum += markDB;
 				skillsMarks.add(skillMark);
 			}
-
-			topicSkills.setAverage(marksSum / skillsMarksDB.size());
+			topicSkills.setAverage((int) Math.round(marksSum / skillsMarksDB.size()));
 			topicSkills.setSkillsMarks(skillsMarks);
 
 			topicsSkills.add(topicSkills);
