@@ -36,7 +36,7 @@
                 <h5 class="text-primary"> nessuna </h5>
             </div>
             <div class="row">
-                <div *ngFor="let area of areas" class="col-md-3">
+                <div *ngFor="let area of areas" class="col-md-4">
                     <h5 class="text-primary"> {{area.value}} </h5>
                 </div>
             </div>
@@ -44,27 +44,54 @@
     </div>
 </app-page>
 <app-page *ngIf="topicsSkills && topicsSkills.length>0" cardTitle="Tematiche e competenze" [buttons]="buttons">
-    <div style="position:absolute; left:900px; top:70px;">
-        <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="topicSearched" [ngbTypeahead]="search" />
+    <div class="row">
+        <div class="col-md-3 offset-7">
+            <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="topicSearched" [ngbTypeahead]="search" [inputFormatter]="inputFormatter" [resultFormatter]="resultsFormatter" placeholder="Cerca tematica"/>
+        </div>
+        <div class="col-md-2">
+            <button (click)="reset()" type="button" class="btn btn-primary"> Reset </button>
+        </div>
     </div>
     <br/>
     <br/>
-    <div class="row">
-        <div *ngFor="let topicSkills of topicsSkills; let i = index" class="col-md-4">
-            <div class="row">
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-link btn-lg" (click)="notCollapsed[i] = !notCollapsed[i]"> {{topicSkills.topicName}} </button>
-                </div>
-                <div class="col-md-1"> 
-                    <img class="images" [src]="'/assets/images/mark'+topicSkills.average+'.png'" /> 
+    <div *ngIf="topicSearched && (topicSearched.topicName && topicSearched.average && topicSearched.skillsMarks)">
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-link btn-lg" (click)="notCollapsedSelected = !notCollapsedSelected"> {{topicSearched.topicName}} </button>
+            </div>
+            <div class="col-md-1"> 
+                <img class="images" [src]="'/assets/images/mark'+topicSearched.average+'.png'" /> 
+            </div>
+        </div>
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="notCollapsedSelected">
+            <div *ngFor="let skillMark of topicSearched.skillsMarks">
+                <div class="row">
+                    <h5 class="col-md-4 offset-1"> {{skillMark.skillName}} </h5>
+                    <div class="col-md-1">
+                        <img class="images" [src]="'/assets/images/mark'+skillMark.mark+'.png'" />
+                    </div>
                 </div>
             </div>
-            <div #collapse="ngbCollapse" [(ngbCollapse)]="notCollapsed[i]">
-                <div *ngFor="let skillMark of topicSkills.skillsMarks">
-                    <div class="row">
-                        <h5 class="col-md-4 offset-1"> {{skillMark.skillName}} </h5>
-                        <div class="col-md-1">
-                            <img class="images" [src]="'/assets/images/mark'+skillMark.mark+'.png'" />
+        </div>
+    </div>
+    <div *ngIf="topicSearched === undefined || (!topicSearched.topicName && !topicSearched.average && !topicSearched.skillsMarks)">
+        <div class="row">
+            <div *ngFor="let topicSkills of topicsSkills; let i = index" class="col-md-4">
+                <div class="row">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-link btn-lg" (click)="notCollapsed[i] = !notCollapsed[i]"> {{topicSkills.topicName}} </button>
+                    </div>
+                    <div class="col-md-1"> 
+                        <img class="images" [src]="'/assets/images/mark'+topicSkills.average+'.png'" /> 
+                    </div>
+                </div>
+                <div #collapse="ngbCollapse" [(ngbCollapse)]="notCollapsed[i]">
+                    <div *ngFor="let skillMark of topicSkills.skillsMarks">
+                        <div class="row">
+                            <h5 class="col-md-4 offset-1"> {{skillMark.skillName}} </h5>
+                            <div class="col-md-1">
+                                <img class="images" [src]="'/assets/images/mark'+skillMark.mark+'.png'" />
+                            </div>
                         </div>
                     </div>
                 </div>

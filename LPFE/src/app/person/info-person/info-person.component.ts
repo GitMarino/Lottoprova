@@ -21,16 +21,20 @@ export class InfoPersonComponent implements OnInit {
   areas?: KeyValue[];
 
   topicsSkills?: TopicSkills[];
-  public topicSearched: any;
+  notCollapsed: boolean[] = [];
+  
+  public topicSearched?: any;
+  inputFormatter = (selected: TopicSkills) => selected.topicName;
+  resultsFormatter = (result: TopicSkills) => result.topicName.toUpperCase();
   search: OperatorFunction<string, readonly TopicSkills[]> = (text$: Observable<string>) =>
 		text$.pipe(
 			debounceTime(200),
 			distinctUntilChanged(),
 			map((topicWritten) =>
-				topicWritten.length < 2 ? [] : this.topicsSkills!.filter((t) => t.topicName.toLowerCase().indexOf(topicWritten.toLowerCase()) > -1).slice(0, 10),
+				topicWritten.length < 2 ? [] : this.topicsSkills!.filter((t) => t.topicName.toLowerCase().indexOf(topicWritten.toLowerCase()) > -1).slice(0, 5),
 			),
 		);
-  notCollapsed: boolean[] = [];
+  notCollapsedSelected: boolean = true;
 
   buttons: Button[] = [];
 
@@ -68,6 +72,10 @@ export class InfoPersonComponent implements OnInit {
 
   pageBack = () => {
     this.location.back();
+  }
+
+  reset()
+  { this.topicSearched = undefined;
   }
 
 }
