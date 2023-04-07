@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.entity.Skill;
@@ -31,8 +30,8 @@ public class SkillManagerImpl implements SkillManager {
 	@Autowired
 	private TopicDAO topicDAO;
 
-	@Transactional
 	@Override
+	@Transactional(rollbackFor = { Exception.class })
 	public void createSkill(final String name, final String description, final Long topicBeanId)
 			throws ServiceErrorException {
 		try {

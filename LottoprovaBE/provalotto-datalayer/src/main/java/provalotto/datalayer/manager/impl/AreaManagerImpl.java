@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.connection.AreaTopicConnection;
@@ -50,8 +49,8 @@ public class AreaManagerImpl implements AreaManager {
 	@Autowired
 	private PersonAreaConnectionDAO personAreaConnectionDAO;
 
-	@Transactional
 	@Override
+	@Transactional(rollbackFor = { Exception.class })
 	public void createArea(final String name, final Long personBeanId, final Long topicBeanId)
 			throws ServiceErrorException {
 		try {
@@ -114,7 +113,7 @@ public class AreaManagerImpl implements AreaManager {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	public void createAreaTopicConnection(final Long areaId, final Long topicId) throws ServiceErrorException {
 		try {
 			Optional<Area> areaOptional = areaDAO.findById(areaId);

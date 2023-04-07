@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.bean.SkillMarkBean;
@@ -39,8 +38,8 @@ public class TopicManagerImpl implements TopicManager {
 	@Autowired
 	private SkillDAO skillDAO;
 
-	@Transactional
 	@Override
+	@Transactional(rollbackFor = { Exception.class })
 	public TopicBean createTopic(final TopicBean topicBean) throws ServiceErrorException {
 		try {
 			if (!topicDAO.existsByName(topicBean.getName())) {
@@ -113,7 +112,6 @@ public class TopicManagerImpl implements TopicManager {
 		}
 	}
 
-	@Transactional
 	@Override
 	public List<TopicSkillsBean> getTopicsSkillsByPerson(final Long personId) {
 		List<TopicSkillsBean> topicsSkills = new ArrayList<>();

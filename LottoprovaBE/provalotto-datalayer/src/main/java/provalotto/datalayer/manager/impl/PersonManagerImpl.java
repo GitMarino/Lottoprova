@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.bean.PersonBean;
@@ -62,8 +61,8 @@ public class PersonManagerImpl implements PersonManager {
 	@Autowired
 	private SkillDAO skillDAO;
 
-	@Transactional
 	@Override
+	@Transactional(rollbackFor = { Exception.class })
 	public PersonBean createPerson(final PersonBean personBean) throws ServiceErrorException {
 		try {
 			if (!personDAO.existsBySerial(personBean.getSerial())) {
@@ -86,8 +85,8 @@ public class PersonManagerImpl implements PersonManager {
 		}
 	}
 
-	@Transactional
 	@Override
+	@Transactional(rollbackFor = { Exception.class })
 	public void createPersonAreaConnection(final Long personId, final Long areaId) throws ServiceErrorException {
 		try {
 			Optional<Area> areaOptional = areaDAO.findById(areaId);
@@ -116,7 +115,7 @@ public class PersonManagerImpl implements PersonManager {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	public void createPersonSkillConnection(final Long personId, final Long skillId, final Integer mark)
 			throws ServiceErrorException {
 
@@ -171,8 +170,8 @@ public class PersonManagerImpl implements PersonManager {
 		}
 	}
 
-	@Transactional
 	@Override
+	@Transactional(rollbackFor = { Exception.class })
 	public void createPersonTopicConnection(final Long personId, final Long topicId) throws ServiceErrorException {
 		try {
 			Optional<Person> personOptional = personDAO.findById(personId);
