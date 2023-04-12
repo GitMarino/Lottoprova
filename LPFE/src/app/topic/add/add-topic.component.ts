@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { ERROR_BODY, ERROR_TITLE, SUCCESS_BODY, SUCCESS_TITLE } from 'src/app/model/constants/constants';
-import { Button } from 'src/app/model/objects/button';
-import { PopupComponent } from 'src/app/model/popup/popup.component';
-import { Topic } from '../../model/objects/topic';
-import { HttpCallsService } from '../../model/service/http-calls.service';
+import { ERROR_BODY, ERROR_TITLE, SUCCESS_BODY, SUCCESS_TITLE } from 'src/app/shared/constants/constants';
+import { Button } from 'src/app/shared/objects/button';
+import { PopupComponent } from 'src/app/shared/popup/popup.component';
+import { Topic } from '../../shared/objects/topic';
+import { HttpCallsService } from '../../shared/service/http-calls.service';
 
 @Component({
   selector: 'app-add-topic',

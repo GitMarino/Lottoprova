@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Button } from '../model/objects/button';
-import { Link } from '../model/objects/link';
+import { Button } from '../objects/button';
+import { Link } from '../objects/link';
 
 @Component({
   selector: 'app-page',

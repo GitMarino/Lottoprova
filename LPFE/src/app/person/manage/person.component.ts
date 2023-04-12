@@ -1,9 +1,9 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { Button } from '../model/objects/button';
-import { KeyValue } from '../model/objects/key-value';
-import { Person } from '../model/objects/person';
-import { HttpCallsService } from '../model/service/http-calls.service';
-import { FEutilityService } from '../model/service/fe-utility.service';
+import { Button } from '../../shared/objects/button';
+import { KeyValue } from '../../shared/objects/key-value';
+import { Person } from '../../shared/objects/person';
+import { HttpCallsService } from '../../shared/service/http-calls.service';
+import { FEutilityService } from '../../shared/service/fe-utility.service';
 
 @Component({
   selector: 'app-person',
@@ -14,8 +14,8 @@ export class PersonComponent implements OnInit {
   iconName: string = 'users';
   buttons: Button[] = [];
   
-  ATSmapBE?: KeyValue[][] = [];
-  ATSsubMap?: KeyValue[][] = [];
+  aTSmapBE?: KeyValue[][] = [];
+  aTSsubMap?: KeyValue[][] = [];
 
   areas: KeyValue[] = [];
   selectedArea?: number;
@@ -49,9 +49,9 @@ export class PersonComponent implements OnInit {
     this.httpCalls.getAreaTopicSkill()
       .subscribe({
         next: (response: KeyValue[][]) => {
-          this.ATSmapBE = response as KeyValue[][];
-          this.ATSsubMap = this.ATSmapBE;
-          this.populateSelects(this.ATSsubMap);
+          this.aTSmapBE = response as KeyValue[][];
+          this.aTSsubMap = this.aTSmapBE;
+          this.populateSelects(this.aTSsubMap);
         }
       })
   }
@@ -68,9 +68,9 @@ export class PersonComponent implements OnInit {
   }
 
   setSelects(column: number) {
-    var resultMap: KeyValue[][] = this.feUtilityService.getMapBySelected(this.ATSmapBE!, this.selectedArea, this.selectedTopic, this.selectedSkill);
-    this.ATSsubMap = resultMap;
-    this.populateSelects(this.ATSsubMap);
+    var resultMap: KeyValue[][] = this.feUtilityService.getMapBySelected(this.aTSmapBE!, this.selectedArea, this.selectedTopic, this.selectedSkill);
+    this.aTSsubMap = resultMap;
+    this.populateSelects(this.aTSsubMap);
   }
 
   searchPeople() {
@@ -89,8 +89,8 @@ export class PersonComponent implements OnInit {
     this.selectedSkill = undefined;
     this.selectedTopic = undefined;
 
-    this.ATSsubMap = this.ATSmapBE;
-    this.populateSelects(this.ATSsubMap!);
+    this.aTSsubMap = this.aTSmapBE;
+    this.populateSelects(this.aTSsubMap!);
   }
 
   populateSelects(map: KeyValue[][]) {

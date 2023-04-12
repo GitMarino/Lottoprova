@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { Button } from 'src/app/model/objects/button';
-import { Person } from '../../model/objects/person';
-import { HttpCallsService } from '../../model/service/http-calls.service';
-import { PopupComponent } from 'src/app/model/popup/popup.component';
-import { ERROR_BODY, ERROR_TITLE, SUCCESS_BODY, SUCCESS_TITLE } from 'src/app/model/constants/constants';
+import { Button } from 'src/app/shared/objects/button';
+import { Person } from '../../shared/objects/person';
+import { HttpCallsService } from '../../shared/service/http-calls.service';
+import { PopupComponent } from 'src/app/shared/popup/popup.component';
+import { ERROR_BODY, ERROR_TITLE, SUCCESS_BODY, SUCCESS_TITLE } from 'src/app/shared/constants/constants';
 
 @Component({
   selector: 'app-add-person',
