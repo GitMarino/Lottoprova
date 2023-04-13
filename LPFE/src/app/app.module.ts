@@ -8,26 +8,27 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { PersonComponent } from './person/person.component';
-import { InfoPersonComponent } from './person/info-person/info-person.component';
-import { TopicComponent } from './topic/topic.component';
-import { AreaComponent } from './area/area.component';
-import { AddPersonComponent } from './add/add-person/add-person.component';
-import { AddTopicComponent } from './add/add-topic/add-topic.component';
-import { AddAreaComponent } from './add/add-area/add-area.component';
-import { SkillComponent } from './skill/skill.component';
-import { AddSkillComponent } from './add/add-skill/add-skill.component';
+import { PersonComponent } from './person/manage/person.component';
+import { InfoPersonComponent } from './person/info/info-person.component';
+import { TopicComponent } from './topic/manage/topic.component';
+import { AreaComponent } from './area/manage/area.component';
+import { AddPersonComponent } from './person/add/add-person.component';
+import { AddTopicComponent } from './topic/add/add-topic.component';
+import { AddAreaComponent } from './area/add/add-area.component';
+import { SkillComponent } from './skill/manage/skill.component';
+import { AddSkillComponent } from './skill/add/add-skill.component';
 import { AddPersonAreaConnectionComponent } from './connections/add-person-area-connection/add-person-area-connection.component';
 import { AddPersonTopicConnectionComponent } from './connections/add-person-topic-connection/add-person-topic-connection.component';
 import { AddPersonSkillConnectionComponent } from './connections/add-person-skill-connection/add-person-skill-connection.component';
 import { AddAreaTopicConnectionComponent } from './connections/add-area-topic-connection/add-area-topic-connection.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbAccordionModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FeatherModule } from 'angular-feather';
-import { PageComponent } from './page/page.component';
+import { PageComponent } from './shared/page/page.component';
 import { IconsModule } from './icons/icons.module';
-import { PopupComponent } from './model/popup/popup.component';
+import { PopupComponent } from './shared/popup/popup.component';
+import { CommonModule } from '@angular/common';
+import { MiniCardComponent } from './shared/mini-card/mini-card.component';
 
 const routes: Routes = [
   { path: '', component: AppComponent},
@@ -73,6 +74,7 @@ const routes: Routes = [
     AddPersonTopicConnectionComponent,
     AddPersonSkillConnectionComponent,
     AddAreaTopicConnectionComponent,
+    MiniCardComponent,
   ],
   imports: 
   [ BrowserModule,
@@ -85,6 +87,8 @@ const routes: Routes = [
     NgbModule,
 
     IconsModule,
+    NgbAccordionModule,
+    CommonModule,
   ],
   exports: [RouterModule],
   providers: [],
