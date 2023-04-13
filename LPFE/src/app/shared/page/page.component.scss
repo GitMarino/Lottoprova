@@ -2,24 +2,30 @@
     margin-top: 80px;
 }
 
-button {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    text-transform: uppercase;
-    margin: 0rem 1rem 0rem 0rem;
-}
-
-.card-footer {
-    justify-content: center;
-    display: flex;
-}
-
 div .d-flex i-feather {
     cursor: pointer;
     color: black;
 }
 
+.card-header {
+    background-color: #87bafb;
+    color: white;
+}
+
 .card-body {
     padding: 40px;
     padding-bottom: 60px;
+}
+
+.card-footer {
+    justify-content: center;
+    display: flex;
+    background-color: white;
+}
+
+button {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-transform: uppercase;
+    margin: 0rem 1rem 0rem 0rem;
 }
