@@ -1,17 +1,26 @@
-<app-page [iconName]="iconName" pageTitle="Associazione tematiche-aree" cardTitle="Associa una tematica ad un'area" [buttons]="buttons">
-    <form ngForm>
+<app-page [iconName]="iconName" pageTitle="Associazione tematiche-aree" [buttons]="buttons">
+    <form #form="ngForm">
         <div class="row justify-content-center"> 
             <div class="col-md-4">
                 <div class="form-floating">
+                    <input id="typeahead" type="text" class="form-control" required 
+                        [(ngModel)]="selectedTopic" name="typeahead" [ngbTypeahead]="searchTopic" 
+                        [inputFormatter]="inputFormatter" [resultFormatter]="resultsFormatter" 
+                        placeholder="tematica" 
+                    />
+                    <label for="typeahead"> tematica </label>
+                </div>
+                
+                <!--<div class="form-floating">
                     <select class="form-select" [(ngModel)]="selectedTopic" aria-label="topic" name="topic" id="topicId">
                         <option *ngFor="let topic of topics" [ngValue]="topic.id"> {{topic.value}} </option>
                     </select>
                     <label for="topicId"> tematica </label>
-                 </div>
+                 </div>-->
             </div>
             <div class="col-md-4">
                 <div class="form-floating">
-                    <select class="form-select" [(ngModel)]="selectedArea" aria-label="area" name="area" id="areaId">
+                    <select class="form-select" required [(ngModel)]="selectedArea" aria-label="area" name="area" id="areaId">
                         <option *ngFor="let area of areas" [ngValue]="area.id"> {{area.value}} </option>
                     </select>
                     <label for="areaId"> area </label>
