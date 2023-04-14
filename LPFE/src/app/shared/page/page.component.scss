@@ -8,8 +8,15 @@ div .d-flex i-feather {
 }
 
 .card-header {
-    background-color: #87bafb;
-    color: white;
+    background-color: white;
+    //background-color: #87bafb;
+    color: black;
+}
+
+.card {
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 7px 4px rgba(0,0,0,0.05);
+    box-shadow: 0px 0px 7px 4px rgba(0,0,0,0.05);
 }
 
 .card-body {
@@ -28,4 +35,11 @@ button {
     padding-right: 1rem;
     text-transform: uppercase;
     margin: 0rem 1rem 0rem 0rem;
+    //background-color: #0080FF;
+    color: white;
+}
+
+.btn:hover {
+    background-color: mediumblue;
+    color: white;
 }
