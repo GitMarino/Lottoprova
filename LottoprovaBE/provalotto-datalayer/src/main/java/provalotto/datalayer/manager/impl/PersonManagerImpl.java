@@ -147,16 +147,18 @@ public class PersonManagerImpl implements PersonManager {
 
 			// save PersonTopicConnection
 			Topic topic = skillDB.getTopic();
-			if (topic != null && !personTopicConnectionDAO.existsByIdPersonIdAndIdTopicId(personId, topic.getId())) {
-				PersonTopicConnectionKey personTopicConnectionKey = new PersonTopicConnectionKey();
-				personTopicConnectionKey.setPerson(personDB);
-				personTopicConnectionKey.setTopic(topic);
+			if (topic != null) {
+				if (!personTopicConnectionDAO.existsByIdPersonIdAndIdTopicId(personId, topic.getId())) {
+					PersonTopicConnectionKey personTopicConnectionKey = new PersonTopicConnectionKey();
+					personTopicConnectionKey.setPerson(personDB);
+					personTopicConnectionKey.setTopic(topic);
 
-				PersonTopicConnection personTopicConnection = new PersonTopicConnection();
-				personTopicConnection.setId(personTopicConnectionKey);
-				personTopicConnection.setMaker("Christian Marino");
-				personTopicConnection.setDateTime(LocalDateTime.now());
-				personTopicConnectionDAO.save(personTopicConnection);
+					PersonTopicConnection personTopicConnection = new PersonTopicConnection();
+					personTopicConnection.setId(personTopicConnectionKey);
+					personTopicConnection.setMaker("Christian Marino");
+					personTopicConnection.setDateTime(LocalDateTime.now());
+					personTopicConnectionDAO.save(personTopicConnection);
+				}
 			} else {
 				throw new ServiceErrorException("Dati inconsistenti");
 			}
