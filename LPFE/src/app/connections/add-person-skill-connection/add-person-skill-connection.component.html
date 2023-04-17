@@ -1,25 +1,30 @@
-<app-page [iconName]="iconName" pageTitle="Associazione persone-competenze" [buttons]="buttons">
-    <form ngForm>
+<app-page [iconName]="iconName" pageTitle="Associazioni Persone-Competenze" [buttons]="buttons">
+    <form #form="ngForm">
         <div class="row justify-content-center">
             <div class="col-md-3">
                 <div class="form-floating">
-                    <select class="form-select" [(ngModel)]="selectedPerson" aria-label="person" name="person" id="personId">
-                        <option *ngFor="let person of people" [ngValue]="person.id"> {{person.value}} </option>
-                    </select>
-                    <label for="personId"> persona </label>
-                 </div>
+                    <input id="PersonTypeahead" type="text" class="form-control" required 
+                        [(ngModel)]="selectedPerson" name="PersonTypeahead" [ngbTypeahead]="searchPerson" 
+                        [inputFormatter]="inputFormatter" [resultFormatter]="resultsFormatter" 
+                        placeholder="persona"
+                    />
+                    <label for="PersonTypeahead"> persona </label>
+                </div>
             </div>
             <div class="col-md-3">
                 <div class="form-floating">
-                    <select class="form-select" [(ngModel)]="selectedSkill" aria-label="skill" name="skill" id="skillId">
-                        <option *ngFor="let skill of skills" [ngValue]="skill.id"> {{skill.value}} </option>
-                    </select>
-                    <label for="skillId"> competenza </label>
-                 </div>
+                    <input id="SkillTypeahead" type="text" class="form-control" required 
+                        [(ngModel)]="selectedSkill" name="SkillTypeahead" [ngbTypeahead]="searchSkill" 
+                        [inputFormatter]="inputFormatter" [resultFormatter]="resultsFormatter" 
+                        placeholder="competenza"
+                    />
+                    <label for="SkillTypeahead"> competenza </label>
+                </div>
             </div>
             <div class="col-md-3">
                 <div class="form-floating">
-                    <select class="form-select" [(ngModel)]="mark" aria-label="mark" name="mark" id="markId">
+                    <select id="markId" class="form-select" required
+                    [(ngModel)]="mark" name="mark">
                         <option> 0 </option>
                         <option> 1 </option>
                         <option> 2 </option>

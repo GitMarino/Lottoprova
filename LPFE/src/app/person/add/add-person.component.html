@@ -1,17 +1,32 @@
-<app-page [iconName]="iconName" pageTitle="Registrazione persone" cardTitle="Aggiungi persona" [buttons]="buttons">
-    <form ngForm>
+<app-page [iconName]="iconName" pageTitle="Registrazione Persone" cardTitle="Aggiungi persona" [buttons]="buttons">
+    <form #form="ngForm">
         <div class="row justify-content-center">
-            <div class="col-md-3 form-floating">
-                <input [(ngModel)]="person.serial" type="number" name="serial" class="form-control" id="serial">
-                <label for="serial"> matricola </label>
+            <div class="col-md-3">
+                <div class="form-floating">
+                    <input id="serial" type="number" class="form-control" required
+                        [(ngModel)]="person.serial" name="serial"
+                        placeholder="matricola"
+                    >
+                    <label for="serial"> matricola </label>
+                </div>
             </div>
-            <div class="col-md-3 form-floating">
-                <input [(ngModel)]="person.name" type="text" name="name" class="form-control" id="name">
-                <label for="name"> nome </label>
+            <div class="col-md-3">
+                <div class="form-floating">
+                    <input id="name" type="text" class="form-control" required
+                        [(ngModel)]="person.name" name="name"
+                        placeholder="nome"
+                    >
+                    <label for="name"> nome </label>
+                </div>
             </div>
-            <div class="col-md-3 form-floating">
-                <input [(ngModel)]="person.surname" type="text" name="surname" class="form-control" id="surname">
-                <label for="surname"> cognome </label>
+            <div class="col-md-3"> 
+                <div class="form-floating">
+                    <input id="surname" type="text" class="form-control" required
+                        [(ngModel)]="person.surname" name="surname"
+                        placeholder="cognome"
+                    >
+                    <label for="surname"> cognome </label>
+                </div>
             </div>
         </div>
     </form>

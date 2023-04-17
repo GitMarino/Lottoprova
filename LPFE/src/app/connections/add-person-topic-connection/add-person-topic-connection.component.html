@@ -1,21 +1,25 @@
-<app-page [iconName]="iconName" pageTitle="Associazione persone-tematiche" [buttons]="buttons">
-    <form ngForm>
+<app-page [iconName]="iconName" pageTitle="Associazioni Persone-Tematiche" [buttons]="buttons">
+    <form #form="ngForm">
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div class="form-floating">
-                    <select class="form-select" [(ngModel)]="selectedPerson" aria-label="person" name="person" id="personId">
-                        <option *ngFor="let person of people" [ngValue]="person.id"> {{person.value}} </option>
-                    </select>
-                    <label for="personId"> persona </label>
-                 </div>
+                    <input id="PersonTypeahead" type="text" class="form-control" required 
+                        [(ngModel)]="selectedPerson" name="PersonTypeahead" [ngbTypeahead]="searchPerson" 
+                        [inputFormatter]="inputFormatter" [resultFormatter]="resultsFormatter" 
+                        placeholder="persona"
+                    />
+                    <label for="PersonTypeahead"> persona </label>
+                </div>
             </div>
             <div class="col-md-4">
                 <div class="form-floating">
-                    <select class="form-select" [(ngModel)]="selectedTopic" aria-label="topic" name="topic" id="topicId">
-                        <option *ngFor="let topic of topics" [ngValue]="topic.id"> {{topic.value}} </option>
-                    </select>
-                    <label for="topicId"> tematica </label>
-                 </div>
+                    <input id="typeahead" type="text" class="form-control" required 
+                        [(ngModel)]="selectedTopic" name="typeahead" [ngbTypeahead]="searchTopic" 
+                        [inputFormatter]="inputFormatter" [resultFormatter]="resultsFormatter" 
+                        placeholder="tematica"
+                    />
+                    <label for="typeahead"> tematica </label>
+                </div>
             </div>  
         </div>
     </form>

@@ -18,7 +18,7 @@ export class AddAreaTopicConnectionComponent implements OnInit, AfterViewInit {
   iconName: string = 'git-commit';
   buttons: Button[] = [];
 
-  selectedArea?: number;
+  selectedAreaId?: number;
   areas: KeyValue[] = [];
 
   topics: KeyValue[] = [];
@@ -74,13 +74,13 @@ export class AddAreaTopicConnectionComponent implements OnInit, AfterViewInit {
   }
 
   addAreaTopicConnection = () =>
-  { this.httpCalls.createAreaTopicConnection(this.selectedArea!, this.selectedTopic!.id)
+  { this.httpCalls.createAreaTopicConnection(this.selectedAreaId!, this.selectedTopic!.id)
       .subscribe({
         next: (response: void) => {
           this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
 
           this.selectedTopic = undefined;
-          this.selectedArea = undefined;
+          this.selectedAreaId = undefined;
         },
         error : error => {
           this.myPopup.show(ERROR_TITLE, ERROR_BODY);

@@ -1,17 +1,20 @@
-<app-page [iconName]="iconName" pageTitle="Associazione persone-aree" [buttons]="buttons">
-    <form ngForm>
+<app-page [iconName]="iconName" pageTitle="Associazioni Persone-Aree" [buttons]="buttons">
+    <form #form="ngForm">
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div class="form-floating">
-                    <select class="form-select" [(ngModel)]="selectedPerson" aria-label="person" name="person" id="personId">
-                        <option *ngFor="let person of people" [ngValue]="person.id"> {{person.value}} </option>
-                    </select>
-                    <label for="personId"> persona </label>
-                 </div>
-            </div>
+                    <input id="typeahead" type="text" class="form-control" required 
+                        [(ngModel)]="selectedPerson" name="typeahead" [ngbTypeahead]="searchPerson" 
+                        [inputFormatter]="inputFormatter" [resultFormatter]="resultsFormatter" 
+                        placeholder="persona"
+                    />
+                    <label for="typeahead"> persona </label>
+                </div>
+            </div> 
             <div class="col-md-4">
                 <div class="form-floating">
-                    <select class="form-select" [(ngModel)]="selectedArea" aria-label="area" name="area" id="areaId">
+                    <select id="areaId" class="form-select" required 
+                    [(ngModel)]="selectedAreaId" name="area">
                         <option *ngFor="let area of areas" [ngValue]="area.id"> {{area.value}} </option>
                     </select>
                     <label for="areaId"> area </label>

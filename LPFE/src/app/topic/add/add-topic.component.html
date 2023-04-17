@@ -1,9 +1,14 @@
-<app-page [iconName]="iconName" pageTitle="Registrazione tematiche" cardTitle="Aggiungi tematica" [buttons]="buttons">
-    <form ngForm>
+<app-page [iconName]="iconName" pageTitle="Registrazione Tematiche" cardTitle="Aggiungi tematica" [buttons]="buttons">
+    <form #form="ngForm">
         <div class="row justify-content-center">
-            <div class="col-md-4 form-floating">
-                <input [(ngModel)]="topic.name" type="text" name="name" class="form-control" id="name">
-                <label for="name"> nome </label>
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <input id="name" type="text" class="form-control" required
+                        [(ngModel)]="topic.name" name="name"
+                        placeholder="nome"
+                    >
+                    <label for="name"> nome </label>
+                </div>
             </div>
         </div>
     </form>
