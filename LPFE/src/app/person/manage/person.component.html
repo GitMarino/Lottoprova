@@ -4,7 +4,10 @@
         <div class="row justify-content-center">
             <div class="col-md-3">
                 <div class="form-floating">
-                    <select class="form-select" [(ngModel)]="selectedArea" (change)="setSelects(0)" aria-label="area" name="area" id="areaId">
+                    <select id="areaId" class="form-select" 
+                        [(ngModel)]="selectedAreaId" name="area" 
+                        placeholder="area" (change)="setSelects()"
+                    >
                         <option selected [ngValue]="undefined"> </option>
                         <option *ngFor="let area of areas" [ngValue]="area.id"> {{area.value}} </option>
                     </select>
@@ -14,21 +17,23 @@
 
             <div class="col-md-3">
                 <div class="form-floating">
-                    <select class="form-select" [(ngModel)]="selectedTopic" (change)="setSelects(1)" aria-label="topic" name="tematica" id="topicId">
-                        <option selected [ngValue]="undefined">  </option>
-                        <option *ngFor="let topic of topics" [ngValue]="topic.id"> {{topic.value}} </option>
-                    </select>
-                    <label for="topicId"> tematica </label>
+                    <input id="TopicTypeahead" type="text" class="form-control" 
+                        [(ngModel)]="selectedTopic" name="TopicTypeahead" [ngbTypeahead]="searchTopic" 
+                        [inputFormatter]="inputFormatter" [resultFormatter]="resultsFormatter" 
+                        (change)="setSelects()" placeholder="tematica"
+                    />
+                    <label for="TopicTypeahead"> tematica </label>
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="form-floating">
-                    <select class="form-select" [(ngModel)]="selectedSkill" (change)="setSelects(2)" aria-label="skill" name="skill" id="skillId">
-                        <option selected [ngValue]="undefined"> </option>
-                        <option *ngFor="let skill of skills" [ngValue]="skill.id"> {{skill.value}} </option>
-                    </select>
-                    <label for="skillId"> competenza </label>
+                    <input id="SkillTypeahead" type="text" class="form-control"
+                        [(ngModel)]="selectedSkill" name="SkillTypeahead" [ngbTypeahead]="searchSkill" 
+                        [inputFormatter]="inputFormatter" [resultFormatter]="resultsFormatter" 
+                        (change)="setSelects()" placeholder="competenza"
+                    />
+                    <label for="SkillTypeahead"> competenza </label>
                 </div>    
             </div>
         </div>
@@ -74,5 +79,5 @@
             </tr>
         </tbody>
     </table>
-    <ngb-pagination [(page)]="currentPage" [pageSize]="pageSize" [collectionSize]="collectionSize" [directionLinks]="false"></ngb-pagination>
+    <ngb-pagination *ngIf="collectionSize>pageSize" [(page)]="currentPage" [pageSize]="pageSize" [collectionSize]="collectionSize" [directionLinks]="false"></ngb-pagination>
 </app-page>

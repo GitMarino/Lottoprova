@@ -4,6 +4,7 @@ import { KeyValue } from '../../shared/objects/key-value';
 import { Person } from '../../shared/objects/person';
 import { HttpCallsService } from '../../shared/service/http-calls.service';
 import { FEutilityService } from '../../shared/service/fe-utility.service';
+import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, map } from 'rxjs';
 
 @Component({
   selector: 'app-person',
@@ -18,11 +19,34 @@ export class PersonComponent implements OnInit {
   aTSsubMap?: KeyValue[][] = [];
 
   areas: KeyValue[] = [];
-  selectedArea?: number;
+  selectedAreaId?: number;
+  
   topics: KeyValue[] = [];
-  selectedTopic?: number;
+  public selectedTopic?: KeyValue;
+  searchTopic: OperatorFunction<string, readonly KeyValue[]> = (text$: Observable<string>) =>
+		text$.pipe(
+			debounceTime(200),
+			distinctUntilChanged(),
+			map((topicWritten) =>
+				topicWritten.length < 3 ? []
+        : this.topics!.filter((t) => t.value.toLowerCase().indexOf(topicWritten.toLowerCase()) > -1).slice(0, 5),
+			),
+		);
+
   skills: KeyValue[] = [];
-  selectedSkill?: number;
+  public selectedSkill?: KeyValue;
+  searchSkill: OperatorFunction<string, readonly KeyValue[]> = (text$: Observable<string>) =>
+  text$.pipe(
+    debounceTime(200),
+    distinctUntilChanged(),
+    map((skillWritten) =>
+      skillWritten.length < 3 ? []
+      : this.skills!.filter((s) => s.value.toLowerCase().indexOf(skillWritten.toLowerCase()) > -1).slice(0, 5),
+    ),
+  );
+
+  inputFormatter = (selected: KeyValue) => selected.value;
+  resultsFormatter = (result: KeyValue) => result.value;
 
   people?: Person[];
   arrow?: string;
@@ -67,14 +91,13 @@ export class PersonComponent implements OnInit {
     }
   }
 
-  setSelects(column: number) {
-    var resultMap: KeyValue[][] = this.feUtilityService.getMapBySelected(this.aTSmapBE!, this.selectedArea, this.selectedTopic, this.selectedSkill);
-    this.aTSsubMap = resultMap;
+  setSelects() {
+    this.aTSsubMap = this.feUtilityService.getMapBySelected(this.aTSmapBE!, this.selectedAreaId, this.selectedTopic?.id, this.selectedSkill?.id);
     this.populateSelects(this.aTSsubMap);
   }
 
   searchPeople() {
-    this.httpCalls.searchPeopleByBeans(this.selectedArea!, this.selectedSkill!, this.selectedTopic!)
+    this.httpCalls.searchPeopleByBeans(this.selectedAreaId!, this.selectedSkill?.id, this.selectedTopic?.id)
       .subscribe({
         next: (response: Person[]) => {
           this.people = response as Person[];
@@ -85,7 +108,7 @@ export class PersonComponent implements OnInit {
 
   reset() {
     this.people = undefined;
-    this.selectedArea = undefined;
+    this.selectedAreaId = undefined;
     this.selectedSkill = undefined;
     this.selectedTopic = undefined;
 
