@@ -42,7 +42,7 @@ export class HttpCallsService
   { return this.http.post<Person>(BACKEND_ENDPOINT+PERSON, person, {'headers': STANDARD_JSON_HEADERS});
   }
 
-  public searchPeopleByBeans(areaId: number, skillId: number, topicId: number): Observable<Person[]>
+  public searchPeopleByBeans(areaId: number | undefined, skillId: number | undefined, topicId: number | undefined): Observable<Person[]>
   { 
     let params = new HttpParams();
     if( areaId )

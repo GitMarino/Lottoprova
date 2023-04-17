@@ -53,7 +53,7 @@
                 <div class="col-md-3 offset-9">
                     <div class="input-group">
                         <input #filterField type="text" class="form-control"(keyup)="onFilter($event)" placeholder="Cerca tematica" aria-label="Cerca tematica" aria-describedby="filter">
-                        <button class="btn btn-primary" (click)="reset();filterField.value=''" type="button" id="filter"> <i-feather name="trash-2"></i-feather></button>
+                        <button class="btn btn-primary" (click)="reset(); filterField.value=''" type="button" id="filter"> <i-feather name="trash-2"></i-feather></button>
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                     </ngb-panel>
                 </ngb-accordion>
                 <br/>
-                <ngb-pagination [(page)]="currentPage" [pageSize]="pageSize" [collectionSize]="collectionSize" [directionLinks]="false"></ngb-pagination>
+                <ngb-pagination *ngIf="collectionSize>pageSize" [(page)]="currentPage" [pageSize]="pageSize" [collectionSize]="collectionSize" [directionLinks]="false"></ngb-pagination>
             </div>
             <div *ngIf="!topicsSkillsBE || !collectionSize || topicsSkillsBE.length<=0">
                 <br/>
