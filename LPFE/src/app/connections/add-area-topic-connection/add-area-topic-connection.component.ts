@@ -22,6 +22,7 @@ export class AddAreaTopicConnectionComponent implements OnInit, AfterViewInit {
   areas: KeyValue[] = [];
 
   topics: KeyValue[] = [];
+  /*
   public selectedTopic?: any;
   inputFormatter = (selected: KeyValue) => selected.value;
   resultsFormatter = (result: KeyValue) => result.value;
@@ -33,7 +34,9 @@ export class AddAreaTopicConnectionComponent implements OnInit, AfterViewInit {
 				topicWritten.length < 3 ? []
         : this.topics!.filter((t) => t.value.toLowerCase().indexOf(topicWritten.toLowerCase()) > -1).slice(0, 5),
 			),
-		);
+		);*/
+
+  selectedTopic?: any = 'java';
 
   @ViewChild('form') form!: NgForm;
 

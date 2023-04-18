@@ -29,6 +29,7 @@ import { IconsModule } from './icons/icons.module';
 import { PopupComponent } from './shared/popup/popup.component';
 import { CommonModule } from '@angular/common';
 import { MiniCardComponent } from './shared/mini-card/mini-card.component';
+import { TypeaheadComponent } from './shared/typeahead/typeahead.component';
 
 const routes: Routes = [
   { path: '', component: AppComponent},
@@ -55,9 +56,11 @@ const routes: Routes = [
 
 @NgModule({
   declarations: 
-  [ PageComponent,
-    AppComponent,
+  [ AppComponent,
+    PageComponent,
     PopupComponent,
+    TypeaheadComponent,
+    MiniCardComponent,
 
     AreaComponent, 
     PersonComponent,
@@ -74,7 +77,6 @@ const routes: Routes = [
     AddPersonTopicConnectionComponent,
     AddPersonSkillConnectionComponent,
     AddAreaTopicConnectionComponent,
-    MiniCardComponent,
   ],
   imports: 
   [ BrowserModule,
