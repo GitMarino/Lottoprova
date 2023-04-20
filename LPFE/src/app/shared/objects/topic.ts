@@ -1,5 +1,4 @@
-export class Topic
-{   
+export class Topic {
     id?: number;
     name!: string;
 

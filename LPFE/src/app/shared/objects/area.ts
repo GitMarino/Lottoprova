@@ -1,5 +1,4 @@
-export class Area
-{   
+export class Area {
     id?: number;
     name!: string;
     manager!: string;

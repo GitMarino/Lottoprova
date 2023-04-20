@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './skill.component.html',
   styleUrls: ['./skill.component.css']
 })
-export class SkillComponent 
-{ iconName: string = 'file-text';
+export class SkillComponent {
+    iconName: string = 'file-text';
 }

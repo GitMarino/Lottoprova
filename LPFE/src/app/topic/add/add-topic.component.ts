@@ -12,7 +12,7 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './add-topic.component.html',
   styleUrls: ['./add-topic.component.css']
 })
-export class AddTopicComponent implements AfterViewInit{
+export class AddTopicComponent implements AfterViewInit {
 
   iconName: string = "plus-square"
   buttons: Button[] = [];
@@ -23,8 +23,8 @@ export class AddTopicComponent implements AfterViewInit{
 
   @ViewChild('popup') myPopup!: PopupComponent;
 
-  constructor(private httpCalls: HttpCallsService) 
-  { this.buttons = [
+  constructor(private httpCalls: HttpCallsService) {
+    this.buttons = [
       {
         name: 'salva',
         action: this.addTopic,
@@ -36,23 +36,23 @@ export class AddTopicComponent implements AfterViewInit{
   ngAfterViewInit(): void {
     this.form.statusChanges?.subscribe({
       next: status => {
-        (this.buttons[0].disabled as BehaviorSubject<boolean>).next(status!=='VALID')
+        (this.buttons[0].disabled as BehaviorSubject<boolean>).next(status !== 'VALID')
       }
     })
   }
 
-  addTopic = () =>
-  { this.httpCalls.createTopic(this.topic)
-      .subscribe({
-        next: (response: Topic) => {
-          this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
-          
-          this.topic = new Topic();
-        },
-        error : error => {
-          this.myPopup.show(ERROR_TITLE, ERROR_BODY);
-        }
-      });
+  addTopic = () => {
+    this.httpCalls.createTopic(this.topic)
+    .subscribe({
+      next: (response: Topic) => {
+        this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
+
+        this.topic = new Topic();
+      },
+      error: error => {
+        this.myPopup.show(ERROR_TITLE, ERROR_BODY);
+      }
+    });
   }
 
 }

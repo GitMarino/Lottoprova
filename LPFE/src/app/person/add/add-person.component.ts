@@ -17,14 +17,14 @@ export class AddPersonComponent implements AfterViewInit {
   iconName: string = "plus-square"
   buttons: Button[] = [];
 
-  person : Person = new Person();
+  person: Person = new Person();
 
   @ViewChild('form') form!: NgForm;
 
   @ViewChild('popup') myPopup!: PopupComponent;
-  
-  constructor(private httpCalls: HttpCallsService) 
-  { this.buttons = [
+
+  constructor(private httpCalls: HttpCallsService) {
+    this.buttons = [
       {
         name: 'salva',
         action: this.addPerson,
@@ -36,23 +36,23 @@ export class AddPersonComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.form.statusChanges?.subscribe({
       next: status => {
-        (this.buttons[0].disabled as BehaviorSubject<boolean>).next(status!=='VALID')
+        (this.buttons[0].disabled as BehaviorSubject<boolean>).next(status !== 'VALID')
       }
     })
   }
 
-  addPerson = () =>
-  { this.httpCalls.createPerson(this.person)
-      .subscribe({
-        next: (response: Person) => {
-          this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
+  addPerson = () => {
+    this.httpCalls.createPerson(this.person)
+    .subscribe({
+      next: (response: Person) => {
+        this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
 
-          this.person = new Person();
-        },
-        error : error => {
-          this.myPopup.show(ERROR_TITLE, ERROR_BODY);
-        }
-      });
+        this.person = new Person();
+      },
+      error: error => {
+        this.myPopup.show(ERROR_TITLE, ERROR_BODY);
+      }
+    });
   }
 
 }

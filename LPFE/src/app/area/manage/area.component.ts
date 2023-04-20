@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './area.component.html',
   styleUrls: ['./area.component.css']
 })
-export class AreaComponent 
-{ iconName: string = 'box';
+export class AreaComponent {
+    iconName: string = 'box';
 }

@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './topic.component.html',
   styleUrls: ['./topic.component.css']
 })
-export class TopicComponent 
-{ iconName: string = 'book';
+export class TopicComponent {
+    iconName: string = 'book';
 
 }

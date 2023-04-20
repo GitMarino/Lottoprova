@@ -1,5 +1,5 @@
-import {allIcons} from 'angular-feather/icons';
-import {FeatherModule} from 'angular-feather';
+import { allIcons } from 'angular-feather/icons';
+import { FeatherModule } from 'angular-feather';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 

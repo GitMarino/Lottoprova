@@ -25,21 +25,21 @@ export class AddPersonAreaConnectionComponent implements OnInit, AfterViewInit {
   inputFormatter = (selected: KeyValue) => selected.value;
   resultsFormatter = (result: KeyValue) => result.value;
   searchPerson: OperatorFunction<string, readonly KeyValue[]> = (text$: Observable<string>) =>
-		text$.pipe(
-			debounceTime(200),
-			distinctUntilChanged(),
-			map((personWritten) =>
-				personWritten.length < 3 ? []
-        : this.people!.filter((p) => p.value.toLowerCase().indexOf(personWritten.toLowerCase()) > -1).slice(0, 5),
-			),
-		);
-  
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map((personWritten) =>
+        personWritten.length < 3 ? []
+          : this.people!.filter((p) => p.value.toLowerCase().indexOf(personWritten.toLowerCase()) > -1).slice(0, 5),
+      ),
+    );
+
   @ViewChild('form') form!: NgForm;
 
   @ViewChild('popup') myPopup!: PopupComponent;
 
-  constructor(private httpCalls: HttpCallsService) 
-  { this.buttons = [
+  constructor(private httpCalls: HttpCallsService) {
+    this.buttons = [
       {
         name: 'salva',
         action: this.addPersonAreaConnection,
@@ -51,19 +51,19 @@ export class AddPersonAreaConnectionComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.form.statusChanges?.subscribe({
       next: status => {
-        (this.buttons[0].disabled as BehaviorSubject<boolean>).next(status!=='VALID')
+        (this.buttons[0].disabled as BehaviorSubject<boolean>).next(status !== 'VALID')
       }
     })
   }
 
-  ngOnInit(): void
-  { this.httpCalls.getAllPeople()
-      .subscribe({
-        next: (response: KeyValue[]) => {
-          this.people = response as KeyValue[];
-        }
-      });
-    
+  ngOnInit(): void {
+    this.httpCalls.getAllPeople()
+    .subscribe({
+      next: (response: KeyValue[]) => {
+        this.people = response as KeyValue[];
+      }
+    });
+
     this.httpCalls.getAllAreas()
       .subscribe({
         next: (response: KeyValue[]) => {
@@ -72,19 +72,19 @@ export class AddPersonAreaConnectionComponent implements OnInit, AfterViewInit {
       });
   }
 
-  addPersonAreaConnection = () =>
-  { this.httpCalls.createPersonAreaConnection(this.selectedPerson!.id, this.selectedAreaId!)
-      .subscribe({
-        next: (response: void) => {
-          this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
+  addPersonAreaConnection = () => {
+    this.httpCalls.createPersonAreaConnection(this.selectedPerson!.id, this.selectedAreaId!)
+    .subscribe({
+      next: (response: void) => {
+        this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
 
-          this.selectedPerson = undefined;
-          this.selectedAreaId = undefined;
-        },
-        error : error => {
-          this.myPopup.show(ERROR_TITLE, ERROR_BODY);
-        }
-      })
+        this.selectedPerson = undefined;
+        this.selectedAreaId = undefined;
+      },
+      error: error => {
+        this.myPopup.show(ERROR_TITLE, ERROR_BODY);
+      }
+    })
   }
 
 }

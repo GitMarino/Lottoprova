@@ -1,5 +1,4 @@
-export class KeyValue
-{   
+export class KeyValue {
     id!: number;
     value!: string;
 }

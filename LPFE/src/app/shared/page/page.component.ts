@@ -14,13 +14,13 @@ export class PageComponent {
   //@Input() link: Link = new Link;
   @Input() cardTitle: string = '';
   @Input() buttons: Button[] = [];
-  
+
   @Output() selection = new EventEmitter<string>();
   onClick(button: Button) {
-    if( button.action ) {
+    if (button.action) {
       button.action!();
-    } 
-    else if (button.identifier ) {
+    }
+    else if (button.identifier) {
       this.selection.emit(button.identifier);
     }
   }

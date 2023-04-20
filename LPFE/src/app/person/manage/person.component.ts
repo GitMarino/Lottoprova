@@ -14,36 +14,36 @@ import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, map }
 export class PersonComponent implements OnInit {
   iconName: string = 'users';
   buttons: Button[] = [];
-  
+
   aTSmapBE?: KeyValue[][] = [];
   aTSsubMap?: KeyValue[][] = [];
 
   areas: KeyValue[] = [];
   selectedAreaId?: number;
-  
+
   topics: KeyValue[] = [];
   public selectedTopic?: KeyValue;
   searchTopic: OperatorFunction<string, readonly KeyValue[]> = (text$: Observable<string>) =>
-		text$.pipe(
-			debounceTime(200),
-			distinctUntilChanged(),
-			map((topicWritten) =>
-				topicWritten.length < 3 ? []
-        : this.topics!.filter((t) => t.value.toLowerCase().indexOf(topicWritten.toLowerCase()) > -1).slice(0, 5),
-			),
-		);
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map((topicWritten) =>
+        topicWritten.length < 3 ? []
+          : this.topics!.filter((t) => t.value.toLowerCase().indexOf(topicWritten.toLowerCase()) > -1).slice(0, 5),
+      ),
+    );
 
   skills: KeyValue[] = [];
   public selectedSkill?: KeyValue;
   searchSkill: OperatorFunction<string, readonly KeyValue[]> = (text$: Observable<string>) =>
-  text$.pipe(
-    debounceTime(200),
-    distinctUntilChanged(),
-    map((skillWritten) =>
-      skillWritten.length < 3 ? []
-      : this.skills!.filter((s) => s.value.toLowerCase().indexOf(skillWritten.toLowerCase()) > -1).slice(0, 5),
-    ),
-  );
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map((skillWritten) =>
+        skillWritten.length < 3 ? []
+          : this.skills!.filter((s) => s.value.toLowerCase().indexOf(skillWritten.toLowerCase()) > -1).slice(0, 5),
+      ),
+    );
 
   inputFormatter = (selected: KeyValue) => selected.value;
   resultsFormatter = (result: KeyValue) => result.value;
@@ -142,113 +142,113 @@ export class PersonComponent implements OnInit {
       }
     }
 
-    this.areas.sort( (n1,n2) => {
-      if(n1.value>n2.value) {
+    this.areas.sort((n1, n2) => {
+      if (n1.value > n2.value) {
         return 1;
       }
-      if(n1.value<n2.value) {
+      if (n1.value < n2.value) {
         return -1;
       }
       return 0;
     });
 
-    this.topics.sort( (n1,n2) => {
-      if(n1.value>n2.value) {
+    this.topics.sort((n1, n2) => {
+      if (n1.value > n2.value) {
         return 1;
       }
-      if(n1.value<n2.value) {
+      if (n1.value < n2.value) {
         return -1;
       }
       return 0;
     });
 
-    this.skills.sort( (n1,n2) => {
-      if(n1.value>n2.value) {
+    this.skills.sort((n1, n2) => {
+      if (n1.value > n2.value) {
         return 1;
       }
-      if(n1.value<n2.value) {
+      if (n1.value < n2.value) {
         return -1;
       }
       return 0;
     });
   }
 
-  onSortClick(column: number)
-  { if(this.sortColumn !== column)
-    { this.ascending = 0;
+  onSortClick(column: number) {
+    if (this.sortColumn !== column) {
+      this.ascending = 0;
       this.sortColumn = column;
     }
     this.sortColumn = column;
-    if(this.ascending===0)
-    { switch (column) {
+    if (this.ascending === 0) {
+      switch (column) {
         case 1:
-          this.people!.sort( (n1,n2) => {
-            if(n1.serial>n2.serial) {
+          this.people!.sort((n1, n2) => {
+            if (n1.serial > n2.serial) {
               return 1;
             }
-            if(n1.serial<n2.serial) {
+            if (n1.serial < n2.serial) {
               return -1;
             }
             return 0;
           });
           break;
         case 2:
-          this.people!.sort( (n1,n2) => {
-            if(n1.name>n2.name) {
+          this.people!.sort((n1, n2) => {
+            if (n1.name > n2.name) {
               return 1;
             }
-            if(n1.name<n2.name) {
+            if (n1.name < n2.name) {
               return -1;
             }
             return 0;
           });
           break;
         case 3:
-          this.people!.sort( (n1,n2) => {
-            if(n1.surname>n2.surname) {
+          this.people!.sort((n1, n2) => {
+            if (n1.surname > n2.surname) {
               return 1;
             }
-            if(n1.surname<n2.surname) {
+            if (n1.surname < n2.surname) {
               return -1;
             }
             return 0;
           });
           break;
-      } 
+      }
       this.arrow = 'arrow-up';
       this.ascending = 1;
     }
-    else if(this.ascending === 1)
-    { this.arrow = 'arrow-down';
-      switch (column)
-      { case 1:
-          this.people!.sort( (n1,n2) => {
-            if(n1.serial<n2.serial) {
+    else if (this.ascending === 1) {
+      this.arrow = 'arrow-down';
+      switch (column) {
+        case 1:
+          this.people!.sort((n1, n2) => {
+            if (n1.serial < n2.serial) {
               return 1;
             }
-            if(n1.serial>n2.serial) {
+            if (n1.serial > n2.serial) {
               return -1;
             }
             return 0;
           });
           break;
         case 2:
-          this.people!.sort( (n1,n2) => {
-            if(n1.name<n2.name) {
+          this.people!.sort((n1, n2) => {
+            if (n1.name < n2.name) {
               return 1;
             }
-            if(n1.name>n2.name) {
+            if (n1.name > n2.name) {
               return -1;
             }
             return 0;
           });
           break;
         case 3:
-          this.people!.sort( (n1,n2) => {
-            if(n1.surname<n2.surname) {
+          this.people!.sort((n1, n2) => {
+            if (n1.surname < n2.surname) {
               return 1;
             }
-            if(n1.surname>n2.surname) {
+            if (n1.surname > n2.surname) {
               return -1;
             }
             return 0;
@@ -258,12 +258,12 @@ export class PersonComponent implements OnInit {
       this.arrow = 'arrow-down';
       this.ascending = 2;
     }
-    else
-    { this.people!.sort( (n1,n2) => {
-        if(n1.surname>n2.surname) {
+    else {
+      this.people!.sort((n1, n2) => {
+        if (n1.surname > n2.surname) {
           return 1;
         }
-        if(n1.surname<n2.surname) {
+        if (n1.surname < n2.surname) {
           return -1;
         }
         return 0;

@@ -1,5 +1,4 @@
-export class Person
-{   
+export class Person {
     id?: number;
     serial!: number;
     name!: string;

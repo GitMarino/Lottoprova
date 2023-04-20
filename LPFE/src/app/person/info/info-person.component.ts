@@ -65,12 +65,12 @@ export class InfoPersonComponent implements OnInit {
           this.person = responsePerson as Person;
           this.areas = responseAreas as KeyValue[];
           this.topicsSkillsBE = responseTopicsSkills as TopicSkills[];
-          
-          this.topicsSkillsBE.sort( (n1, n2) => {
-            if(n1.topicName>n2.topicName) {
+
+          this.topicsSkillsBE.sort((n1, n2) => {
+            if (n1.topicName > n2.topicName) {
               return 1;
             }
-            if(n1.topicName<n2.topicName) {
+            if (n1.topicName < n2.topicName) {
               return -1;
             }
             return 0;

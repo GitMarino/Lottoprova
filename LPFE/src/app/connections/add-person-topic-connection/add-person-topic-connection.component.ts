@@ -23,33 +23,33 @@ export class AddPersonTopicConnectionComponent implements OnInit, AfterViewInit 
   people: KeyValue[] = [];
   public selectedPerson?: any;
   searchPerson: OperatorFunction<string, readonly KeyValue[]> = (text$: Observable<string>) =>
-		text$.pipe(
-			debounceTime(200),
-			distinctUntilChanged(),
-			map((personWritten) =>
-				personWritten.length < 3 ? []
-        : this.people!.filter((p) => p.value.toLowerCase().indexOf(personWritten.toLowerCase()) > -1).slice(0, 5),
-			),
-		);
-  
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map((personWritten) =>
+        personWritten.length < 3 ? []
+          : this.people!.filter((p) => p.value.toLowerCase().indexOf(personWritten.toLowerCase()) > -1).slice(0, 5),
+      ),
+    );
+
   topics: KeyValue[] = [];
   public selectedTopic?: any;
   searchTopic: OperatorFunction<string, readonly KeyValue[]> = (text$: Observable<string>) =>
-		text$.pipe(
-			debounceTime(200),
-			distinctUntilChanged(),
-			map((topicWritten) =>
-				topicWritten.length < 3 ? []
-        : this.topics!.filter((t) => t.value.toLowerCase().indexOf(topicWritten.toLowerCase()) > -1).slice(0, 5),
-			),
-		);
-  
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map((topicWritten) =>
+        topicWritten.length < 3 ? []
+          : this.topics!.filter((t) => t.value.toLowerCase().indexOf(topicWritten.toLowerCase()) > -1).slice(0, 5),
+      ),
+    );
+
   @ViewChild('form') form!: NgForm;
 
   @ViewChild('popup') myPopup!: PopupComponent;
 
-  constructor(private httpCalls: HttpCallsService) 
-  { this.buttons = [
+  constructor(private httpCalls: HttpCallsService) {
+    this.buttons = [
       {
         name: 'salva',
         action: this.addPersonTopicConnection,
@@ -61,19 +61,19 @@ export class AddPersonTopicConnectionComponent implements OnInit, AfterViewInit 
   ngAfterViewInit(): void {
     this.form.statusChanges?.subscribe({
       next: status => {
-        (this.buttons[0].disabled as BehaviorSubject<boolean>).next(status!=='VALID')
+        (this.buttons[0].disabled as BehaviorSubject<boolean>).next(status !== 'VALID')
       }
     })
   }
 
-  ngOnInit(): void
-  { this.httpCalls.getAllPeople()
-      .subscribe({
-        next: (response: KeyValue[]) => {
-          this.people = response as KeyValue[];
-        }
-      });
-    
+  ngOnInit(): void {
+    this.httpCalls.getAllPeople()
+    .subscribe({
+      next: (response: KeyValue[]) => {
+        this.people = response as KeyValue[];
+      }
+    });
+
     this.httpCalls.getAllTopics()
       .subscribe({
         next: (response: KeyValue[]) => {
@@ -82,19 +82,19 @@ export class AddPersonTopicConnectionComponent implements OnInit, AfterViewInit 
       });
   }
 
-  addPersonTopicConnection = () =>
-  { this.httpCalls.createPersonTopicConnection(this.selectedPerson!.id, this.selectedTopic!.id)
-      .subscribe({
-        next: (response: void) => {
-          this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
+  addPersonTopicConnection = () => {
+    this.httpCalls.createPersonTopicConnection(this.selectedPerson!.id, this.selectedTopic!.id)
+    .subscribe({
+      next: (response: void) => {
+        this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
 
-          this.selectedPerson = undefined;
-          this.selectedTopic = undefined;
-        },
-        error: error => {
-          this.myPopup.show(ERROR_TITLE, ERROR_BODY);
-        }
-      })
+        this.selectedPerson = undefined;
+        this.selectedTopic = undefined;
+      },
+      error: error => {
+        this.myPopup.show(ERROR_TITLE, ERROR_BODY);
+      }
+    })
   }
 
 }
