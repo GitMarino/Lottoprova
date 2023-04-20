@@ -11,7 +11,17 @@
                     />
                     <label for="typeahead"> tematica </label>
                 </div>
-            </div>-->
+            </div> -->
+            <div class="col-md-4"> {{topicId}}
+                <app-typeahead required
+                    label="tematica" [list]="topics" 
+                    [(ngModel)]="topicId" name="topic" #topic="ngModel"
+                /> {{topic.invalid}} {{topic.dirty}} {{topic.touched}}
+                <div *ngIf="topic.invalid && (topic.dirty || topic.touched)" class="alert alert-danger" role="alert">
+                    <div *ngIf="topic.errors?.['required']"> Campo obbligatorio </div>
+                    <div *ngIf="topic.errors?.['notAllowedValue']"> Valore immesso non valido </div>
+                </div>
+            </div>
             <div class="col-md-4">
                 <div class="form-floating">
                     <select id="areaId" class="form-select" required 
@@ -22,9 +32,6 @@
                     </select>
                     <label for="areaId"> area </label>
                  </div>
-            </div>
-            <div class="col-md-4"> {{selectedTopic}}
-                <app-typeahead label="customTypeahead" [list]="topics" [(ngModel)]="selectedTopic" name="topics"/>
             </div>
         </div>
     </form>

@@ -18,32 +18,18 @@ export class AddAreaTopicConnectionComponent implements OnInit, AfterViewInit {
   iconName: string = 'git-commit';
   buttons: Button[] = [];
 
-  selectedAreaId?: number;
   areas: KeyValue[] = [];
+  selectedAreaId?: number;
 
   topics: KeyValue[] = [];
-  /*
-  public selectedTopic?: any;
-  inputFormatter = (selected: KeyValue) => selected.value;
-  resultsFormatter = (result: KeyValue) => result.value;
-  searchTopic: OperatorFunction<string, readonly KeyValue[]> = (text$: Observable<string>) =>
-		text$.pipe(
-			debounceTime(200),
-			distinctUntilChanged(),
-			map((topicWritten) =>
-				topicWritten.length < 3 ? []
-        : this.topics!.filter((t) => t.value.toLowerCase().indexOf(topicWritten.toLowerCase()) > -1).slice(0, 5),
-			),
-		);*/
-
-  selectedTopic?: any = 'java';
+  topicId?: number;
 
   @ViewChild('form') form!: NgForm;
 
   @ViewChild('popup') myPopup!: PopupComponent;
 
-  constructor(private httpCalls: HttpCallsService) 
-  { this.buttons = [
+  constructor(private httpCalls: HttpCallsService) {
+    this.buttons = [
       {
         name: 'salva',
         action: this.addAreaTopicConnection,
@@ -55,19 +41,19 @@ export class AddAreaTopicConnectionComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.form.statusChanges?.subscribe({
       next: status => {
-        (this.buttons[0].disabled as BehaviorSubject<boolean>).next(status!=='VALID')
+        (this.buttons[0].disabled as BehaviorSubject<boolean>).next(status !== 'VALID')
       }
     })
   }
 
-  ngOnInit(): void
-  { this.httpCalls.getAllTopics()
-      .subscribe({
-        next: (response: KeyValue[]) => {
-          this.topics = response as KeyValue[];
-        }
-      });
-    
+  ngOnInit(): void {
+    this.httpCalls.getAllTopics()
+    .subscribe({
+      next: (response: KeyValue[]) => {
+        this.topics = response as KeyValue[];
+      }
+    });
+
     this.httpCalls.getAllAreas()
       .subscribe({
         next: (response: KeyValue[]) => {
@@ -76,19 +62,19 @@ export class AddAreaTopicConnectionComponent implements OnInit, AfterViewInit {
       });
   }
 
-  addAreaTopicConnection = () =>
-  { this.httpCalls.createAreaTopicConnection(this.selectedAreaId!, this.selectedTopic!.id)
-      .subscribe({
-        next: (response: void) => {
-          this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
+  addAreaTopicConnection = () => {
+    this.httpCalls.createAreaTopicConnection(this.selectedAreaId!, this.topicId!)
+    .subscribe({
+      next: (response: void) => {
+        this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
 
-          this.selectedTopic = undefined;
-          this.selectedAreaId = undefined;
-        },
-        error : error => {
-          this.myPopup.show(ERROR_TITLE, ERROR_BODY);
-        }
-      })
+        this.topicId = undefined;
+        this.selectedAreaId = undefined;
+      },
+      error: error => {
+        this.myPopup.show(ERROR_TITLE, ERROR_BODY);
+      }
+    })
   }
-  
+
 }

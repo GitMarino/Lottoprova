@@ -1,67 +1,109 @@
-import { Component, Input, Output, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, Input, OnChanges, OnInit, Output, SimpleChanges, forwardRef } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import { KeyValue } from '../objects/key-value';
 import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, map } from 'rxjs';
+import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-typeahead',
   templateUrl: './typeahead.component.html',
   styleUrls: ['./typeahead.component.scss'],
   providers: [
-    { provide: NG_VALUE_ACCESSOR,
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TypeaheadComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
       useExisting: forwardRef(() => TypeaheadComponent),
       multi: true
     }
   ]
 })
-export class TypeaheadComponent implements ControlValueAccessor {
-  
+export class TypeaheadComponent implements ControlValueAccessor, Validator {
+
   @Input() label: string = '';
   @Input() list: KeyValue[] = [];
+  value?: any;
+
   inputFormatter = (selected: KeyValue) => selected.value;
   resultsFormatter = (result: KeyValue) => result.value;
   search: OperatorFunction<string, readonly KeyValue[]> = (text$: Observable<string>) =>
-		text$.pipe(
-			debounceTime(200),
-			distinctUntilChanged(),
-			map((written) =>
-				written.length < 3 ? []
-        : this.list!.filter((o) => o.value.toLowerCase().indexOf(written.toLowerCase()) > -1).slice(0, 5),
-			),
-		);
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map((written) =>
+        written.length < 3 ? []
+          : this.list!.filter((o) => o.value.toLowerCase().indexOf(written.toLowerCase()) > -1).slice(0, 5),
+      ),
+    );
 
-  content?: any;
-  
-  onSelect(event: any)
-  { 
-    console.log(event.target.value) ;
-    if(this.list.find((item)=> item.value=== event.target.value))
-    { this.onChange(event.target.value);
+  //event particolare che permette di avere item che è l'oggetto
+  onSelect(event: NgbTypeaheadSelectItemEvent) {
+    this.value = event.item;
+    this.onChange(event.item.id);
+  }
+
+  //event.target è il tag dove l'evento è contenuto, event.target.value è il valore del tag quindi la stringa dell'input formatter
+  onFocusOut(event: any) {
+    if (!event.target.value) {
+      this.value = null;
+      this.onChange(null);
+    }
+    else {
+      const item = this.list.find((item) => item.value === event.target.value)
+      if (item) {
+        this.value = item;
+        this.onChange(item.id);
+      }
+      else {
+        this.onChange(-1);
+      }
+    }
+    this.onTouched();
+  }
+
+
+  //channel from page to custom component
+  writeValue(idValue: number): void {
+    //non trova il valore perchè la lista non è inizializzata
+    const item = this.list.find((item) => item.id === idValue)
+    if (item) {
+      this.value = item;
     }
     else
-    { this.onChange(null);
-    }
-  }
-  
-
-  writeValue(value: any): void {
-    this.content = value;
-    this.onChange(null);
+      if (idValue) {
+        this.onChange(null);
+      }
   }
 
-  //when something is been writing
+  //channel from custom component to page
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
+  //channel from custom component to page
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
-  onChange= (value: any) =>
-  {}
-  
-  onTouched() 
-  {}
+  //ngModel value
+  onChange = (idValue: any) => { }
+
+  onTouched() { }
+
+  validate(control: FormControl): ValidationErrors | null {
+    if (this.value) {
+      const item = this.list.find((item) => item === this.value)
+      if (item) {
+        return null;
+      }
+      else {
+        return { notAllowedValue: true };
+      }
+    }
+    return null;
+  }
 
 }
