@@ -46,8 +46,6 @@ export class AddPersonComponent implements AfterViewInit {
     .subscribe({
       next: (response: Person) => {
         this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
-
-        this.person = new Person();
       },
       error: error => {
         this.myPopup.show(ERROR_TITLE, ERROR_BODY);

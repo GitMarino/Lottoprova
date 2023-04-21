@@ -46,8 +46,6 @@ export class AddTopicComponent implements AfterViewInit {
     .subscribe({
       next: (response: Topic) => {
         this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
-
-        this.topic = new Topic();
       },
       error: error => {
         this.myPopup.show(ERROR_TITLE, ERROR_BODY);
