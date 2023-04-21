@@ -4,30 +4,37 @@
             <div class="col-md-3">
                 <div class="form-floating">
                     <input id="name" type="text" class="form-control" required
-                        [(ngModel)]="name" name="name"
+                        [(ngModel)]="name" name="name" #Name="ngModel"
                         placeholder="nome"
                     >
                     <label for="name"> nome </label>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-floating">
-                    <input id="PersonTypeahead" type="text" class="form-control" required 
-                        [(ngModel)]="selectedPerson" name="PersonTypeahead" [ngbTypeahead]="searchPerson" 
-                        [inputFormatter]="inputFormatter" [resultFormatter]="resultsFormatter" 
-                        placeholder="responsabile"
-                    />
-                    <label for="PersonTypeahead"> responsabile </label>
+                <div *ngIf="Name.invalid && (Name.dirty || Name.touched)" class="alert alert-danger" role="alert">
+                    <div *ngIf="Name.errors?.['required']">
+                        <strong> Attenzione! </strong> Campo obbligatorio.
+                    </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="form-floating">
-                    <input id="typeahead" type="text" class="form-control" required 
-                        [(ngModel)]="selectedTopic" name="typeahead" [ngbTypeahead]="searchTopic" 
-                        [inputFormatter]="inputFormatter" [resultFormatter]="resultsFormatter" 
-                        placeholder="tematica"
-                    />
-                    <label for="typeahead"> tematica </label>
+                <app-typeahead required
+                    label="responsabile" [list]="people" 
+                    [(ngModel)]="personId" name="person" #person="ngModel"
+                />
+                <div *ngIf="person.invalid && (person.dirty || person.touched)" class="alert alert-danger" role="alert">
+                    <div *ngIf="person.errors?.['required']">
+                        <strong> Attenzione! </strong> Campo obbligatorio.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <app-typeahead required
+                    label="tematica" [list]="topics" 
+                    [(ngModel)]="topicId" name="topic" #topic="ngModel"
+                />
+                <div *ngIf="topic.invalid && (topic.dirty || topic.touched)" class="alert alert-danger" role="alert">
+                    <div *ngIf="topic.errors?.['required']"> 
+                        <strong> Attenzione! </strong> Campo obbligatorio.
+                    </div>
                 </div>
             </div>
         </div>

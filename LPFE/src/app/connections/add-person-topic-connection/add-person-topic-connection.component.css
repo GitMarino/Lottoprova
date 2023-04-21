@@ -1,3 +1,5 @@
-label {
-    color: #0080FF;
+.alert {
+    position: absolute;
+    margin-top: 0.2rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
 }

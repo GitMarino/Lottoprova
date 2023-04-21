@@ -4,28 +4,43 @@
             <div class="col-md-3">
                 <div class="form-floating">
                     <input id="serial" type="number" class="form-control" required
-                        [(ngModel)]="person.serial" name="serial"
+                        [(ngModel)]="person.serial" name="serial" #Serial="ngModel"
                         placeholder="matricola"
                     >
                     <label for="serial"> matricola </label>
+                </div>
+                <div *ngIf="Serial.invalid && (Serial.dirty || Serial.touched)" class="alert alert-danger" role="alert">
+                    <div *ngIf="Serial.errors?.['required']">
+                        <strong> Attenzione! </strong> Campo obbligatorio.
+                    </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-floating">
                     <input id="name" type="text" class="form-control" required
-                        [(ngModel)]="person.name" name="name"
+                        [(ngModel)]="person.name" name="name" #Name="ngModel"
                         placeholder="nome"
                     >
                     <label for="name"> nome </label>
+                </div>
+                <div *ngIf="Name.invalid && (Name.dirty || Name.touched)" class="alert alert-danger" role="alert">
+                    <div *ngIf="Name.errors?.['required']">
+                        <strong> Attenzione! </strong> Campo obbligatorio.
+                    </div>
                 </div>
             </div>
             <div class="col-md-3"> 
                 <div class="form-floating">
                     <input id="surname" type="text" class="form-control" required
-                        [(ngModel)]="person.surname" name="surname"
+                        [(ngModel)]="person.surname" name="surname" #Surname="ngModel"
                         placeholder="cognome"
                     >
                     <label for="surname"> cognome </label>
+                </div>
+                <div *ngIf="Surname.invalid && (Surname.dirty || Surname.touched)" class="alert alert-danger" role="alert">
+                    <div *ngIf="Surname.errors?.['required']">
+                        <strong> Attenzione! </strong> Campo obbligatorio.
+                    </div>
                 </div>
             </div>
         </div>

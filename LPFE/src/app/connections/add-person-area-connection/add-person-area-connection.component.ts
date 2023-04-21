@@ -4,7 +4,7 @@ import { KeyValue } from 'src/app/shared/objects/key-value';
 import { HttpCallsService } from '../../shared/service/http-calls.service';
 import { PopupComponent } from 'src/app/shared/popup/popup.component';
 import { ERROR_BODY, ERROR_TITLE, SUCCESS_BODY, SUCCESS_TITLE } from 'src/app/shared/constants/constants';
-import { BehaviorSubject, Observable, OperatorFunction, debounceTime, distinctUntilChanged, map } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -21,18 +21,7 @@ export class AddPersonAreaConnectionComponent implements OnInit, AfterViewInit {
   areas: KeyValue[] = [];
 
   people: KeyValue[] = [];
-  public selectedPerson?: any;
-  inputFormatter = (selected: KeyValue) => selected.value;
-  resultsFormatter = (result: KeyValue) => result.value;
-  searchPerson: OperatorFunction<string, readonly KeyValue[]> = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      map((personWritten) =>
-        personWritten.length < 3 ? []
-          : this.people!.filter((p) => p.value.toLowerCase().indexOf(personWritten.toLowerCase()) > -1).slice(0, 5),
-      ),
-    );
+  personId?: number;
 
   @ViewChild('form') form!: NgForm;
 
@@ -73,13 +62,10 @@ export class AddPersonAreaConnectionComponent implements OnInit, AfterViewInit {
   }
 
   addPersonAreaConnection = () => {
-    this.httpCalls.createPersonAreaConnection(this.selectedPerson!.id, this.selectedAreaId!)
+    this.httpCalls.createPersonAreaConnection(this.personId!, this.selectedAreaId!)
     .subscribe({
       next: (response: void) => {
         this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
-
-        this.selectedPerson = undefined;
-        this.selectedAreaId = undefined;
       },
       error: error => {
         this.myPopup.show(ERROR_TITLE, ERROR_BODY);

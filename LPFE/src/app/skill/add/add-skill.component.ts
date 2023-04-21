@@ -4,7 +4,7 @@ import { KeyValue } from 'src/app/shared/objects/key-value';
 import { HttpCallsService } from '../../shared/service/http-calls.service';
 import { PopupComponent } from 'src/app/shared/popup/popup.component';
 import { ERROR_BODY, ERROR_TITLE, SUCCESS_BODY, SUCCESS_TITLE } from 'src/app/shared/constants/constants';
-import { BehaviorSubject, Observable, OperatorFunction, debounceTime, distinctUntilChanged, map } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -21,18 +21,7 @@ export class AddSkillComponent implements OnInit, AfterViewInit {
   description?: string;
 
   topics: KeyValue[] = [];
-  public selectedTopic?: any;
-  inputFormatter = (selected: KeyValue) => selected.value;
-  resultsFormatter = (result: KeyValue) => result.value;
-  searchTopic: OperatorFunction<string, readonly KeyValue[]> = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      map((topicWritten) =>
-        topicWritten.length < 3 ? []
-          : this.topics!.filter((t) => t.value.toLowerCase().indexOf(topicWritten.toLowerCase()) > -1).slice(0, 5),
-      ),
-    );
+  topicId?: number;
 
   @ViewChild('form') form!: NgForm;
 
@@ -66,14 +55,10 @@ export class AddSkillComponent implements OnInit, AfterViewInit {
   }
 
   addSkill = () => {
-    this.httpCalls.createSkill(this.name!, this.description!, this.selectedTopic!.id)
+    this.httpCalls.createSkill(this.name!, this.description!, this.topicId!)
     .subscribe({
       next: (response: void) => {
         this.myPopup.show(SUCCESS_TITLE, SUCCESS_BODY);
-
-        this.name = undefined;
-        this.description = undefined;
-        this.selectedTopic = undefined;
       },
       error: error => {
         this.myPopup.show(ERROR_TITLE, ERROR_BODY);

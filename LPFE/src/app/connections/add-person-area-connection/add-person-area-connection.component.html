@@ -2,23 +2,30 @@
     <form #form="ngForm">
         <div class="row justify-content-center">
             <div class="col-md-4">
-                <div class="form-floating">
-                    <input id="typeahead" type="text" class="form-control" required 
-                        [(ngModel)]="selectedPerson" name="typeahead" [ngbTypeahead]="searchPerson" 
-                        [inputFormatter]="inputFormatter" [resultFormatter]="resultsFormatter" 
-                        placeholder="persona"
-                    />
-                    <label for="typeahead"> persona </label>
+                <app-typeahead required
+                    label="persona" [list]="people" 
+                    [(ngModel)]="personId" name="person" #person="ngModel"
+                />
+                <div *ngIf="person.invalid && (person.dirty || person.touched)" class="alert alert-danger" role="alert">
+                    <div *ngIf="person.errors?.['required']">
+                        <strong> Attenzione! </strong> Campo obbligatorio.
+                    </div>
                 </div>
             </div> 
             <div class="col-md-4">
                 <div class="form-floating">
                     <select id="areaId" class="form-select" required 
-                    [(ngModel)]="selectedAreaId" name="area">
+                        [(ngModel)]="selectedAreaId" name="area" #area="ngModel"
+                    >
                         <option *ngFor="let area of areas" [ngValue]="area.id"> {{area.value}} </option>
                     </select>
                     <label for="areaId"> area </label>
-                 </div>
+                </div>
+                <div *ngIf="area.invalid && (area.dirty || area.touched)" class="alert alert-danger" role="alert">
+                    <div *ngIf="area.errors?.['required']">
+                        <strong> Attenzione! </strong> Campo obbligatorio.
+                    </div>
+                </div>
             </div>
         </div>
     </form>
