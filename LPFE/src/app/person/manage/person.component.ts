@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Button } from '../../shared/objects/button';
 import { KeyValue } from '../../shared/objects/key-value';
 import { Person } from '../../shared/objects/person';

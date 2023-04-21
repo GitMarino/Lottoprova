@@ -4,7 +4,7 @@ import { Person } from 'src/app/shared/objects/person';
 import { HttpCallsService } from '../../shared/service/http-calls.service';
 import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, forkJoin, map } from 'rxjs';
 import { KeyValue } from 'src/app/shared/objects/key-value';
-import { CommonModule, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { Button } from 'src/app/shared/objects/button';
 import { TopicSkills } from 'src/app/shared/objects/topic-skills';
 

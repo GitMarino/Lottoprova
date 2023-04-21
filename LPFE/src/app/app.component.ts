@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { HttpCallsService } from './shared/service/http-calls.service';
 
 @Component({
   selector: 'app-root',
