@@ -1,4 +1,4 @@
-<div class="form-floating"> {{value}}
+<div class="form-floating">
     <input id="typeahead" type="text" class="form-control"
         [(ngModel)]="value" name="typeahead" (focusout)="onFocusOut($event)" (selectItem)="onSelect($event)"
         [inputFormatter]="inputFormatter" [resultFormatter]="resultsFormatter" [ngbTypeahead]="search"

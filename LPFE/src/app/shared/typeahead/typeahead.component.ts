@@ -1,5 +1,5 @@
-import { Component, Input, OnChanges, OnInit, Output, SimpleChanges, forwardRef } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import { Component, Input, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { KeyValue } from '../objects/key-value';
 import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
@@ -14,14 +14,15 @@ import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
       useExisting: forwardRef(() => TypeaheadComponent),
       multi: true
     },
-    {
+    
+    /*{
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => TypeaheadComponent),
       multi: true
-    }
+    }*/
   ]
 })
-export class TypeaheadComponent implements ControlValueAccessor, Validator {
+export class TypeaheadComponent implements ControlValueAccessor {
 
   @Input() label: string = '';
   @Input() list: KeyValue[] = [];
@@ -57,8 +58,9 @@ export class TypeaheadComponent implements ControlValueAccessor, Validator {
         this.value = item;
         this.onChange(item.id);
       }
-      else {
-        this.onChange(-1);
+      else
+      { this.value = null;
+        this.onChange(null);
       }
     }
     this.onTouched();
@@ -93,17 +95,11 @@ export class TypeaheadComponent implements ControlValueAccessor, Validator {
 
   onTouched() { }
 
+  /*
   validate(control: FormControl): ValidationErrors | null {
-    if (this.value) {
-      const item = this.list.find((item) => item === this.value)
-      if (item) {
-        return null;
-      }
-      else {
-        return { notAllowedValue: true };
-      }
-    }
-    return null;
-  }
+    logica del validate
+    if(condizione di errore) return return { notAllowedValue: true };
+    else return null
+  }*/
 
 }
