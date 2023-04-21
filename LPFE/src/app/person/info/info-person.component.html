@@ -63,20 +63,25 @@
                 <ngb-accordion [closeOthers]="true">
                     <ngb-panel id="panel-{{topicSkills.topicName}}" *ngFor="let topicSkills of topicSkillsList | slice: (currentPage-1) * pageSize : currentPage * pageSize">
                         <ng-template ngbPanelTitle>
-                            <div class="row">
-                                <div class="col">
+                            <div class="d-flex flex-row">
+                                <div class="p-1">
                                     <img class="images" [src]="'/assets/images/mark'+topicSkills.average+'.png'" />
                                 </div>
-                                <h6 class="col"> {{topicSkills.topicName.toUpperCase()}} </h6>
+                                <div class="p-2">
+                                    <h6> {{topicSkills.topicName.toUpperCase()}} </h6>
+                                </div>
                             </div>
                         </ng-template>
                         <ng-template ngbPanelContent>
-                            <div class="row">
+                            <div *ngIf="topicSkills.skillsMarks && topicSkills.skillsMarks.length>0" class="row">
                                 <div *ngFor="let skillMark of topicSkills.skillsMarks" class="col-md-2">
                                     <app-mini-card title="{{skillMark.skillName}}">
                                         <img class="images" [src]="'/assets/images/mark'+skillMark.mark+'.png'" />
                                     </app-mini-card>
                                 </div>
+                            </div>
+                            <div *ngIf="!topicSkills.skillsMarks || (topicSkills.skillsMarks && topicSkills.skillsMarks.length<=0)">
+                                <h6> Nessuna competenza associata alla tematica </h6>
                             </div>
                         </ng-template>
                     </ngb-panel>
