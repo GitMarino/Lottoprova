@@ -2,7 +2,6 @@ package provalotto.datalayer.manager.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -59,21 +58,6 @@ public class TopicManagerImpl implements TopicManager {
 			log.error(e.getMessage(), e);
 			throw new ServiceErrorException(e);
 		}
-	}
-
-	@Override
-	public boolean deleteTopic(final Long topicBeanId) {
-		try {
-			Optional<Topic> topicOptional = topicDAO.findById(topicBeanId);
-			if (topicOptional.isPresent()) {
-				topicDAO.delete(topicOptional.get());
-				return true;
-			}
-			return false;
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
-		return false;
 	}
 
 	@Override

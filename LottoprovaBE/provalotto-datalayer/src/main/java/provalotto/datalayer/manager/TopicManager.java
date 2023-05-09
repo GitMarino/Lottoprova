@@ -11,8 +11,6 @@ public interface TopicManager {
 
 	TopicBean createTopic(TopicBean topicBean) throws ServiceErrorException;
 
-	boolean deleteTopic(Long topicBeanId);
-
 	List<KeyValueBean> getAllTopics() throws ServiceErrorException;
 
 	List<KeyValueBean> getTopicsByPerson(Long personId) throws ServiceErrorException;

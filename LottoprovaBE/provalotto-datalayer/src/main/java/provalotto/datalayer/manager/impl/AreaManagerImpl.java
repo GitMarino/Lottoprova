@@ -143,22 +143,7 @@ public class AreaManagerImpl implements AreaManager {
 	}
 
 	@Override
-	public boolean deleteArea(final Long areaBeanId) {
-		try {
-			Optional<Area> areaOptional = areaDAO.findById(areaBeanId);
-			if (areaOptional.isPresent()) {
-				areaDAO.delete(areaOptional.get());
-				return true;
-			}
-			return false;
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
-		return false;
-	}
-
-	@Override
-	public List<KeyValueBean> getAllAreas() throws ServiceErrorException {
+	public List<KeyValueBean> getAllAreas() {
 		List<KeyValueBean> allBeans = new ArrayList<>();
 		KeyValueBean beanKeyValue;
 		try {
@@ -171,7 +156,7 @@ public class AreaManagerImpl implements AreaManager {
 			return allBeans;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
-			throw new ServiceErrorException(e);
+			throw new DataBaseException();
 		}
 	}
 

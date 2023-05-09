@@ -9,8 +9,6 @@ public interface SkillManager {
 
 	void createSkill(String name, String description, Long topicBeanId) throws ServiceErrorException;
 
-	boolean deleteSkill(Long skillBeanId);
-
 	List<KeyValueBean> getAllSkills() throws ServiceErrorException;
 
 	List<KeyValueBean> getSkillsByTopic(Long personId) throws ServiceErrorException;

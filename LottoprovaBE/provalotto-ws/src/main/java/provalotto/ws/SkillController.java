@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,11 +27,6 @@ public class SkillController {
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
-	}
-
-	@DeleteMapping
-	public boolean deleteSkill(final Long skillBeanId) {
-		return skillManager.deleteSkill(skillBeanId);
 	}
 
 	@GetMapping

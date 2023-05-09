@@ -61,21 +61,6 @@ public class SkillManagerImpl implements SkillManager {
 	}
 
 	@Override
-	public boolean deleteSkill(final Long skillBeanId) {
-		try {
-			Optional<Skill> skillOptional = skillDAO.findById(skillBeanId);
-			if (skillOptional.isPresent()) {
-				skillDAO.delete(skillOptional.get());
-				return true;
-			}
-			return false;
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
-		return false;
-	}
-
-	@Override
 	public List<KeyValueBean> getAllSkills() throws ServiceErrorException {
 		List<KeyValueBean> allBeans = new ArrayList<>();
 		KeyValueBean beanKeyValue;

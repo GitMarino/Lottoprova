@@ -32,6 +32,8 @@ import provalotto.datalayer.dao.PersonSkillConnectionDAO;
 import provalotto.datalayer.dao.PersonTopicConnectionDAO;
 import provalotto.datalayer.dao.SkillDAO;
 import provalotto.datalayer.dao.TopicDAO;
+import provalotto.datalayer.exceptions.DataBaseException;
+import provalotto.datalayer.exceptions.InconsistentDataException;
 import provalotto.datalayer.exceptions.ServiceErrorException;
 import provalotto.datalayer.manager.PersonManager;
 
@@ -203,22 +205,7 @@ public class PersonManagerImpl implements PersonManager {
 	}
 
 	@Override
-	public boolean deletePerson(final Long personId) {
-		try {
-			Optional<Person> personOptional = personDAO.findById(personId);
-			if (personOptional.isPresent()) {
-				personDAO.delete(personOptional.get());
-				return true;
-			}
-			return false;
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
-		return false;
-	}
-
-	@Override
-	public List<KeyValueBean> getAllPeople() throws ServiceErrorException {
+	public List<KeyValueBean> getAllPeople() {
 		List<KeyValueBean> allBeans = new ArrayList<>();
 		KeyValueBean beanKeyValue;
 		try {
@@ -231,12 +218,12 @@ public class PersonManagerImpl implements PersonManager {
 			return allBeans;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
-			throw new ServiceErrorException(e);
+			throw new DataBaseException();
 		}
 	}
 
 	@Override
-	public PersonBean getPerson(final Long personId) throws ServiceErrorException {
+	public PersonBean getPerson(final Long personId) {
 		PersonBean personBean;
 		try {
 			Optional<Person> personOptional = personDAO.findById(personId);
@@ -252,13 +239,13 @@ public class PersonManagerImpl implements PersonManager {
 				return personBean;
 
 			}
-			throw new ServiceErrorException("Dati inconsistenti");
-		} catch (ServiceErrorException e) {
+			throw new InconsistentDataException();
+		} catch (InconsistentDataException e) {
 			log.error(e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
-			throw new ServiceErrorException(e);
+			throw new DataBaseException();
 		}
 	}
 
