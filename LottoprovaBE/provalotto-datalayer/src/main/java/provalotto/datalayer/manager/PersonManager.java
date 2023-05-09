@@ -18,11 +18,9 @@ public interface PersonManager {
 
 	void createPersonTopicConnection(Long personId, Long topicId) throws ServiceErrorException;
 
-	boolean deletePerson(Long personId);
+	List<KeyValueBean> getAllPeople();
 
-	List<KeyValueBean> getAllPeople() throws ServiceErrorException;
-
-	PersonBean getPerson(Long personId) throws ServiceErrorException;
+	PersonBean getPerson(Long personId);
 
 	List<SkillMarkBean> getPersonSkillMarks(Long personId) throws ServiceErrorException;
 

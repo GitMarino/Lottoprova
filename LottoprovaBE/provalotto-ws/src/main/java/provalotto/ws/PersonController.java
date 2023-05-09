@@ -3,8 +3,8 @@ package provalotto.ws;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +19,7 @@ import provalotto.bean.bean.PersonBean;
 import provalotto.bean.bean.SkillMarkBean;
 import provalotto.bean.utility.SearchPeopleObject;
 import provalotto.datalayer.manager.PersonManager;
+import provalotto.ws.response.Answer;
 
 @RestController
 @RequestMapping("/person")
@@ -69,29 +70,17 @@ public class PersonController {
 		}
 	}
 
-	@DeleteMapping
-	public boolean deletePerson(final Long personBeanId) {
-		return personManager.deletePerson(personBeanId);
-	}
-
 	@GetMapping
-	public ResponseEntity<List<KeyValueBean>> getAllPeople() {
-		try {
-			return ResponseEntity.ok(personManager.getAllPeople());
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
-		}
+	public Answer<List<KeyValueBean>> getAllPeople() {
+		return Answer.ok(personManager.getAllPeople(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<PersonBean> getPerson(@PathVariable("id") final Long personId) {
-		try {
-			return ResponseEntity.ok(personManager.getPerson(personId));
-			// return new ResponseEntity<>(personManager.getPerson(personId),
-			// HttpStatus.OK);
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
-		}
+	public Answer<PersonBean> getPerson(@PathVariable("id") final Long personId) {
+		return Answer.ok(personManager.getPerson(personId), HttpStatus.OK);
+		// return ResponseEntity.ok(personManager.getPerson(personId));
+		// return new ResponseEntity<>(personManager.getPerson(personId),
+		// HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}/skill")

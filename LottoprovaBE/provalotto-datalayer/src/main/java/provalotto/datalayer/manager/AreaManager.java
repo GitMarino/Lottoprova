@@ -11,9 +11,7 @@ public interface AreaManager {
 
 	void createAreaTopicConnection(Long areaId, Long topicId) throws ServiceErrorException;
 
-	boolean deleteArea(Long areaBeanId);
-
-	List<KeyValueBean> getAllAreas() throws ServiceErrorException;
+	List<KeyValueBean> getAllAreas();
 
 	List<KeyValueBean> getAreasByPerson(Long personId) throws ServiceErrorException;
 
