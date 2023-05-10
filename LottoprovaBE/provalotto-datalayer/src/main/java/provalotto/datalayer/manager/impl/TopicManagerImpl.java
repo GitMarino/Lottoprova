@@ -20,6 +20,7 @@ import provalotto.bean.utility.SkillMark;
 import provalotto.datalayer.dao.PersonTopicConnectionDAO;
 import provalotto.datalayer.dao.SkillDAO;
 import provalotto.datalayer.dao.TopicDAO;
+import provalotto.datalayer.exceptions.DataBaseException;
 import provalotto.datalayer.exceptions.ServiceErrorException;
 import provalotto.datalayer.manager.TopicManager;
 
@@ -61,7 +62,7 @@ public class TopicManagerImpl implements TopicManager {
 	}
 
 	@Override
-	public List<KeyValueBean> getAllTopics() throws ServiceErrorException {
+	public List<KeyValueBean> getAllTopics() {
 		List<KeyValueBean> allBeans = new ArrayList<>();
 		KeyValueBean beanKeyValue;
 		try {
@@ -74,7 +75,7 @@ public class TopicManagerImpl implements TopicManager {
 			return allBeans;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
-			throw new ServiceErrorException(e);
+			throw new DataBaseException();
 		}
 	}
 
@@ -104,28 +105,34 @@ public class TopicManagerImpl implements TopicManager {
 		List<SkillMarkBean> skillsMarks;
 		SkillMarkBean skillMark;
 		Integer markDB;
-		for (PersonTopicConnection personTopicConnection : personTopicConnectionDAO.findByIdPersonId(personId)) {
-			topic = personTopicConnection.getId().getTopic();
+		try {
+			for (PersonTopicConnection personTopicConnection : personTopicConnectionDAO.findByIdPersonId(personId)) {
+				topic = personTopicConnection.getId().getTopic();
 
-			topicSkills = new TopicSkillsBean();
-			topicSkills.setTopicName(topic.getName());
-			double marksSum = 0;
-			skillsMarks = new ArrayList<>();
-			List<SkillMark> skillsMarksDB = skillDAO.findSkillsByPersonAndTopic(personId, topic.getId());
-			for (SkillMark skillMarkDB : skillsMarksDB) {
-				skillMark = new SkillMarkBean();
-				skillMark.setSkillName(skillMarkDB.getSkillName());
-				markDB = skillMarkDB.getMark();
-				skillMark.setMark(markDB);
-				marksSum += markDB;
-				skillsMarks.add(skillMark);
+				topicSkills = new TopicSkillsBean();
+				topicSkills.setTopicName(topic.getName());
+				double marksSum = 0;
+				skillsMarks = new ArrayList<>();
+				List<SkillMark> skillsMarksDB = skillDAO.findSkillsByPersonAndTopic(personId, topic.getId());
+				for (SkillMark skillMarkDB : skillsMarksDB) {
+					skillMark = new SkillMarkBean();
+					skillMark.setSkillName(skillMarkDB.getSkillName());
+					markDB = skillMarkDB.getMark();
+					skillMark.setMark(markDB);
+					marksSum += markDB;
+					skillsMarks.add(skillMark);
+				}
+				topicSkills.setAverage((int) Math.round(marksSum / skillsMarksDB.size()));
+				topicSkills.setSkillsMarks(skillsMarks);
+
+				topicsSkills.add(topicSkills);
 			}
-			topicSkills.setAverage((int) Math.round(marksSum / skillsMarksDB.size()));
-			topicSkills.setSkillsMarks(skillsMarks);
+			return topicsSkills;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new DataBaseException();
 
-			topicsSkills.add(topicSkills);
 		}
-		return topicsSkills;
 	}
 
 }
