@@ -3,6 +3,7 @@ package provalotto.ws;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import provalotto.bean.bean.KeyValueBean;
 import provalotto.datalayer.manager.SkillManager;
+import provalotto.ws.response.Answer;
 
 @RestController
 @RequestMapping("/skill")
@@ -30,12 +32,8 @@ public class SkillController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<KeyValueBean>> getAllSkills() {
-		try {
-			return ResponseEntity.ok(skillManager.getAllSkills());
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
-		}
+	public Answer<List<KeyValueBean>> getAllSkills() {
+		return Answer.ok(skillManager.getAllSkills(), HttpStatus.OK);
 	}
 
 	@GetMapping("/topic")

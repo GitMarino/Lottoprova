@@ -9,7 +9,7 @@ public interface SkillManager {
 
 	void createSkill(String name, String description, Long topicBeanId) throws ServiceErrorException;
 
-	List<KeyValueBean> getAllSkills() throws ServiceErrorException;
+	List<KeyValueBean> getAllSkills();
 
 	List<KeyValueBean> getSkillsByTopic(Long personId) throws ServiceErrorException;
 

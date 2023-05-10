@@ -16,6 +16,7 @@ import provalotto.bean.entity.Skill;
 import provalotto.bean.entity.Topic;
 import provalotto.datalayer.dao.SkillDAO;
 import provalotto.datalayer.dao.TopicDAO;
+import provalotto.datalayer.exceptions.DataBaseException;
 import provalotto.datalayer.exceptions.ServiceErrorException;
 import provalotto.datalayer.manager.SkillManager;
 
@@ -61,7 +62,7 @@ public class SkillManagerImpl implements SkillManager {
 	}
 
 	@Override
-	public List<KeyValueBean> getAllSkills() throws ServiceErrorException {
+	public List<KeyValueBean> getAllSkills() {
 		List<KeyValueBean> allBeans = new ArrayList<>();
 		KeyValueBean beanKeyValue;
 		try {
@@ -74,7 +75,7 @@ public class SkillManagerImpl implements SkillManager {
 			return allBeans;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
-			throw new ServiceErrorException(e);
+			throw new DataBaseException();
 		}
 	}
 

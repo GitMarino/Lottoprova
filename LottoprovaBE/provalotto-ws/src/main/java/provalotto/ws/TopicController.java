@@ -3,6 +3,7 @@ package provalotto.ws;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.bean.TopicBean;
 import provalotto.bean.bean.TopicSkillsBean;
 import provalotto.datalayer.manager.TopicManager;
+import provalotto.ws.response.Answer;
 
 @RestController
 @RequestMapping("/topic")
@@ -32,12 +34,8 @@ public class TopicController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<KeyValueBean>> getAllTopics() {
-		try {
-			return ResponseEntity.ok(topicManager.getAllTopics());
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
-		}
+	public Answer<List<KeyValueBean>> getAllTopics() {
+		return Answer.ok(topicManager.getAllTopics(), HttpStatus.OK);
 	}
 
 	@GetMapping("/person")
@@ -50,12 +48,8 @@ public class TopicController {
 	}
 
 	@GetMapping("/skills")
-	public ResponseEntity<List<TopicSkillsBean>> getTopicsSkillsByPerson(final Long personId) {
-		try {
-			return ResponseEntity.ok(topicManager.getTopicsSkillsByPerson(personId));
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
-		}
+	public Answer<List<TopicSkillsBean>> getTopicsSkillsByPerson(final Long personId) {
+		return Answer.ok(topicManager.getTopicsSkillsByPerson(personId), HttpStatus.OK);
 	}
 
 }
