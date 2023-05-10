@@ -39,45 +39,51 @@
         </div>
     </form>
 </app-page>
-<app-page *ngIf="people && collectionSize && people.length>0" cardTitle="Risultato ricerca">
-    <table class="table">
-        <thead>
-            <tr>
-                <th (click)="onSortClick(1)">
-                  <div class="row"> 
-                        <div *ngIf="arrow && sortColumn===1" class="col-md-1"> 
-                            <i-feather [name]="arrow"></i-feather>  
+<app-page *ngIf="people" cardTitle="Risultato ricerca">
+    <div *ngIf="collectionSize && people.length>0">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th (click)="onSortClick(1)">
+                      <div class="row"> 
+                            <div *ngIf="arrow && sortColumn===1" class="col-md-1"> 
+                                <i-feather [name]="arrow"></i-feather>  
+                            </div>
+                            <h6 class="text-primary col-md-4"> Matricola </h6>
+                        </div> 
+                    </th>
+                    <th (click)="onSortClick(2)"> 
+                        <div class="row"> 
+                            <div *ngIf="arrow && sortColumn===2" class="col-md-1"> 
+                                <i-feather [name]="arrow"></i-feather>  
+                            </div>
+                            <h6 class="text-primary col-md-3"> Nome </h6>
+                        </div> 
+                    </th>
+                    <th (click)="onSortClick(3)"> 
+                        <div class="row"> 
+                            <div *ngIf="arrow && sortColumn===3" class="col-md-1"> 
+                                <i-feather [name]="arrow"></i-feather>  
+                            </div>
+                            <h6 class="text-primary col-md-4"> Cognome </h6>
                         </div>
-                        <h6 class="text-primary col-md-4"> Matricola </h6>
-                    </div> 
-                </th>
-                <th (click)="onSortClick(2)"> 
-                    <div class="row"> 
-                        <div *ngIf="arrow && sortColumn===2" class="col-md-1"> 
-                            <i-feather [name]="arrow"></i-feather>  
-                        </div>
-                        <h6 class="text-primary col-md-3"> Nome </h6>
-                    </div> 
-                </th>
-                <th (click)="onSortClick(3)"> 
-                    <div class="row"> 
-                        <div *ngIf="arrow && sortColumn===3" class="col-md-1"> 
-                            <i-feather [name]="arrow"></i-feather>  
-                        </div>
-                        <h6 class="text-primary col-md-4"> Cognome </h6>
-                    </div>
-                </th>
-                <th width="30px"> </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let person of people! | slice: (currentPage-1) * pageSize : currentPage * pageSize">
-                <td> {{person.serial}} </td>
-                <td> {{person.name}} </td>
-                <td> {{person.surname}} </td>
-                <td> <a [routerLink]="['/person', person.id]"> <i-feather name="file-text"></i-feather> </a> </td>
-            </tr>
-        </tbody>
-    </table>
-    <ngb-pagination *ngIf="collectionSize>pageSize" [(page)]="currentPage" [pageSize]="pageSize" [collectionSize]="collectionSize" [directionLinks]="false"></ngb-pagination>
+                    </th>
+                    <th width="30px"> </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let person of people! | slice: (currentPage-1) * pageSize : currentPage * pageSize">
+                    <td> {{person.serial}} </td>
+                    <td> {{person.name}} </td>
+                    <td> {{person.surname}} </td>
+                    <td> <a [routerLink]="['/person', person.id]"> <i-feather name="file-text"></i-feather> </a> </td>
+                </tr>
+            </tbody>
+        </table>
+        <ngb-pagination *ngIf="collectionSize>pageSize" [(page)]="currentPage" [pageSize]="pageSize" [collectionSize]="collectionSize" [directionLinks]="false"></ngb-pagination>
+    </div>
+    <div *ngIf="people.length===0">
+        <h6> Nessuna persona soddisfa la ricerca </h6>
+    </div>
+    
 </app-page>
