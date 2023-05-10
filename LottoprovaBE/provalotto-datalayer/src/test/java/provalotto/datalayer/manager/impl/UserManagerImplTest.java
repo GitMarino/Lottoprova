@@ -26,7 +26,7 @@ public class UserManagerImplTest {
 	private UserManagerImpl userManager;
 
 	@Test
-	public void createUserExceptionTest() {
+	public void createUserInconsistentDataExceptionTest() {
 		UserBean userBean = new UserBean();
 		userBean.setUsername("simona.aiello@internet-idee.net");
 		userBean.setPassword("123");
@@ -38,7 +38,7 @@ public class UserManagerImplTest {
 	}
 
 	@Test
-	public void setPasswordExceptionTest() {
+	public void setPasswordInconsistentDataExceptionTest() {
 		UserBean userBean = new UserBean();
 		userBean.setUsername("christian.marino@internet-idee.net");
 		userBean.setPassword("123");

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.exception.JDBCConnectionException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,6 +24,7 @@ import provalotto.datalayer.dao.AreaDAO;
 import provalotto.datalayer.dao.PersonAreaConnectionDAO;
 import provalotto.datalayer.dao.PersonDAO;
 import provalotto.datalayer.dao.TopicDAO;
+import provalotto.datalayer.exceptions.DataBaseException;
 import provalotto.datalayer.exceptions.ServiceErrorException;
 
 @ExtendWith(MockitoExtension.class)
@@ -90,7 +92,15 @@ public class AreaManagerImplTest {
 	}
 
 	@Test
-	public void getAllAreaTest() {
+	public void getAllAreasDataBaseExceptionTest() {
+		when(areaDAO.findAllByOrderByName()).thenThrow(JDBCConnectionException.class);
+
+		assertThrows(DataBaseException.class, () -> areaManager.getAllAreas());
+
+	}
+
+	@Test
+	public void getAllAreasTest() {
 		Person person = new Person();
 		person.setId((long) 7);
 		person.setSerial((long) 80);
@@ -112,6 +122,14 @@ public class AreaManagerImplTest {
 			assertEquals(area.getId(), bean.getId());
 			assertEquals(area.getName(), bean.getValue());
 		}
+	}
+
+	@Test
+	public void getAreaTopicSkillMapDataBaseExceptionTest() {
+		when(topicDAO.getMap()).thenThrow(JDBCConnectionException.class);
+
+		assertThrows(DataBaseException.class, () -> areaManager.getAreaTopicSkillMap());
+
 	}
 
 }

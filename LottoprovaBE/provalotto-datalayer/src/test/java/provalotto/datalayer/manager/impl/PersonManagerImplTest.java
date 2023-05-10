@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.exception.JDBCConnectionException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,6 +29,7 @@ import provalotto.datalayer.dao.PersonSkillConnectionDAO;
 import provalotto.datalayer.dao.PersonTopicConnectionDAO;
 import provalotto.datalayer.dao.SkillDAO;
 import provalotto.datalayer.dao.TopicDAO;
+import provalotto.datalayer.exceptions.DataBaseException;
 import provalotto.datalayer.exceptions.InconsistentDataException;
 import provalotto.datalayer.exceptions.ServiceErrorException;
 
@@ -129,6 +131,14 @@ public class PersonManagerImplTest {
 	}
 
 	@Test
+	public void getAllPeopleDataBaseExceptionTest() {
+		when(personDAO.findAllByOrderBySurname()).thenThrow(JDBCConnectionException.class);
+
+		assertThrows(DataBaseException.class, () -> personManager.getAllPeople());
+
+	}
+
+	@Test
 	public void getAllPeopleTest() {
 		Person person = new Person();
 		person.setId((long) 3);
@@ -150,7 +160,15 @@ public class PersonManagerImplTest {
 	}
 
 	@Test
-	public void getPersonExceptionTest() {
+	public void getPersonDataBaseExceptionTest() {
+		when(personDAO.findById(3l)).thenThrow(JDBCConnectionException.class);
+
+		assertThrows(DataBaseException.class, () -> personManager.getPerson(3l));
+
+	}
+
+	@Test
+	public void getPersonInconsistentDataExceptionTest() {
 		Optional<Person> personOptional = Optional.empty();
 
 		when(personDAO.findById((long) -1)).thenReturn(personOptional);
