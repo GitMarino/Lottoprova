@@ -17,15 +17,13 @@ public interface SkillDAO extends JpaRepository<Skill, Long> {
 
 	List<Skill> findAllByOrderByName();
 
-	@Override
-	Optional<Skill> findById(Long id);
+	Optional<Skill> findById(Integer id);
 
-	List<Skill> findByTopicIdOrderByName(Long topicId);
+	List<Skill> findByTopicIdOrderByName(Integer topicId);
 
-	@Query("SELECT s.name as skillName, ps.mark as mark " 
-		 + "FROM skill s join PersonSkillConnection ps on s.id=ps.id.skill.id "
-		 + "WHERE ps.id.person.id=?1 AND s.topic.id=?2 " 
-		 + "ORDER BY s.name")
-	List<SkillMark> findSkillsByPersonAndTopic(Long personId, Long topicId);
+	@Query("SELECT s.name as skillName, ps.mark as mark "
+			+ "FROM Skill s join PersonSkillConnection ps on s.id=ps.id.skill.id "
+			+ "WHERE ps.id.person.id=?1 AND s.topic.id=?2 " + "ORDER BY s.name")
+	List<SkillMark> findSkillsByPersonAndTopic(Integer personId, Integer topicId);
 
 }

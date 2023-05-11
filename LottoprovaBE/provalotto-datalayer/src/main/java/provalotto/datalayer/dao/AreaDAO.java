@@ -16,11 +16,10 @@ public interface AreaDAO extends JpaRepository<Area, Long> {
 
 	List<Area> findAllByOrderByName();
 
-	@Query("SELECT a " + "FROM area a join PersonAreaConnection pa on a.id=pa.id.area.id "
-			+ "join person p on pa.id.person=p.id " + "WHERE p.id=?1 " + "ORDER BY a.name")
-	List<Area> findAreasByPerson(Long personId);
+	@Query("SELECT a " + "FROM Area a join PersonAreaConnection pa on a.id=pa.id.area.id "
+			+ "join Person p on pa.id.person=p.id " + "WHERE p.id=?1 " + "ORDER BY a.name")
+	List<Area> findAreasByPerson(Integer personId);
 
-	@Override
-	Optional<Area> findById(Long id);
+	Optional<Area> findById(Integer id);
 
 }

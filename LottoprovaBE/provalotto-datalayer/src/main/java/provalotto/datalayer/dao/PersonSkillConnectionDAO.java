@@ -13,8 +13,8 @@ public interface PersonSkillConnectionDAO extends JpaRepository<PersonSkillConne
 
 	/*
 	 * @Query("SELECT DISTINCT ps " + "FROM PersonSkillConnection ps " +
-	 * "left join skill s on ps.id.skill.id=s.id " +
-	 * "left join topic t on s.skillTopic=t.id " + "WHERE ps.id.person.id=?1 AND " +
+	 * "left join Skill s on ps.id.skill.id=s.id " +
+	 * "left join Topic t on s.skillTopic=t.id " + "WHERE ps.id.person.id=?1 AND " +
 	 * "( (:#{#model.skillId} IS NULL AND (:#{#model.topicId} IS NULL OR t.id=:#{#model.topicId})) "
 	 * + "OR s.id=:#{#model.skillId} )" ) List<PersonSkillConnection>
 	 * searchPersonSkillConnection(Long personId,
@@ -22,8 +22,8 @@ public interface PersonSkillConnectionDAO extends JpaRepository<PersonSkillConne
 	 * @Param("model") SearchPeopleObject searchPeopleObject);
 	 */
 
-	boolean existsByIdPersonIdAndIdSkillId(Long personId, Long skillId);
+	boolean existsByIdPersonIdAndIdSkillId(Integer personId, Integer skillId);
 
-	List<PersonSkillConnection> findByIdPersonId(Long personId);
+	List<PersonSkillConnection> findByIdPersonId(Integer personId);
 
 }

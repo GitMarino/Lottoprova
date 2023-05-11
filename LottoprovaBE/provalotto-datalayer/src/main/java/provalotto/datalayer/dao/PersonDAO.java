@@ -14,17 +14,16 @@ import provalotto.bean.utility.SearchPeopleObject;
 @Repository
 public interface PersonDAO extends JpaRepository<Person, Long> {
 
-	boolean existsBySerial(Long serial);
+	boolean existsBySerial(Integer serial);
 
 	List<Person> findAllByOrderBySurname();
 
-	@Override
-	Optional<Person> findById(Long id);
+	Optional<Person> findById(Integer id);
 
-	@Query("SELECT DISTINCT p " + "FROM person p "
-			+ "left join PersonAreaConnection pa on p.id=pa.id.person.id left join area a on pa.id.area.id=a.id "
-			+ "left join PersonTopicConnection pt on p.id=pt.id.person.id left join topic t on pt.id.topic.id=t.id "
-			+ "left join PersonSkillConnection ps on p.id=ps.id.person.id left join skill s on ps.id.skill.id=s.id "
+	@Query("SELECT DISTINCT p " + "FROM Person p "
+			+ "left join PersonAreaConnection pa on p.id=pa.id.person.id left join Area a on pa.id.area.id=a.id "
+			+ "left join PersonTopicConnection pt on p.id=pt.id.person.id left join Topic t on pt.id.topic.id=t.id "
+			+ "left join PersonSkillConnection ps on p.id=ps.id.person.id left join Skill s on ps.id.skill.id=s.id "
 			+ "WHERE (:#{#model.areaId} IS NULL OR a.id=:#{#model.areaId}) "
 			+ "AND (:#{#model.skillId} IS NULL OR s.id=:#{#model.skillId}) "
 			+ "AND (:#{#model.topicId} IS NULL OR t.id=:#{#model.topicId}) " + "ORDER BY p.surname")
