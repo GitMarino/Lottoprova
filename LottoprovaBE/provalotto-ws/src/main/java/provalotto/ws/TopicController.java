@@ -39,7 +39,7 @@ public class TopicController {
 	}
 
 	@GetMapping("/person")
-	public ResponseEntity<List<KeyValueBean>> getTopicsByPerson(final Long personId) {
+	public ResponseEntity<List<KeyValueBean>> getTopicsByPerson(final Integer personId) {
 		try {
 			return ResponseEntity.ok(topicManager.getTopicsByPerson(personId));
 		} catch (Exception e) {
@@ -48,7 +48,7 @@ public class TopicController {
 	}
 
 	@GetMapping("/skills")
-	public Answer<List<TopicSkillsBean>> getTopicsSkillsByPerson(final Long personId) {
+	public Answer<List<TopicSkillsBean>> getTopicsSkillsByPerson(final Integer personId) {
 		return Answer.ok(topicManager.getTopicsSkillsByPerson(personId), HttpStatus.OK);
 	}
 

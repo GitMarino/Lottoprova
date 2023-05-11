@@ -12,17 +12,17 @@ public interface PersonManager {
 
 	PersonBean createPerson(PersonBean personBean) throws ServiceErrorException;
 
-	void createPersonAreaConnection(Long areaId, Long personId) throws ServiceErrorException;
+	void createPersonAreaConnection(Integer areaId, Integer personId) throws ServiceErrorException;
 
-	void createPersonSkillConnection(Long personId, Long topicId, Integer mark) throws ServiceErrorException;
+	void createPersonSkillConnection(Integer personId, Integer topicId, Integer mark) throws ServiceErrorException;
 
-	void createPersonTopicConnection(Long personId, Long topicId) throws ServiceErrorException;
+	void createPersonTopicConnection(Integer personId, Integer topicId) throws ServiceErrorException;
 
 	List<KeyValueBean> getAllPeople();
 
-	PersonBean getPerson(Long personId);
+	PersonBean getPerson(Integer personId);
 
-	List<SkillMarkBean> getPersonSkillMarks(Long personId) throws ServiceErrorException;
+	List<SkillMarkBean> getPersonSkillMarks(Integer personId) throws ServiceErrorException;
 
 	List<PersonBean> searchPeopleByBeans(SearchPeopleObject searchPeopleObject) throws ServiceErrorException;
 

@@ -51,7 +51,7 @@ public class AreaManagerImpl implements AreaManager {
 
 	@Override
 	@Transactional(rollbackFor = { Exception.class })
-	public void createArea(final String name, final Long personBeanId, final Long topicBeanId)
+	public void createArea(final String name, final Integer personBeanId, final Integer topicBeanId)
 			throws ServiceErrorException {
 		try {
 			Area areaDB;
@@ -114,7 +114,7 @@ public class AreaManagerImpl implements AreaManager {
 
 	@Override
 	@Transactional(rollbackFor = { Exception.class })
-	public void createAreaTopicConnection(final Long areaId, final Long topicId) throws ServiceErrorException {
+	public void createAreaTopicConnection(final Integer areaId, final Integer topicId) throws ServiceErrorException {
 		try {
 			Optional<Area> areaOptional = areaDAO.findById(areaId);
 			Optional<Topic> topicOptional = topicDAO.findById(topicId);
@@ -161,7 +161,7 @@ public class AreaManagerImpl implements AreaManager {
 	}
 
 	@Override
-	public List<KeyValueBean> getAreasByPerson(final Long personId) throws ServiceErrorException {
+	public List<KeyValueBean> getAreasByPerson(final Integer personId) throws ServiceErrorException {
 		List<KeyValueBean> areaBeans = new ArrayList<>();
 		KeyValueBean beanKeyValue;
 		try {

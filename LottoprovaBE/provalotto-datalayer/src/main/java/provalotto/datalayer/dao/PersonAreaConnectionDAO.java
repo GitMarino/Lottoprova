@@ -9,5 +9,5 @@ import provalotto.bean.key.PersonAreaConnectionKey;
 @Repository
 public interface PersonAreaConnectionDAO extends JpaRepository<PersonAreaConnection, PersonAreaConnectionKey> {
 
-	boolean existsByIdPersonIdAndIdAreaId(Long personId, Long areaId);
+	boolean existsByIdPersonIdAndIdAreaId(Integer personId, Integer areaId);
 }

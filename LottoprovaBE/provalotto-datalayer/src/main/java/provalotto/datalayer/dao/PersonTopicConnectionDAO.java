@@ -11,8 +11,8 @@ import provalotto.bean.key.PersonTopicConnectionKey;
 @Repository
 public interface PersonTopicConnectionDAO extends JpaRepository<PersonTopicConnection, PersonTopicConnectionKey> {
 
-	boolean existsByIdPersonIdAndIdTopicId(Long personId, Long topicId);
+	boolean existsByIdPersonIdAndIdTopicId(Integer personId, Integer topicId);
 
-	List<PersonTopicConnection> findByIdPersonId(Long personId);
+	List<PersonTopicConnection> findByIdPersonId(Integer personId);
 
 }

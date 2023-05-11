@@ -7,10 +7,10 @@ import provalotto.datalayer.exceptions.ServiceErrorException;
 
 public interface SkillManager {
 
-	void createSkill(String name, String description, Long topicBeanId) throws ServiceErrorException;
+	void createSkill(String name, String description, Integer topicBeanId) throws ServiceErrorException;
 
 	List<KeyValueBean> getAllSkills();
 
-	List<KeyValueBean> getSkillsByTopic(Long personId) throws ServiceErrorException;
+	List<KeyValueBean> getSkillsByTopic(Integer personId) throws ServiceErrorException;
 
 }

@@ -24,7 +24,8 @@ public class AreaController {
 	private AreaManager areaManager;
 
 	@PostMapping
-	public ResponseEntity<Integer> createArea(final String name, final Long personBeanId, final Long topicBeanId) {
+	public ResponseEntity<Integer> createArea(final String name, final Integer personBeanId,
+			final Integer topicBeanId) {
 		try {
 			areaManager.createArea(name, personBeanId, topicBeanId);
 			return ResponseEntity.ok(1);
@@ -34,8 +35,8 @@ public class AreaController {
 	}
 
 	@PutMapping("/{id}/topic")
-	public ResponseEntity<Integer> createAreaTopicConnection(@PathVariable("id") final Long areaId,
-			final Long topicId) {
+	public ResponseEntity<Integer> createAreaTopicConnection(@PathVariable("id") final Integer areaId,
+			final Integer topicId) {
 		try {
 			areaManager.createAreaTopicConnection(areaId, topicId);
 			return ResponseEntity.ok(1);
@@ -50,7 +51,7 @@ public class AreaController {
 	}
 
 	@GetMapping("/person")
-	public ResponseEntity<List<KeyValueBean>> getAreasByPerson(final Long personId) {
+	public ResponseEntity<List<KeyValueBean>> getAreasByPerson(final Integer personId) {
 		try {
 			return ResponseEntity.ok(areaManager.getAreasByPerson(personId));
 		} catch (Exception e) {

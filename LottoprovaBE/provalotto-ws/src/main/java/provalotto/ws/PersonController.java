@@ -38,8 +38,8 @@ public class PersonController {
 	}
 
 	@PutMapping("/{id}/area")
-	public ResponseEntity<Integer> createPersonAreaConnection(@PathVariable("id") final Long personId,
-			final Long areaId) {
+	public ResponseEntity<Integer> createPersonAreaConnection(@PathVariable("id") final Integer personId,
+			final Integer areaId) {
 		try {
 			personManager.createPersonAreaConnection(personId, areaId);
 			return ResponseEntity.ok(1);
@@ -49,8 +49,8 @@ public class PersonController {
 	}
 
 	@PutMapping("/{id}/skill")
-	public ResponseEntity<Integer> createPersonSkillConnection(@PathVariable("id") final Long personId,
-			final Long skillId, final Integer mark) {
+	public ResponseEntity<Integer> createPersonSkillConnection(@PathVariable("id") final Integer personId,
+			final Integer skillId, final Integer mark) {
 		try {
 			personManager.createPersonSkillConnection(personId, skillId, mark);
 			return ResponseEntity.ok(1);
@@ -60,8 +60,8 @@ public class PersonController {
 	}
 
 	@PutMapping("/{id}/topic")
-	public ResponseEntity<Integer> createPersonTopicConnection(@PathVariable("id") final Long personId,
-			final Long topicId) {
+	public ResponseEntity<Integer> createPersonTopicConnection(@PathVariable("id") final Integer personId,
+			final Integer topicId) {
 		try {
 			personManager.createPersonTopicConnection(personId, topicId);
 			return ResponseEntity.ok(1);
@@ -76,7 +76,7 @@ public class PersonController {
 	}
 
 	@GetMapping("/{id}")
-	public Answer<PersonBean> getPerson(@PathVariable("id") final Long personId) {
+	public Answer<PersonBean> getPerson(@PathVariable("id") final Integer personId) {
 		return Answer.ok(personManager.getPerson(personId), HttpStatus.OK);
 		// return ResponseEntity.ok(personManager.getPerson(personId));
 		// return new ResponseEntity<>(personManager.getPerson(personId),
@@ -84,7 +84,7 @@ public class PersonController {
 	}
 
 	@GetMapping("/{id}/skill")
-	public ResponseEntity<List<SkillMarkBean>> getPersonSkillMarks(@PathVariable("id") final Long personId) {
+	public ResponseEntity<List<SkillMarkBean>> getPersonSkillMarks(@PathVariable("id") final Integer personId) {
 		try {
 			return ResponseEntity.ok(personManager.getPersonSkillMarks(personId));
 		} catch (Exception e) {
@@ -93,8 +93,9 @@ public class PersonController {
 	}
 
 	@GetMapping("/search")
-	public ResponseEntity<List<PersonBean>> searchPeopleByBeans(final @RequestParam(required = false) Long areaId,
-			final @RequestParam(required = false) Long skillId, final @RequestParam(required = false) Long topicId) {
+	public ResponseEntity<List<PersonBean>> searchPeopleByBeans(final @RequestParam(required = false) Integer areaId,
+			final @RequestParam(required = false) Integer skillId,
+			final @RequestParam(required = false) Integer topicId) {
 		SearchPeopleObject searchPeopleObject = new SearchPeopleObject();
 		searchPeopleObject.setAreaId(areaId);
 		searchPeopleObject.setSkillId(skillId);

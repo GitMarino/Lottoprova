@@ -2,15 +2,15 @@ package provalotto.bean.utility;
 
 public interface ATSKeyValue {
 
-	Long getAreaId();
+	Integer getAreaId();
 
 	String getAreaName();
 
-	Long getSkillId();
+	Integer getSkillId();
 
 	String getSkillName();
 
-	Long getTopicId();
+	Integer getTopicId();
 
 	String getTopicName();
 

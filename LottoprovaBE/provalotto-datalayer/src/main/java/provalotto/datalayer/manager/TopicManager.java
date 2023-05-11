@@ -13,7 +13,7 @@ public interface TopicManager {
 
 	List<KeyValueBean> getAllTopics();
 
-	List<KeyValueBean> getTopicsByPerson(Long personId) throws ServiceErrorException;
+	List<KeyValueBean> getTopicsByPerson(Integer personId) throws ServiceErrorException;
 
-	List<TopicSkillsBean> getTopicsSkillsByPerson(Long personId);
+	List<TopicSkillsBean> getTopicsSkillsByPerson(Integer personId);
 }

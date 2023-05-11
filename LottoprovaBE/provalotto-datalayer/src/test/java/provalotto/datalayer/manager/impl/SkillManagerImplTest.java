@@ -40,7 +40,7 @@ public class SkillManagerImplTest {
 	public void createSkillNameExceptionTest() {
 		when(skillDAO.existsByName("spring")).thenReturn(true);
 
-		assertThrows(ServiceErrorException.class, () -> skillManager.createSkill("spring", "framework", (long) 1));
+		assertThrows(ServiceErrorException.class, () -> skillManager.createSkill("spring", "framework", 1));
 
 	}
 
@@ -48,9 +48,9 @@ public class SkillManagerImplTest {
 	public void createSkillTopicException() {
 		Optional<Topic> topicOptional = Optional.empty();
 
-		when(topicDAO.findById((long) -1)).thenReturn(topicOptional);
+		when(topicDAO.findById(-1)).thenReturn(topicOptional);
 
-		assertThrows(ServiceErrorException.class, () -> skillManager.createSkill("spring", "framework", (long) -1));
+		assertThrows(ServiceErrorException.class, () -> skillManager.createSkill("spring", "framework", -1));
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class SkillManagerImplTest {
 	@Test
 	public void getAllSkillsTest() {
 		Skill skill = new Skill();
-		skill.setId(2l);
+		skill.setId(2);
 		skill.setName("spring");
 		skill.setDescription("framework");
 		skill.setTopic(null);

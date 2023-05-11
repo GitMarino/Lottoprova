@@ -56,7 +56,7 @@ public class TopicManagerImplTest {
 	@Test
 	public void getAllTopicsTest() {
 		Topic topic = new Topic();
-		topic.setId(1l);
+		topic.setId(1);
 		topic.setName("java");
 		List<Topic> topics = new ArrayList<>();
 		topics.add(topic);
@@ -74,9 +74,9 @@ public class TopicManagerImplTest {
 
 	@Test
 	public void getTopicsSkillsByPersonDataBaseException() {
-		when(personTopicConnectionDAO.findByIdPersonId(3l)).thenThrow(JDBCConnectionException.class);
+		when(personTopicConnectionDAO.findByIdPersonId(3)).thenThrow(JDBCConnectionException.class);
 
-		assertThrows(DataBaseException.class, () -> topicManager.getTopicsSkillsByPerson(3l));
+		assertThrows(DataBaseException.class, () -> topicManager.getTopicsSkillsByPerson(3));
 
 	}
 }

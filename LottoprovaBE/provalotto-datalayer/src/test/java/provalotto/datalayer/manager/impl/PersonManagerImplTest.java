@@ -65,20 +65,20 @@ public class PersonManagerImplTest {
 		Optional<Area> areaOptional = Optional.empty();
 		Optional<Person> personOptional = Optional.empty();
 
-		when(areaDAO.findById(-1l)).thenReturn(areaOptional);
-		when(personDAO.findById(-1l)).thenReturn(personOptional);
+		when(areaDAO.findById(-1)).thenReturn(areaOptional);
+		when(personDAO.findById(-1)).thenReturn(personOptional);
 
-		assertThrows(ServiceErrorException.class, () -> personManager.createPersonAreaConnection(-1l, -1l));
+		assertThrows(ServiceErrorException.class, () -> personManager.createPersonAreaConnection(-1, -1));
 	}
 
 	@Test
 	public void createPersonExceptionTest() {
 		PersonBean personBean = new PersonBean();
-		personBean.setSerial((long) 237);
+		personBean.setSerial(237);
 		personBean.setName("christian");
 		personBean.setSurname("marino");
 
-		when(personDAO.existsBySerial((long) 237)).thenReturn(true);
+		when(personDAO.existsBySerial(237)).thenReturn(true);
 
 		assertThrows(ServiceErrorException.class, () -> personManager.createPerson(personBean));
 	}
@@ -88,33 +88,33 @@ public class PersonManagerImplTest {
 		Optional<Person> personOptional = Optional.empty();
 		Optional<Skill> skillOptional = Optional.empty();
 
-		when(personDAO.findById(-1l)).thenReturn(personOptional);
-		when(skillDAO.findById(-1l)).thenReturn(skillOptional);
+		when(personDAO.findById(-1)).thenReturn(personOptional);
+		when(skillDAO.findById(-1)).thenReturn(skillOptional);
 
-		assertThrows(ServiceErrorException.class, () -> personManager.createPersonSkillConnection(-1l, -1l, 5));
+		assertThrows(ServiceErrorException.class, () -> personManager.createPersonSkillConnection(-1, -1, 5));
 	}
 
 	@Test
 	public void createPersonSkillConnectionTopicExceptionTest() {
 		Person person = new Person();
-		person.setId((long) 3);
-		person.setSerial((long) 237);
+		person.setId(3);
+		person.setSerial(237);
 		person.setName("christian");
 		person.setSurname("marino");
 		Optional<Person> personOptional = Optional.of(person);
 
 		Skill skill = new Skill();
-		skill.setId(2l);
+		skill.setId(2);
 		skill.setName("spring");
 		skill.setDescription("framework");
 		skill.setTopic(null);
 		Optional<Skill> skillOptional = Optional.of(skill);
 
-		when(personDAO.findById(3l)).thenReturn(personOptional);
-		when(skillDAO.findById(2l)).thenReturn(skillOptional);
-		when(personSkillConnectionDAO.existsByIdPersonIdAndIdSkillId(3l, 2l)).thenReturn(false);
+		when(personDAO.findById(3)).thenReturn(personOptional);
+		when(skillDAO.findById(2)).thenReturn(skillOptional);
+		when(personSkillConnectionDAO.existsByIdPersonIdAndIdSkillId(3, 2)).thenReturn(false);
 
-		assertThrows(ServiceErrorException.class, () -> personManager.createPersonSkillConnection(3l, 2l, 3));
+		assertThrows(ServiceErrorException.class, () -> personManager.createPersonSkillConnection(3, 2, 3));
 
 	}
 
@@ -123,10 +123,10 @@ public class PersonManagerImplTest {
 		Optional<Person> personOptional = Optional.empty();
 		Optional<Topic> topicOptional = Optional.empty();
 
-		when(personDAO.findById(-1l)).thenReturn(personOptional);
-		when(topicDAO.findById(-1l)).thenReturn(topicOptional);
+		when(personDAO.findById(-1)).thenReturn(personOptional);
+		when(topicDAO.findById(-1)).thenReturn(topicOptional);
 
-		assertThrows(ServiceErrorException.class, () -> personManager.createPersonTopicConnection(-1l, -1l));
+		assertThrows(ServiceErrorException.class, () -> personManager.createPersonTopicConnection(-1, -1));
 
 	}
 
@@ -141,8 +141,8 @@ public class PersonManagerImplTest {
 	@Test
 	public void getAllPeopleTest() {
 		Person person = new Person();
-		person.setId((long) 3);
-		person.setSerial((long) 237);
+		person.setId(3);
+		person.setSerial(237);
 		person.setName("christian");
 		person.setSurname("marino");
 		List<Person> people = new ArrayList<>();
@@ -161,9 +161,9 @@ public class PersonManagerImplTest {
 
 	@Test
 	public void getPersonDataBaseExceptionTest() {
-		when(personDAO.findById(3l)).thenThrow(JDBCConnectionException.class);
+		when(personDAO.findById(3)).thenThrow(JDBCConnectionException.class);
 
-		assertThrows(DataBaseException.class, () -> personManager.getPerson(3l));
+		assertThrows(DataBaseException.class, () -> personManager.getPerson(3));
 
 	}
 
@@ -171,23 +171,23 @@ public class PersonManagerImplTest {
 	public void getPersonInconsistentDataExceptionTest() {
 		Optional<Person> personOptional = Optional.empty();
 
-		when(personDAO.findById((long) -1)).thenReturn(personOptional);
+		when(personDAO.findById(-1)).thenReturn(personOptional);
 
-		assertThrows(InconsistentDataException.class, () -> personManager.getPerson((long) -1));
+		assertThrows(InconsistentDataException.class, () -> personManager.getPerson(-1));
 	}
 
 	@Test
 	public void getPersonTest() {
 		Person person = new Person();
-		person.setId((long) 3);
-		person.setSerial((long) 237);
+		person.setId(3);
+		person.setSerial(237);
 		person.setName("christian");
 		person.setSurname("marino");
 		Optional<Person> personOptional = Optional.of(person);
 
-		when(personDAO.findById((long) 3)).thenReturn(personOptional);
+		when(personDAO.findById(3)).thenReturn(personOptional);
 
-		PersonBean personBean = personManager.getPerson(3l);
+		PersonBean personBean = personManager.getPerson(3);
 
 		assertNotNull(personBean);
 		assertEquals(person.getId(), personBean.getId());

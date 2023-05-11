@@ -22,7 +22,7 @@ public class SkillController {
 	private SkillManager skillManager;
 
 	@PostMapping
-	public ResponseEntity<Integer> createSkill(final String name, final String description, final Long topicBeanId) {
+	public ResponseEntity<Integer> createSkill(final String name, final String description, final Integer topicBeanId) {
 		try {
 			skillManager.createSkill(name, description, topicBeanId);
 			return ResponseEntity.ok(1);
@@ -37,7 +37,7 @@ public class SkillController {
 	}
 
 	@GetMapping("/topic")
-	public ResponseEntity<List<KeyValueBean>> getSkillsByTopic(final Long topicId) {
+	public ResponseEntity<List<KeyValueBean>> getSkillsByTopic(final Integer topicId) {
 		try {
 			return ResponseEntity.ok(skillManager.getSkillsByTopic(topicId));
 		} catch (Exception e) {

@@ -50,16 +50,16 @@ public class AreaManagerImplTest {
 		Optional<Person> personOptional = Optional.empty();
 
 		when(areaDAO.existsByName("lis")).thenReturn(false);
-		when(personDAO.findById((long) -1)).thenReturn(personOptional);
+		when(personDAO.findById(-1)).thenReturn(personOptional);
 
-		assertThrows(ServiceErrorException.class, () -> areaManager.createArea("lis", (long) -1, (long) 1));
+		assertThrows(ServiceErrorException.class, () -> areaManager.createArea("lis", -1, 1));
 	}
 
 	@Test
 	public void createAreaNameExceptionTest() {
 		when(areaDAO.existsByName("lottomatica")).thenReturn(true);
 
-		assertThrows(ServiceErrorException.class, () -> areaManager.createArea("lottomatica", (long) 7, (long) 1));
+		assertThrows(ServiceErrorException.class, () -> areaManager.createArea("lottomatica", 7, 1));
 	}
 
 	@Test
@@ -67,28 +67,28 @@ public class AreaManagerImplTest {
 		Optional<Area> areaOptional = Optional.empty();
 		Optional<Topic> topicOptional = Optional.empty();
 
-		when(areaDAO.findById(-1l)).thenReturn(areaOptional);
-		when(topicDAO.findById(-1l)).thenReturn(topicOptional);
+		when(areaDAO.findById(-1)).thenReturn(areaOptional);
+		when(topicDAO.findById(-1)).thenReturn(topicOptional);
 
-		assertThrows(ServiceErrorException.class, () -> areaManager.createAreaTopicConnection(-1l, -1l));
+		assertThrows(ServiceErrorException.class, () -> areaManager.createAreaTopicConnection(-1, -1));
 
 	}
 
 	@Test
 	public void createAreaTopicExcpetionTest() {
 		Person person = new Person();
-		person.setId((long) 7);
-		person.setSerial((long) 80);
+		person.setId(7);
+		person.setSerial(80);
 		person.setName("luigi");
 		person.setSurname("carullo");
 		Optional<Person> personOptional = Optional.of(person);
 		Optional<Topic> topicOptional = Optional.empty();
 
 		when(areaDAO.existsByName("lis")).thenReturn(false);
-		when(personDAO.findById((long) 7)).thenReturn(personOptional);
-		when(topicDAO.findById((long) -1)).thenReturn(topicOptional);
+		when(personDAO.findById(7)).thenReturn(personOptional);
+		when(topicDAO.findById(-1)).thenReturn(topicOptional);
 
-		assertThrows(ServiceErrorException.class, () -> areaManager.createArea("lis", (long) 7, (long) -1));
+		assertThrows(ServiceErrorException.class, () -> areaManager.createArea("lis", 7, -1));
 	}
 
 	@Test
@@ -102,12 +102,12 @@ public class AreaManagerImplTest {
 	@Test
 	public void getAllAreasTest() {
 		Person person = new Person();
-		person.setId((long) 7);
-		person.setSerial((long) 80);
+		person.setId(7);
+		person.setSerial(80);
 		person.setName("luigi");
 		person.setSurname("carullo");
 		Area area = new Area();
-		area.setId(1l);
+		area.setId(1);
 		area.setName("lis");
 		area.setManager(person);
 		List<Area> areas = new ArrayList<>();

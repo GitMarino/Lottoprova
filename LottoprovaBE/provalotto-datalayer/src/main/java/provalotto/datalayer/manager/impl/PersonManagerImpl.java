@@ -89,7 +89,7 @@ public class PersonManagerImpl implements PersonManager {
 
 	@Override
 	@Transactional(rollbackFor = { Exception.class })
-	public void createPersonAreaConnection(final Long personId, final Long areaId) throws ServiceErrorException {
+	public void createPersonAreaConnection(final Integer personId, final Integer areaId) throws ServiceErrorException {
 		try {
 			Optional<Area> areaOptional = areaDAO.findById(areaId);
 			Optional<Person> personOptional = personDAO.findById(personId);
@@ -118,7 +118,7 @@ public class PersonManagerImpl implements PersonManager {
 
 	@Override
 	@Transactional(rollbackFor = { Exception.class })
-	public void createPersonSkillConnection(final Long personId, final Long skillId, final Integer mark)
+	public void createPersonSkillConnection(final Integer personId, final Integer skillId, final Integer mark)
 			throws ServiceErrorException {
 
 		try {
@@ -176,7 +176,8 @@ public class PersonManagerImpl implements PersonManager {
 
 	@Override
 	@Transactional(rollbackFor = { Exception.class })
-	public void createPersonTopicConnection(final Long personId, final Long topicId) throws ServiceErrorException {
+	public void createPersonTopicConnection(final Integer personId, final Integer topicId)
+			throws ServiceErrorException {
 		try {
 			Optional<Person> personOptional = personDAO.findById(personId);
 			Optional<Topic> topicOptional = topicDAO.findById(topicId);
@@ -223,7 +224,7 @@ public class PersonManagerImpl implements PersonManager {
 	}
 
 	@Override
-	public PersonBean getPerson(final Long personId) {
+	public PersonBean getPerson(final Integer personId) {
 		PersonBean personBean;
 		try {
 			Optional<Person> personOptional = personDAO.findById(personId);
@@ -250,7 +251,7 @@ public class PersonManagerImpl implements PersonManager {
 	}
 
 	@Override
-	public List<SkillMarkBean> getPersonSkillMarks(final Long personId) throws ServiceErrorException {
+	public List<SkillMarkBean> getPersonSkillMarks(final Integer personId) throws ServiceErrorException {
 		List<SkillMarkBean> skillMarkList = new ArrayList<>();
 		SkillMarkBean skillMark;
 		try {

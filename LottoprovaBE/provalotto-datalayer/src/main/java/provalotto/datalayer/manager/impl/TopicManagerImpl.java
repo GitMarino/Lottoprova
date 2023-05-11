@@ -80,7 +80,7 @@ public class TopicManagerImpl implements TopicManager {
 	}
 
 	@Override
-	public List<KeyValueBean> getTopicsByPerson(final Long personId) throws ServiceErrorException {
+	public List<KeyValueBean> getTopicsByPerson(final Integer personId) throws ServiceErrorException {
 		List<KeyValueBean> topicBeans = new ArrayList<>();
 		KeyValueBean beanKeyValue;
 		try {
@@ -98,7 +98,7 @@ public class TopicManagerImpl implements TopicManager {
 	}
 
 	@Override
-	public List<TopicSkillsBean> getTopicsSkillsByPerson(final Long personId) {
+	public List<TopicSkillsBean> getTopicsSkillsByPerson(final Integer personId) {
 		List<TopicSkillsBean> topicsSkills = new ArrayList<>();
 		Topic topic;
 		TopicSkillsBean topicSkills;

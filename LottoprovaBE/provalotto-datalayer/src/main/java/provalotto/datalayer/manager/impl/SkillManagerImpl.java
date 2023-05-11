@@ -33,7 +33,7 @@ public class SkillManagerImpl implements SkillManager {
 
 	@Override
 	@Transactional(rollbackFor = { Exception.class })
-	public void createSkill(final String name, final String description, final Long topicBeanId)
+	public void createSkill(final String name, final String description, final Integer topicBeanId)
 			throws ServiceErrorException {
 		try {
 			if (!skillDAO.existsByName(name)) {
@@ -80,7 +80,7 @@ public class SkillManagerImpl implements SkillManager {
 	}
 
 	@Override
-	public List<KeyValueBean> getSkillsByTopic(final Long topicId) throws ServiceErrorException {
+	public List<KeyValueBean> getSkillsByTopic(final Integer topicId) throws ServiceErrorException {
 		List<KeyValueBean> skillBeans = new ArrayList<>();
 		KeyValueBean beanKeyValue;
 		try {
