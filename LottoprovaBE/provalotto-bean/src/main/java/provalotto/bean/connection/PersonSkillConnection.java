@@ -1,17 +1,29 @@
 package provalotto.bean.connection;
 
-import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import org.joda.time.LocalDateTime;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import provalotto.bean.key.PersonSkillConnectionKey;
 
+@Getter
+@Setter
+@ToString
 @Entity
+@Table(name = PersonSkillConnection.TABLE_NAME)
 public class PersonSkillConnection {
+
+	public static final String TABLE_NAME = "person_skill";
+
+	public static String getTableName() {
+		return TABLE_NAME;
+	}
 
 	@EmbeddedId
 	PersonSkillConnectionKey id;
@@ -24,61 +36,5 @@ public class PersonSkillConnection {
 
 	@Column(nullable = false)
 	private int mark;
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PersonSkillConnection other = (PersonSkillConnection) obj;
-		return Objects.equals(dateTime, other.dateTime) && Objects.equals(id, other.id)
-				&& Objects.equals(maker, other.maker) && mark == other.mark;
-	}
-
-	public LocalDateTime getDateTime() {
-		return dateTime;
-	}
-
-	public PersonSkillConnectionKey getId() {
-		return id;
-	}
-
-	public String getMaker() {
-		return maker;
-	}
-
-	public int getMark() {
-		return mark;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(dateTime, id, maker, mark);
-	}
-
-	public void setDateTime(final LocalDateTime dateTime) {
-		this.dateTime = dateTime;
-	}
-
-	public void setId(final PersonSkillConnectionKey id) {
-		this.id = id;
-	}
-
-	public void setMaker(final String maker) {
-		this.maker = maker;
-	}
-
-	public void setMark(final int mark) {
-		this.mark = mark;
-	}
-
-	@Override
-	public String toString() {
-		return "PersonSkillConnection [id=" + id + ", maker=" + maker + ", dateTime=" + dateTime + ", mark=" + mark
-				+ "]";
-	}
 
 }
