@@ -11,12 +11,13 @@ import provalotto.bean.entity.Skill;
 import provalotto.bean.utility.SkillMark;
 
 @Repository
-public interface SkillDAO extends JpaRepository<Skill, Long> {
+public interface SkillDAO extends JpaRepository<Skill, Integer> {
 
 	boolean existsByName(String name);
 
 	List<Skill> findAllByOrderByName();
 
+	@Override
 	Optional<Skill> findById(Integer id);
 
 	List<Skill> findByTopicIdOrderByName(Integer topicId);

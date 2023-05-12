@@ -11,12 +11,13 @@ import provalotto.bean.entity.Topic;
 import provalotto.bean.utility.ATSKeyValue;
 
 @Repository
-public interface TopicDAO extends JpaRepository<Topic, Long> {
+public interface TopicDAO extends JpaRepository<Topic, Integer> {
 
 	boolean existsByName(String name);
 
 	List<Topic> findAllByOrderByName();
 
+	@Override
 	Optional<Topic> findById(Integer id);
 
 	@Query("SELECT t " + "FROM Topic t join PersonTopicConnection pt on t.id=pt.id.topic.id "

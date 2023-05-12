@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import provalotto.bean.entity.Area;
 
 @Repository
-public interface AreaDAO extends JpaRepository<Area, Long> {
+public interface AreaDAO extends JpaRepository<Area, Integer> {
 
 	boolean existsByName(String name);
 
@@ -20,6 +20,7 @@ public interface AreaDAO extends JpaRepository<Area, Long> {
 			+ "join Person p on pa.id.person=p.id " + "WHERE p.id=?1 " + "ORDER BY a.name")
 	List<Area> findAreasByPerson(Integer personId);
 
+	@Override
 	Optional<Area> findById(Integer id);
 
 }

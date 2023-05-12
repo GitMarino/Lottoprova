@@ -12,12 +12,13 @@ import provalotto.bean.entity.Person;
 import provalotto.bean.utility.SearchPeopleObject;
 
 @Repository
-public interface PersonDAO extends JpaRepository<Person, Long> {
+public interface PersonDAO extends JpaRepository<Person, Integer> {
 
 	boolean existsBySerial(Integer serial);
 
 	List<Person> findAllByOrderBySurname();
 
+	@Override
 	Optional<Person> findById(Integer id);
 
 	@Query("SELECT DISTINCT p " + "FROM Person p "

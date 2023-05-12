@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import provalotto.bean.entity.User;
 
 @Repository
-public interface UserDAO extends JpaRepository<User, Long> {
+public interface UserDAO extends JpaRepository<User, Integer> {
 
 	boolean existsByUsername(String username);
 
