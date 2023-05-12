@@ -23,6 +23,7 @@ import provalotto.datalayer.dao.TopicDAO;
 import provalotto.datalayer.exceptions.DataBaseException;
 import provalotto.datalayer.exceptions.ServiceErrorException;
 import provalotto.datalayer.manager.TopicManager;
+import provalotto.datalayer.utility.EntityBeanMapper;
 
 @Component
 public class TopicManagerImpl implements TopicManager {
@@ -37,6 +38,9 @@ public class TopicManagerImpl implements TopicManager {
 
 	@Autowired
 	private SkillDAO skillDAO;
+
+	@Autowired
+	private EntityBeanMapper mapper;
 
 	@Override
 	@Transactional(rollbackFor = { Exception.class })
@@ -64,13 +68,9 @@ public class TopicManagerImpl implements TopicManager {
 	@Override
 	public List<KeyValueBean> getAllTopics() {
 		List<KeyValueBean> allBeans = new ArrayList<>();
-		KeyValueBean beanKeyValue;
 		try {
 			for (Topic topic : topicDAO.findAllByOrderByName()) {
-				beanKeyValue = new KeyValueBean();
-				beanKeyValue.setId(topic.getId());
-				beanKeyValue.setValue(topic.getName());
-				allBeans.add(beanKeyValue);
+				allBeans.add(mapper.mapTopicKV(topic));
 			}
 			return allBeans;
 		} catch (Exception e) {
@@ -82,13 +82,9 @@ public class TopicManagerImpl implements TopicManager {
 	@Override
 	public List<KeyValueBean> getTopicsByPerson(final Integer personId) throws ServiceErrorException {
 		List<KeyValueBean> topicBeans = new ArrayList<>();
-		KeyValueBean beanKeyValue;
 		try {
 			for (Topic topic : topicDAO.findTopicsByPerson(personId)) {
-				beanKeyValue = new KeyValueBean();
-				beanKeyValue.setId(topic.getId());
-				beanKeyValue.setValue(topic.getName());
-				topicBeans.add(beanKeyValue);
+				topicBeans.add(mapper.mapTopicKV(topic));
 			}
 			return topicBeans;
 		} catch (Exception e) {

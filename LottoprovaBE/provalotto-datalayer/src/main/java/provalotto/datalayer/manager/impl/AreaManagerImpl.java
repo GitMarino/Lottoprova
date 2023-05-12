@@ -28,6 +28,7 @@ import provalotto.datalayer.dao.TopicDAO;
 import provalotto.datalayer.exceptions.DataBaseException;
 import provalotto.datalayer.exceptions.ServiceErrorException;
 import provalotto.datalayer.manager.AreaManager;
+import provalotto.datalayer.utility.EntityBeanMapper;
 
 @Component
 public class AreaManagerImpl implements AreaManager {
@@ -48,6 +49,9 @@ public class AreaManagerImpl implements AreaManager {
 
 	@Autowired
 	private PersonAreaConnectionDAO personAreaConnectionDAO;
+
+	@Autowired
+	private EntityBeanMapper mapper;
 
 	@Override
 	@Transactional(rollbackFor = { Exception.class })
@@ -145,13 +149,9 @@ public class AreaManagerImpl implements AreaManager {
 	@Override
 	public List<KeyValueBean> getAllAreas() {
 		List<KeyValueBean> allBeans = new ArrayList<>();
-		KeyValueBean beanKeyValue;
 		try {
 			for (Area area : areaDAO.findAllByOrderByName()) {
-				beanKeyValue = new KeyValueBean();
-				beanKeyValue.setId(area.getId());
-				beanKeyValue.setValue(area.getName());
-				allBeans.add(beanKeyValue);
+				allBeans.add(mapper.mapAreaKV(area));
 			}
 			return allBeans;
 		} catch (Exception e) {
@@ -163,13 +163,9 @@ public class AreaManagerImpl implements AreaManager {
 	@Override
 	public List<KeyValueBean> getAreasByPerson(final Integer personId) throws ServiceErrorException {
 		List<KeyValueBean> areaBeans = new ArrayList<>();
-		KeyValueBean beanKeyValue;
 		try {
 			for (Area area : areaDAO.findAreasByPerson(personId)) {
-				beanKeyValue = new KeyValueBean();
-				beanKeyValue.setId(area.getId());
-				beanKeyValue.setValue(area.getName());
-				areaBeans.add(beanKeyValue);
+				areaBeans.add(mapper.mapAreaKV(area));
 			}
 			return areaBeans;
 		} catch (Exception e) {

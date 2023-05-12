@@ -36,6 +36,7 @@ import provalotto.datalayer.exceptions.DataBaseException;
 import provalotto.datalayer.exceptions.InconsistentDataException;
 import provalotto.datalayer.exceptions.ServiceErrorException;
 import provalotto.datalayer.manager.PersonManager;
+import provalotto.datalayer.utility.EntityBeanMapper;
 
 @Component
 public class PersonManagerImpl implements PersonManager {
@@ -63,15 +64,15 @@ public class PersonManagerImpl implements PersonManager {
 	@Autowired
 	private SkillDAO skillDAO;
 
+	@Autowired
+	private EntityBeanMapper mapper;
+
 	@Override
 	@Transactional(rollbackFor = { Exception.class })
 	public PersonBean createPerson(final PersonBean personBean) throws ServiceErrorException {
 		try {
 			if (!personDAO.existsBySerial(personBean.getSerial())) {
-				Person person = new Person();
-				person.setSerial(personBean.getSerial());
-				person.setName(personBean.getName());
-				person.setSurname(personBean.getSurname());
+				Person person = mapper.mapPersonBean(personBean);
 				person.setMaker("Christian Marino");
 				person.setDateTime(LocalDateTime.now());
 				personDAO.save(person);
@@ -208,13 +209,9 @@ public class PersonManagerImpl implements PersonManager {
 	@Override
 	public List<KeyValueBean> getAllPeople() {
 		List<KeyValueBean> allBeans = new ArrayList<>();
-		KeyValueBean beanKeyValue;
 		try {
 			for (Person person : personDAO.findAllByOrderBySurname()) {
-				beanKeyValue = new KeyValueBean();
-				beanKeyValue.setId(person.getId());
-				beanKeyValue.setValue(person.getSurname());
-				allBeans.add(beanKeyValue);
+				allBeans.add(mapper.mapPersonKV(person));
 			}
 			return allBeans;
 		} catch (Exception e) {
@@ -225,20 +222,10 @@ public class PersonManagerImpl implements PersonManager {
 
 	@Override
 	public PersonBean getPerson(final Integer personId) {
-		PersonBean personBean;
 		try {
 			Optional<Person> personOptional = personDAO.findById(personId);
 			if (personOptional.isPresent()) {
-				Person person = personOptional.get();
-
-				personBean = new PersonBean();
-				personBean.setId(person.getId());
-				personBean.setSerial(person.getSerial());
-				personBean.setName(person.getName());
-				personBean.setSurname(person.getSurname());
-
-				return personBean;
-
+				return mapper.mapPerson(personOptional.get());
 			}
 			throw new InconsistentDataException();
 		} catch (InconsistentDataException e) {
@@ -272,15 +259,9 @@ public class PersonManagerImpl implements PersonManager {
 	public List<PersonBean> searchPeopleByBeans(final SearchPeopleObject searchPeopleObject)
 			throws ServiceErrorException {
 		List<PersonBean> peopleByBeans = new ArrayList<>();
-		PersonBean personBean;
 		try {
 			for (Person person : personDAO.searchPeople(searchPeopleObject)) {
-				personBean = new PersonBean();
-				personBean.setId(person.getId());
-				personBean.setSerial(person.getSerial());
-				personBean.setName(person.getName());
-				personBean.setSurname(person.getSurname());
-				peopleByBeans.add(personBean);
+				peopleByBeans.add(mapper.mapPerson(person));
 			}
 			return peopleByBeans;
 		} catch (Exception e) {
