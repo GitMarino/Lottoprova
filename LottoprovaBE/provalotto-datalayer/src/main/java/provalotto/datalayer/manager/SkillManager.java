@@ -11,6 +11,6 @@ public interface SkillManager {
 
 	List<KeyValueBean> getAllSkills();
 
-	List<KeyValueBean> getSkillsByTopic(Integer personId) throws ServiceErrorException;
+	List<KeyValueBean> getSkillsByTopic(Integer topicId) throws ServiceErrorException;
 
 }
