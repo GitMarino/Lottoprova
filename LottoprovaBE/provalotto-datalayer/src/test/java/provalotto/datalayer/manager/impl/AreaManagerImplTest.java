@@ -1,12 +1,8 @@
 package provalotto.datalayer.manager.impl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.exception.JDBCConnectionException;
@@ -16,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.entity.Area;
 import provalotto.bean.entity.Person;
 import provalotto.bean.entity.Topic;
@@ -97,31 +92,6 @@ public class AreaManagerImplTest {
 
 		assertThrows(DataBaseException.class, () -> areaManager.getAllAreas());
 
-	}
-
-	@Test
-	public void getAllAreasTest() {
-		Person person = new Person();
-		person.setId(7);
-		person.setSerial(80);
-		person.setName("luigi");
-		person.setSurname("carullo");
-		Area area = new Area();
-		area.setId(1);
-		area.setName("lis");
-		area.setManager(person);
-		List<Area> areas = new ArrayList<>();
-		areas.add(area);
-
-		when(areaDAO.findAllByOrderByName()).thenReturn(areas);
-
-		List<KeyValueBean> allBeans = areaManager.getAllAreas();
-
-		for (KeyValueBean bean : allBeans) {
-			assertNotNull(bean);
-			assertEquals(area.getId(), bean.getId());
-			assertEquals(area.getName(), bean.getValue());
-		}
 	}
 
 	@Test

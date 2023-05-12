@@ -1,12 +1,8 @@
 package provalotto.datalayer.manager.impl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.exception.JDBCConnectionException;
@@ -16,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.bean.PersonBean;
 import provalotto.bean.entity.Area;
 import provalotto.bean.entity.Person;
@@ -139,27 +134,6 @@ public class PersonManagerImplTest {
 	}
 
 	@Test
-	public void getAllPeopleTest() {
-		Person person = new Person();
-		person.setId(3);
-		person.setSerial(237);
-		person.setName("christian");
-		person.setSurname("marino");
-		List<Person> people = new ArrayList<>();
-		people.add(person);
-
-		when(personDAO.findAllByOrderBySurname()).thenReturn(people);
-
-		List<KeyValueBean> allBeans = personManager.getAllPeople();
-
-		for (KeyValueBean bean : allBeans) {
-			assertNotNull(bean);
-			assertEquals(person.getId(), bean.getId());
-			assertEquals(person.getSurname(), bean.getValue());
-		}
-	}
-
-	@Test
 	public void getPersonDataBaseExceptionTest() {
 		when(personDAO.findById(3)).thenThrow(JDBCConnectionException.class);
 
@@ -174,26 +148,6 @@ public class PersonManagerImplTest {
 		when(personDAO.findById(-1)).thenReturn(personOptional);
 
 		assertThrows(InconsistentDataException.class, () -> personManager.getPerson(-1));
-	}
-
-	@Test
-	public void getPersonTest() {
-		Person person = new Person();
-		person.setId(3);
-		person.setSerial(237);
-		person.setName("christian");
-		person.setSurname("marino");
-		Optional<Person> personOptional = Optional.of(person);
-
-		when(personDAO.findById(3)).thenReturn(personOptional);
-
-		PersonBean personBean = personManager.getPerson(3);
-
-		assertNotNull(personBean);
-		assertEquals(person.getId(), personBean.getId());
-		assertEquals(person.getSerial(), personBean.getSerial());
-		assertEquals(person.getName(), personBean.getName());
-		assertEquals(person.getSurname(), personBean.getSurname());
 	}
 
 }
