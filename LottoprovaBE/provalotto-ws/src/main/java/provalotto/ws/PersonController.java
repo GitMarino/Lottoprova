@@ -75,6 +75,11 @@ public class PersonController {
 		return Answer.ok(personManager.getAllPeople(), HttpStatus.OK);
 	}
 
+	@GetMapping("/cv/{id}")
+	public Answer<byte[]> getCV(@PathVariable("id") final Integer personId) {
+		return Answer.ok(personManager.getCV(personId), HttpStatus.OK);
+	}
+
 	@GetMapping("/{id}")
 	public Answer<PersonBean> getPerson(@PathVariable("id") final Integer personId) {
 		return Answer.ok(personManager.getPerson(personId), HttpStatus.OK);

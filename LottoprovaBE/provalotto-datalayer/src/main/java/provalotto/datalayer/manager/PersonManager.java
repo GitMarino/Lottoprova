@@ -20,6 +20,8 @@ public interface PersonManager {
 
 	List<KeyValueBean> getAllPeople();
 
+	byte[] getCV(Integer personId);
+
 	PersonBean getPerson(Integer personId);
 
 	List<SkillMarkBean> getPersonSkillMarks(Integer personId) throws ServiceErrorException;

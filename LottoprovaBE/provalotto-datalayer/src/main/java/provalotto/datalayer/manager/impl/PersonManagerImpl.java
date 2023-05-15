@@ -1,9 +1,14 @@
 package provalotto.datalayer.manager.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +30,7 @@ import provalotto.bean.key.PersonAreaConnectionKey;
 import provalotto.bean.key.PersonSkillConnectionKey;
 import provalotto.bean.key.PersonTopicConnectionKey;
 import provalotto.bean.utility.SearchPeopleObject;
+import provalotto.bean.utility.SkillMark;
 import provalotto.datalayer.dao.AreaDAO;
 import provalotto.datalayer.dao.PersonAreaConnectionDAO;
 import provalotto.datalayer.dao.PersonDAO;
@@ -214,6 +220,63 @@ public class PersonManagerImpl implements PersonManager {
 				allBeans.add(mapper.mapPersonKV(person));
 			}
 			return allBeans;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new DataBaseException();
+		}
+	}
+
+	@Override
+	public byte[] getCV(final Integer personId) {
+		try {
+			XSSFWorkbook workbook = new XSSFWorkbook();
+			XSSFSheet sheet = workbook.createSheet("curriculum vitae");
+
+			Optional<Person> personOptional = personDAO.findById(personId);
+			if (personOptional.isPresent()) {
+				int rowNum = 0;
+
+				Person person = personOptional.get();
+
+				Row row = sheet.createRow(rowNum);
+				Cell cell = row.createCell(0);
+				cell.setCellValue(person.getSerial().toString());
+				cell = row.createCell(1);
+				cell.setCellValue(person.getName());
+				cell = row.createCell(2);
+				cell.setCellValue(person.getSurname());
+
+				for (PersonTopicConnection personTopicConnection : personTopicConnectionDAO
+						.findByIdPersonId(personId)) {
+					rowNum++;
+					row = sheet.createRow(rowNum);
+					Topic topic = personTopicConnection.getId().getTopic();
+
+					int cellNum = 0;
+					cell = row.createCell(cellNum);
+					cell.setCellValue(topic.getName());
+					for (SkillMark skill : skillDAO.findSkillsByPersonAndTopic(personId, topic.getId())) {
+						cellNum++;
+						cell = row.createCell(cellNum);
+						cell.setCellValue(skill.getSkillName());
+					}
+				}
+				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+				workbook.write(byteArrayOutputStream);
+				/*
+				 * FileOutputStream out = new
+				 * FileOutputStream("C:\\Users\\christian.marino\\Documents\\pippo.xlsx");
+				 * out.write(byteArrayOutputStream.toByteArray()); out.flush(); out.close();
+				 */
+				return byteArrayOutputStream.toByteArray();
+
+			} else {
+				throw new InconsistentDataException();
+			}
+
+		} catch (InconsistentDataException ide) {
+			log.error(ide.getMessage(), ide);
+			throw ide;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new DataBaseException();
