@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import provalotto.bean.bean.FileBean;
 import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.bean.PersonBean;
 import provalotto.bean.bean.SkillMarkBean;
@@ -227,7 +228,7 @@ public class PersonManagerImpl implements PersonManager {
 	}
 
 	@Override
-	public byte[] getCV(final Integer personId) {
+	public FileBean getCV(final Integer personId) {
 		try {
 			XSSFWorkbook workbook = new XSSFWorkbook();
 			XSSFSheet sheet = workbook.createSheet("curriculum vitae");
@@ -268,7 +269,14 @@ public class PersonManagerImpl implements PersonManager {
 				 * FileOutputStream("C:\\Users\\christian.marino\\Documents\\pippo.xlsx");
 				 * out.write(byteArrayOutputStream.toByteArray()); out.flush(); out.close();
 				 */
-				return byteArrayOutputStream.toByteArray();
+				byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+				FileBean fileBean = new FileBean();
+				fileBean.setName(person.getName() + person.getSurname() + "CV");
+				fileBean.setMetaype("application/vnd.ms-excel");
+				fileBean.setSize((long) byteArray.length);
+				fileBean.setContent(byteArray);
+				return fileBean;
 
 			} else {
 				throw new InconsistentDataException();

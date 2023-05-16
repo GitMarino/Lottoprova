@@ -2,6 +2,7 @@ package provalotto.datalayer.manager;
 
 import java.util.List;
 
+import provalotto.bean.bean.FileBean;
 import provalotto.bean.bean.KeyValueBean;
 import provalotto.bean.bean.PersonBean;
 import provalotto.bean.bean.SkillMarkBean;
@@ -20,7 +21,7 @@ public interface PersonManager {
 
 	List<KeyValueBean> getAllPeople();
 
-	byte[] getCV(Integer personId);
+	FileBean getCV(Integer personId);
 
 	PersonBean getPerson(Integer personId);
 
