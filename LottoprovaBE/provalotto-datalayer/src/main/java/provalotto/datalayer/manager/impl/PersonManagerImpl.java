@@ -263,7 +263,10 @@ public class PersonManagerImpl implements PersonManager {
 					}
 				}
 				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
 				workbook.write(byteArrayOutputStream);
+				byteArrayOutputStream.flush();
+				workbook.close();
 				/*
 				 * FileOutputStream out = new
 				 * FileOutputStream("C:\\Users\\christian.marino\\Documents\\pippo.xlsx");
@@ -273,7 +276,7 @@ public class PersonManagerImpl implements PersonManager {
 
 				FileBean fileBean = new FileBean();
 				fileBean.setName(person.getName() + person.getSurname() + "CV");
-				fileBean.setMetaype("application/vnd.ms-excel");
+				fileBean.setMetatype("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 				fileBean.setSize((long) byteArray.length);
 				fileBean.setContent(byteArray);
 				return fileBean;
