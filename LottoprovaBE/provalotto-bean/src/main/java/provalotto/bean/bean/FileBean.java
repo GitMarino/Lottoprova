@@ -15,7 +15,7 @@ public class FileBean implements Serializable {
 
 	private String name;
 
-	private String metaype;
+	private String metatype;
 
 	private Long size;
 
