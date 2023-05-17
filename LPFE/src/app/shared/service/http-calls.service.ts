@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Topic } from '../objects/topic';
-import { AREA, BACKEND_ENDPOINT, PERSON, SEARCH, SKILL, SKILLS, STANDARD_JSON_HEADERS, TOPIC } from '../constants/constants';
+import { AREA, BACKEND_ENDPOINT, CV, PERSON, SEARCH, SKILL, SKILLS, STANDARD_JSON_HEADERS, TOPIC } from '../constants/constants';
 import { Person } from '../objects/person';
 import { KeyValue } from '../objects/key-value';
 import { SkillMark } from '../objects/skill-mark';
 import { TopicSkills } from '../objects/topic-skills';
+import { FileContent } from '../objects/file-content';
 
 @Injectable({ providedIn: 'root' })
 export class HttpCallsService {
@@ -34,6 +35,10 @@ export class HttpCallsService {
 
   public getAllPeople(): Observable<KeyValue[]> {
     return this.http.get<KeyValue[]>(BACKEND_ENDPOINT + PERSON);
+  }
+
+  public getCV(personId: number): Observable<FileContent> {
+  return this.http.get<FileContent>(BACKEND_ENDPOINT + PERSON + CV + "/" + personId);
   }
 
   public createPerson(person: Person): Observable<Person> {

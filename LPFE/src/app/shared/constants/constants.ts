@@ -7,6 +7,7 @@ export const AREA = "/area";
 
     //PERSON
 export const PERSON = "/person";
+export const CV = "/cv";
 
     //SKILL
 export const SKILL = "/skill";

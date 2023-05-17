@@ -7,6 +7,7 @@ import { KeyValue } from 'src/app/shared/objects/key-value';
 import { Location } from '@angular/common';
 import { Button } from 'src/app/shared/objects/button';
 import { TopicSkills } from 'src/app/shared/objects/topic-skills';
+import { FileContent } from 'src/app/shared/objects/file-content';
 
 @Component({
   selector: 'app-info-person',
@@ -14,6 +15,7 @@ import { TopicSkills } from 'src/app/shared/objects/topic-skills';
   styleUrls: ['./info-person.component.scss'],
 })
 export class InfoPersonComponent implements OnInit {
+
 
   personId?: number;
   iconName: string = 'file-text';
@@ -47,6 +49,10 @@ export class InfoPersonComponent implements OnInit {
       {
         name: 'torna a gestione',
         action: this.pageBack
+      },
+      {
+        name: 'scarica cv',
+        action: this.download
       }
     ];
   }
@@ -82,10 +88,6 @@ export class InfoPersonComponent implements OnInit {
     }
   }
 
-  pageBack = () => {
-    this.location.back();
-  }
-
   reset() {
     this.topicSkillsList = this.topicsSkillsBE;
     this.collectionSize = this.topicSkillsList!.length;
@@ -100,6 +102,30 @@ export class InfoPersonComponent implements OnInit {
       this.topicSkillsList = this.topicsSkillsBE;
     }
     this.collectionSize = this.topicSkillsList!.length;
+  }
+
+  pageBack = () => {
+    this.location.back();
+  }
+
+  download = () => {
+    this.httpCalls.getCV(this.personId!)
+      .subscribe({
+        next: (response: FileContent) => {
+          //const byteArray = Buffer.from(response.content, 'base64');
+          console.log(response.metatype)
+          const byteArray = new Uint8Array(atob(response.content).split('').map(char => char.charCodeAt(0)));
+          const blob = new Blob([byteArray], {type: response.metatype});
+          const fileURL = URL.createObjectURL(blob);
+
+          var linkToFile = document.createElement('a');
+          linkToFile.download = response.name;
+          linkToFile.href = fileURL;
+          linkToFile.click();
+
+          //window.open(fileURL);
+        }
+      })
   }
 
 }
