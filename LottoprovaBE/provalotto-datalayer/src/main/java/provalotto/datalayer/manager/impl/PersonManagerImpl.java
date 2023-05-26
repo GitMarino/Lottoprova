@@ -228,13 +228,13 @@ public class PersonManagerImpl implements PersonManager {
 	}
 
 	@Override
-	public FileBean getCV(final Integer personId) {
+	public FileBean getCV(final Integer personId) throws ServiceErrorException {
 		try {
-			XSSFWorkbook workbook = new XSSFWorkbook();
-			XSSFSheet sheet = workbook.createSheet("curriculum vitae");
-
 			Optional<Person> personOptional = personDAO.findById(personId);
 			if (personOptional.isPresent()) {
+				XSSFWorkbook workbook = new XSSFWorkbook();
+				XSSFSheet sheet = workbook.createSheet("curriculum vitae");
+
 				int rowNum = 0;
 
 				Person person = personOptional.get();
@@ -275,22 +275,21 @@ public class PersonManagerImpl implements PersonManager {
 				byte[] byteArray = byteArrayOutputStream.toByteArray();
 
 				FileBean fileBean = new FileBean();
-				fileBean.setName(person.getName() + person.getSurname() + "CV");
+				fileBean.setName(person.getName() + person.getSurname() + "CV.xlsx");
 				fileBean.setMetatype("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 				fileBean.setSize((long) byteArray.length);
 				fileBean.setContent(byteArray);
 				return fileBean;
 
 			} else {
-				throw new InconsistentDataException();
+				throw new ServiceErrorException("Dati inconsistenti");
 			}
-
-		} catch (InconsistentDataException ide) {
-			log.error(ide.getMessage(), ide);
-			throw ide;
+		} catch (ServiceErrorException e) {
+			log.error(e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
-			throw new DataBaseException();
+			throw new ServiceErrorException(e);
 		}
 	}
 

@@ -3,6 +3,7 @@ package provalotto.ws;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,8 +78,28 @@ public class PersonController {
 	}
 
 	@GetMapping("/cv/{id}")
-	public Answer<FileBean> getCV(@PathVariable("id") final Integer personId) {
-		return Answer.ok(personManager.getCV(personId), HttpStatus.OK);
+	public ResponseEntity<byte[]> getCV(@PathVariable("id") final Integer personId) {
+		try {
+			FileBean fileBean = personManager.getCV(personId);
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Type", fileBean.getMetatype());
+			headers.add("Content-Disposition", "attachment; filename=\"%s\"".formatted(fileBean.getName()));
+
+			return ResponseEntity.status(HttpStatus.OK).headers(headers).body(fileBean.getContent());
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	@GetMapping("/cv/object/{id}")
+	public ResponseEntity<FileBean> getObjectCV(@PathVariable("id") final Integer personId) {
+		try {
+			return ResponseEntity.ok(personManager.getCV(personId));
+
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 	@GetMapping("/{id}")

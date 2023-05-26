@@ -21,7 +21,7 @@ public interface PersonManager {
 
 	List<KeyValueBean> getAllPeople();
 
-	FileBean getCV(Integer personId);
+	FileBean getCV(Integer personId) throws ServiceErrorException;
 
 	PersonBean getPerson(Integer personId);
 
