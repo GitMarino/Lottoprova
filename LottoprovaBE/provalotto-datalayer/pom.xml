@@ -77,6 +77,12 @@
 		    <artifactId>poi-ooxml</artifactId>
 		    <version>5.2.2</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.5.0</version>
+		</dependency>
 
 	</dependencies>
 	
