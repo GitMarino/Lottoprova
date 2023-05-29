@@ -11,6 +11,8 @@ public class NoOrmDAO {
 
 	public static void main(final String[] args) {
 		try (
+				// SETTINGS
+
 				// database connection
 				Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/lotto-prova-db",
 						"postgres", "pass");
@@ -23,6 +25,9 @@ public class NoOrmDAO {
 						"select serial, surname from person where serial > ? and surname = ? order by serial")
 
 		) {
+			// QUERIES AND RESULTS
+
+			// statement
 			String queryString = "select serial, surname from person order by serial";
 			ResultSet queryResult = statement.executeQuery(queryString);
 			while (queryResult.next()) {
@@ -33,6 +38,7 @@ public class NoOrmDAO {
 
 			System.out.println();
 
+			// prepared statement
 			preparedStatement.setInt(1, 90);
 			preparedStatement.setString(2, "marino");
 			queryResult = preparedStatement.executeQuery();
