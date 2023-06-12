@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Topic } from '../objects/topic';
-import { AREA, BACKEND_ENDPOINT, CV, PERSON, SEARCH, SKILL, SKILLS, STANDARD_JSON_HEADERS, TOPIC } from '../constants/constants';
+import { AREA, BACKEND_ENDPOINT, CV, OBJECT, PERSON, SEARCH, SKILL, SKILLS, STANDARD_JSON_HEADERS, TOPIC } from '../constants/constants';
 import { Person } from '../objects/person';
 import { KeyValue } from '../objects/key-value';
 import { SkillMark } from '../objects/skill-mark';
@@ -37,8 +37,13 @@ export class HttpCallsService {
     return this.http.get<KeyValue[]>(BACKEND_ENDPOINT + PERSON);
   }
 
-  public getCV(personId: number): Observable<FileContent> {
-  return this.http.get<FileContent>(BACKEND_ENDPOINT + PERSON + CV + "/" + personId);
+  public getCV(personId: number): Observable<Blob> {
+    
+    return this.http.get<Blob>(BACKEND_ENDPOINT + PERSON + CV + "/" + personId);
+  }
+
+  public getObjectCV(personId: number): Observable<FileContent> {
+    return this.http.get<FileContent>(BACKEND_ENDPOINT + PERSON + CV + OBJECT + "/" + personId);
   }
 
   public createPerson(person: Person): Observable<Person> {

@@ -38,7 +38,7 @@ public class NoOrmDAO {
 
 			System.out.println();
 
-			// prepared statement
+			// prepared statement (avoid sql injection)
 			preparedStatement.setInt(1, 90);
 			preparedStatement.setString(2, "marino");
 			queryResult = preparedStatement.executeQuery();
